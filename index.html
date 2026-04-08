@@ -713,6 +713,53 @@ document.getElementById('srcToggle').addEventListener('click', function() {
     </div>
 </div>
 
+<!-- Download Gate Modal -->
+<div class="modal-overlay" id="downloadGateOverlay" style="z-index:10001;">
+    <div class="modal-content" style="max-width:440px;">
+        <button class="modal-close" onclick="document.getElementById('downloadGateOverlay').classList.remove('active');">&times;</button>
+        <div style="text-align:center;margin-bottom:20px;">
+            <div style="font-size:36px;margin-bottom:10px;">&#128202;</div>
+            <div class="modal-title" style="margin-bottom:4px;">Free County Download</div>
+            <p style="font-family:'Inter',sans-serif;font-size:13px;color:#7f8c8d;line-height:1.6;">
+                This dataset is made available for research and educational purposes. Please provide your information to proceed with your free download.
+            </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:12px;">
+                <div style="flex:1;">
+                    <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">First Name</label>
+                    <input id="gateFirstName" type="text" placeholder="e.g. Jane" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+                </div>
+                <div style="flex:1;">
+                    <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Last Name</label>
+                    <input id="gateLastName" type="text" placeholder="e.g. Smith" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+                </div>
+            </div>
+            <div>
+                <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Email Address</label>
+                <input id="gateEmail" type="email" placeholder="e.g. jsmith@university.edu" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+            </div>
+            <div>
+                <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Purpose of Download</label>
+                <select id="gatePurpose" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;cursor:pointer;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+                    <option value="" disabled selected>Select a purpose...</option>
+                    <option value="Academic Research">Academic Research</option>
+                    <option value="Policy Analysis">Policy Analysis</option>
+                    <option value="Coursework / Class Assignment">Coursework / Class Assignment</option>
+                    <option value="Journalism / Reporting">Journalism / Reporting</option>
+                    <option value="Personal Interest">Personal Interest</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div id="gateError" style="display:none;font-family:'Inter',sans-serif;font-size:12px;color:#c0392b;"></div>
+            <button id="gateSubmitBtn" class="download-btn" style="width:100%;justify-content:center;padding:12px;font-size:14px;">Continue &amp; Download</button>
+        </div>
+        <p style="font-family:'Inter',sans-serif;font-size:11px;color:#7f8c8d;text-align:center;margin-top:14px;line-height:1.5;">
+            Your information will be sent to the researcher for record-keeping purposes only. It will not be shared with third parties.
+        </p>
+    </div>
+</div>
+
 <footer>Dr. Semiha B. Sekerli, PhD &mdash; Dissertation Research</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -979,13 +1026,9 @@ document.addEventListener('DOMContentLoaded', function() {
         var dlBtn = document.getElementById('modalDownloadBtn');
         if (dlBtn) {
             dlBtn.addEventListener('click', function() {
-                downloadCountyCSV(countyName);
-                _freeDownloadUsed = true;
-                _freeDownloadCounty = countyName;
-                dlArea.innerHTML = '<span style="font-family:Inter,sans-serif;font-size:12px;color:#27ae60;">&#10003; Downloaded! For more counties, purchase the full dataset.</span>' +
-                    '<button class="download-btn" id="modalPurchaseBtn2" style="font-size:13px;padding:8px 16px;background:#1c2333;border:1px solid #c0392b;color:#c0392b;">View Packages</button>';
-                var p2 = document.getElementById('modalPurchaseBtn2');
-                if (p2) p2.addEventListener('click', function() { modalOverlay.classList.remove('active'); scrollToPricing(); });
+                // Show the download gate form instead of downloading directly
+                _pendingDownloadCounty = countyName;
+                document.getElementById('downloadGateOverlay').classList.add('active');
             });
         }
         var purchBtn = document.getElementById('modalPurchaseBtn');
@@ -1110,6 +1153,71 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         triggerDownload(rows.join('\n'), countyName.replace(/\s+/g, '_') + '_' + currentYear + '.csv');
     }
+
+    // Download gate form handler
+    var _pendingDownloadCounty = null;
+    var downloadGateOverlay = document.getElementById('downloadGateOverlay');
+
+    downloadGateOverlay.addEventListener('click', function(e) {
+        if (e.target === downloadGateOverlay) { downloadGateOverlay.classList.remove('active'); _pendingDownloadCounty = null; }
+    });
+
+    document.getElementById('gateSubmitBtn').addEventListener('click', function() {
+        var firstName = document.getElementById('gateFirstName').value.trim();
+        var lastName = document.getElementById('gateLastName').value.trim();
+        var email = document.getElementById('gateEmail').value.trim();
+        var purpose = document.getElementById('gatePurpose').value;
+        var err = document.getElementById('gateError');
+        var btn = document.getElementById('gateSubmitBtn');
+
+        if (!firstName) { err.textContent = 'Please enter your first name.'; err.style.display = 'block'; return; }
+        if (!lastName) { err.textContent = 'Please enter your last name.'; err.style.display = 'block'; return; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Please enter a valid email address.'; err.style.display = 'block'; return; }
+        if (!purpose) { err.textContent = 'Please select a purpose.'; err.style.display = 'block'; return; }
+
+        err.style.display = 'none';
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+
+        emailjs.send('service_klf33h6', 'template_d23oim8', {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            purpose: 'FREE DOWNLOAD: ' + (_pendingDownloadCounty || 'Unknown') + ' County | Purpose: ' + purpose
+        }).then(function() {
+            btn.disabled = false;
+            btn.innerHTML = 'Continue &amp; Download';
+            downloadGateOverlay.classList.remove('active');
+
+            // Now trigger the actual download
+            if (_pendingDownloadCounty) {
+                downloadCountyCSV(_pendingDownloadCounty);
+                _freeDownloadUsed = true;
+                _freeDownloadCounty = _pendingDownloadCounty;
+
+                // Update the modal download area
+                var dlArea = document.getElementById('modalDownloadArea');
+                if (dlArea) {
+                    dlArea.innerHTML = '<span style="font-family:Inter,sans-serif;font-size:12px;color:#27ae60;">&#10003; Downloaded! For more counties, purchase the full dataset.</span>' +
+                        '<button class="download-btn" id="modalPurchaseBtn2" style="font-size:13px;padding:8px 16px;background:#1c2333;border:1px solid #c0392b;color:#c0392b;">View Packages</button>';
+                    var p2 = document.getElementById('modalPurchaseBtn2');
+                    if (p2) p2.addEventListener('click', function() { modalOverlay.classList.remove('active'); scrollToPricing(); });
+                }
+                _pendingDownloadCounty = null;
+            }
+        }).catch(function() {
+            btn.disabled = false;
+            btn.innerHTML = 'Continue &amp; Download';
+            err.textContent = 'Something went wrong. Please try again.';
+            err.style.display = 'block';
+        });
+    });
+
+    ['gateFirstName','gateLastName','gateEmail'].forEach(function(id) {
+        document.getElementById(id).addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') document.getElementById('gateSubmitBtn').click();
+        });
+    });
 
     // Hire Me modal close handlers
     var hireMeOverlay = document.getElementById('hireMeOverlay');
