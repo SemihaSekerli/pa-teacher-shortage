@@ -11,61 +11,71 @@
 
 body {
     font-family: 'Inter', Arial, sans-serif;
-    background: #ffffff;
-    color: #333333;
+    background: #0d1117;
+    color: #e0e0e0;
     line-height: 1.6;
     min-height: 100vh;
 }
 
-a { color: #c62828; text-decoration: none; }
-a:hover { color: #8b0000; text-decoration: underline; }
+a { color: #a93226; text-decoration: none; }
+a:hover { color: #c0392b; text-decoration: underline; }
 
 .back-link {
     display: inline-block;
     padding: 16px 24px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
-    color: #666666;
+    color: #888888;
     transition: color 0.2s;
 }
-.back-link:hover { color: #c62828; text-decoration: none; }
+.back-link:hover { color: #a93226; text-decoration: none; }
 
 header {
     text-align: center;
-    padding: 32px 24px 24px;
-    background: #fef2f2;
+    padding: 40px 24px 32px;
+    background: #161b22;
+    border-bottom: 3px solid #c0392b;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
 header .author {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+header .author span {
+    display: block;
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: #c62828;
+    font-size: 12px;
+    color: #c0392b;
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-top: 4px;
 }
 header h1 {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 36px;
-    color: #2d1f2f;
+    color: #ffffff;
     margin-bottom: 8px;
     line-height: 1.2;
 }
 header .subtitle {
     font-family: 'Inter', sans-serif;
     font-size: 16px;
-    color: #666666;
+    color: #7f8c8d;
 }
 
 /* Year Slider */
 .year-slider-container {
-    padding: 16px 24px 24px;
+    padding: 20px 24px 24px;
     max-width: 1200px;
     margin: 0 auto;
 }
 .year-slider-label {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
-    color: #666666;
+    color: #7f8c8d;
     margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -76,25 +86,28 @@ header .subtitle {
     gap: 6px;
 }
 .year-btn {
-    background: #ffffff;
-    border: 1px solid #e0c4c4;
-    color: #666666;
+    background: #1c2333;
+    border: 1px solid #30363d;
+    color: #8b949e;
     font-family: 'Inter', sans-serif;
     font-size: 13px;
     padding: 6px 12px;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 .year-btn:hover {
-    border-color: #c62828;
-    color: #c62828;
+    border-color: #c0392b;
+    color: #a93226;
+    box-shadow: 0 2px 6px rgba(192,57,43,0.15);
 }
 .year-btn.active {
-    background: #c62828;
+    background: #c0392b;
     color: #ffffff;
-    border-color: #c62828;
+    border-color: #c0392b;
     font-weight: 700;
+    box-shadow: 0 2px 8px rgba(192,57,43,0.3);
 }
 
 /* Content Grid */
@@ -109,30 +122,32 @@ header .subtitle {
 
 /* Map */
 .map-card {
-    background: #ffffff;
-    border: 1px solid #e0c4c4;
-    border-radius: 8px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
 #map {
     width: 100%;
     height: 520px;
 }
-.leaflet-container { background: #fef2f2; }
+.leaflet-container { background: #0d1117; }
 
 /* Sidebar */
 .sidebar { display: flex; flex-direction: column; gap: 16px; }
 
 .card {
-    background: #fef2f2;
-    border: 1px solid #e0c4c4;
-    border-radius: 8px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
     padding: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 .card h3 {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 18px;
-    color: #c62828;
+    color: #a93226;
     margin-bottom: 12px;
 }
 .card .stat-row {
@@ -140,24 +155,24 @@ header .subtitle {
     justify-content: space-between;
     padding: 6px 0;
     font-size: 14px;
-    border-bottom: 1px solid #e0c4c4;
+    border-bottom: 1px solid #21262d;
 }
 .card .stat-row:last-child { border-bottom: none; }
-.card .stat-label { color: #666666; }
-.card .stat-value { color: #333333; font-weight: 700; }
+.card .stat-label { color: #7f8c8d; }
+.card .stat-value { color: #ffffff; font-weight: 700; }
 
 /* Legend */
 .legend-gradient {
     height: 16px;
     border-radius: 4px;
     margin-bottom: 6px;
-    background: linear-gradient(to right, #fef2f2, #f5c4c4, #ef9a9a, #e57373, #ef5350, #e53935, #c62828, #b71c1c, #7f0000);
+    background: linear-gradient(to right, #fdf2f2, #fadbd8, #f1948a, #e74c3c, #c0392b, #a93226, #922b21, #7b241c, #641e16);
 }
 .legend-labels {
     display: flex;
     justify-content: space-between;
     font-size: 11px;
-    color: #666666;
+    color: #7f8c8d;
 }
 
 /* Top Counties */
@@ -166,25 +181,25 @@ header .subtitle {
     justify-content: space-between;
     align-items: center;
     padding: 8px 0;
-    border-bottom: 1px solid #e0c4c4;
+    border-bottom: 1px solid #21262d;
     font-size: 14px;
 }
 .top-county:last-child { border-bottom: none; }
 .top-county .rank {
-    color: #c62828;
+    color: #c0392b;
     font-weight: 700;
     margin-right: 8px;
     min-width: 20px;
 }
-.top-county .name { color: #333333; flex: 1; }
-.top-county .ec-val { color: #b71c1c; font-weight: 700; }
+.top-county .name { color: #e0e0e0; flex: 1; }
+.top-county .ec-val { color: #c0392b; font-weight: 700; }
 
 /* Modal */
 .modal-overlay {
     display: none;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(45,31,47,0.7);
+    background: rgba(44,62,80,0.6);
     z-index: 10000;
     justify-content: center;
     align-items: flex-start;
@@ -194,14 +209,14 @@ header .subtitle {
 .modal-overlay.active { display: flex; }
 
 .modal-content {
-    background: #ffffff;
-    border: 1px solid #e0c4c4;
+    background: #161b22;
+    border: 1px solid #30363d;
     border-radius: 12px;
     max-width: 1100px;
     width: 100%;
     padding: 32px;
     position: relative;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
 }
 .modal-close {
     position: absolute;
@@ -209,7 +224,7 @@ header .subtitle {
     right: 16px;
     background: none;
     border: none;
-    color: #666666;
+    color: #7f8c8d;
     font-size: 28px;
     cursor: pointer;
     line-height: 1;
@@ -221,25 +236,45 @@ header .subtitle {
     border-radius: 50%;
     transition: all 0.2s;
 }
-.modal-close:hover { background: #fef2f2; color: #c62828; }
+.modal-close:hover { background: #1c2333; color: #e74c3c; }
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #c0392b;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+}
+.download-btn:hover { background: #a93226; }
 
 .modal-title {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 24px;
-    color: #c62828;
+    color: #a93226;
     margin-bottom: 4px;
 }
 .modal-subtitle {
     font-family: 'Inter', sans-serif;
     font-size: 14px;
-    color: #666666;
+    color: #7f8c8d;
     margin-bottom: 20px;
 }
 
 .modal-table-wrap {
     overflow-x: auto;
     border-radius: 8px;
-    border: 1px solid #e0c4c4;
+    border: 1px solid #30363d;
+    max-height: 400px;
+    overflow-y: auto;
 }
 .modal-table {
     width: 100%;
@@ -248,8 +283,8 @@ header .subtitle {
     min-width: 1000px;
 }
 .modal-table th {
-    background: #fef2f2;
-    color: #c62828;
+    background: #1c2333;
+    color: #e74c3c;
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     padding: 10px 8px;
@@ -257,15 +292,15 @@ header .subtitle {
     white-space: nowrap;
     position: sticky;
     top: 0;
-    border-bottom: 2px solid #c62828;
+    border-bottom: 2px solid #c0392b;
 }
 .modal-table td {
     padding: 8px;
-    border-bottom: 1px solid #e0c4c4;
-    color: #333333;
+    border-bottom: 1px solid #21262d;
+    color: #e0e0e0;
     white-space: nowrap;
 }
-.modal-table tr:hover td { background: #fef2f2; }
+.modal-table tr:hover td { background: #1c2333; }
 
 /* Footer */
 footer {
@@ -273,16 +308,17 @@ footer {
     padding: 32px 24px;
     font-family: 'Inter', sans-serif;
     font-size: 13px;
-    color: #666666;
-    border-top: 1px solid #e0c4c4;
+    color: #8b949e;
+    border-top: 1px solid #30363d;
     margin-top: 24px;
+    background: #161b22;
 }
 
 /* Tooltip */
 .dark-tooltip {
-    background: #ffffff !important;
-    color: #333333 !important;
-    border: 1px solid #c62828 !important;
+    background: #161b22 !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #c0392b !important;
     border-radius: 6px !important;
     padding: 8px 12px !important;
     font-family: 'Inter', sans-serif !important;
@@ -298,11 +334,11 @@ footer {
     }
     .sidebar { order: -1; }
     #map { height: 400px; }
+    #pricingSection > div:nth-child(2) { grid-template-columns: 1fr !important; max-width: 400px; margin: 0 auto; }
 }
 @media (max-width: 768px) {
     header h1 { font-size: 28px; }
     .modal-content { padding: 20px; }
-    .modal-table { font-size: 11px; }
     #map { height: 350px; }
 }
 @media (max-width: 480px) {
@@ -321,21 +357,30 @@ footer {
 <a href="https://semihasekerli.com/" class="back-link">&larr; Back to Portfolio</a>
 
 <header>
-    <div class="author">Dr. Semiha Sekerli, Ph.D.</div>
+    <div class="author">Dr. Semiha B. Sekerli, Ph.D.<span>Education Researcher &amp; Data Scientist</span></div>
     <h1>Teacher Shortage in Pennsylvania Schools</h1>
     <p class="subtitle">Emergency Certification Data by County (2010&ndash;2022)</p>
-    <p style="font-family:'Inter',sans-serif;font-size:13px;color:#555;max-width:700px;margin:12px auto 0;line-height:1.6;">Developed by Dr. Semiha Sekerli as an open-access research tool to support educators, policymakers, and the research community in understanding and addressing teacher shortages across Pennsylvania.</p>
+    <p style="font-family:'Inter',sans-serif;font-size:13px;color:#7f8c8d;max-width:700px;margin:12px auto 0;line-height:1.6;">Developed by Dr. Semiha Sekerli as an open-access research tool to support educators, policymakers, and the research community in understanding and addressing teacher shortages across Pennsylvania.</p>
+    <div style="margin-top:20px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+        <button class="download-btn" onclick="document.getElementById('hireMeOverlay').classList.add('active');" style="padding:12px 28px;font-size:14px;border-radius:8px;">Work With Dr. Sekerli</button>
+        <button class="download-btn" onclick="document.getElementById('pricingSection').scrollIntoView({behavior:'smooth'});" style="padding:12px 28px;font-size:14px;border-radius:8px;">View Research Products</button>
+    </div>
 </header>
 
 <div class="year-slider-container">
-    <div class="year-slider-label">Select Academic Year</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div class="year-slider-label" style="margin-bottom:0;">Select Academic Year</div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <button class="download-btn" onclick="document.getElementById('pricingSection').scrollIntoView({behavior:'smooth'});">&#128274; Get Full District Dataset</button>
+        </div>
+    </div>
     <div class="year-labels" id="yearLabels"></div>
 </div>
 
 <div class="content-grid">
     <div class="map-card" style="position:relative;">
         <div id="map"></div>
-        <div id="hoverInfo" style="display:none;position:absolute;top:10px;right:10px;z-index:1000;background:rgba(255,255,255,0.95);color:#333333;padding:10px 14px;border-radius:8px;border:1px solid #c62828;font-size:0.9rem;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,0.1);"></div>
+        <div id="hoverInfo" style="display:none;position:absolute;top:10px;right:10px;z-index:1000;background:rgba(22,27,34,0.97);color:#e0e0e0;padding:12px 14px;border-radius:8px;border:1px solid #c0392b;font-size:0.9rem;pointer-events:auto;box-shadow:0 2px 8px rgba(0,0,0,0.1);min-width:200px;"></div>
     </div>
     <div class="sidebar">
         <div class="card" id="summaryCard">
@@ -357,11 +402,14 @@ footer {
     </div>
 </div>
 
+
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-content">
         <button class="modal-close" id="modalClose">&times;</button>
         <div class="modal-title" id="modalTitle"></div>
         <div class="modal-subtitle" id="modalSubtitle"></div>
+        <div id="modalDownloadArea" style="display:flex;justify-content:flex-end;margin-bottom:12px;gap:8px;align-items:center;">
+        </div>
         <div class="modal-table-wrap">
             <table class="modal-table" id="modalTable">
                 <thead id="modalHead"></thead>
@@ -372,8 +420,8 @@ footer {
 </div>
 
 <section style="max-width:1200px;margin:32px auto 0;padding:0 24px 24px;">
-    <div style="background:#fef2f2;border:1px solid #e0c4c4;border-radius:8px;overflow:hidden;">
-        <button id="varToggle" style="width:100%;padding:16px 20px;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Playfair Display',Georgia,serif;font-size:20px;color:#c62828;text-align:left;">
+    <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;overflow:hidden;">
+        <button id="varToggle" style="width:100%;padding:16px 20px;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Playfair Display',Georgia,serif;font-size:20px;color:#a93226;text-align:left;">
             Variable Definitions
             <span id="varArrow" style="font-size:14px;transition:transform 0.3s;font-family:'Inter',sans-serif;">&#9660;</span>
         </button>
@@ -383,102 +431,102 @@ footer {
             </p>
             <table style="width:100%;border-collapse:collapse;font-size:13px;line-height:1.5;">
                 <thead>
-                    <tr style="border-bottom:2px solid #c62828;text-align:left;">
-                        <th style="padding:8px 12px;color:#c62828;width:220px;">Variable</th>
-                        <th style="padding:8px 12px;color:#c62828;width:90px;">Level</th>
-                        <th style="padding:8px 12px;color:#333;">Description</th>
+                    <tr style="border-bottom:2px solid #c0392b;text-align:left;">
+                        <th style="padding:8px 12px;color:#a93226;width:220px;">Variable</th>
+                        <th style="padding:8px 12px;color:#a93226;width:90px;">Level</th>
+                        <th style="padding:8px 12px;color:#e0e0e0;">Description</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="border-bottom:1px solid #e0c4c4;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Emergency Certs (EC)</td>
+                    <tr style="border-bottom:1px solid #eef0f2;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Emergency Certs (EC)</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Number of emergency teaching certifications issued to the district. Emergency certifications are granted when qualified certified teachers are unavailable, serving as a key indicator of teacher shortage severity.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Number of emergency teaching certifications issued to the district. Emergency certifications are granted when qualified certified teachers are unavailable, serving as a key indicator of teacher shortage severity.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;background:#fff;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Education Spending</td>
+                    <tr style="border-bottom:1px solid #21262d;background:#1c2333;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Education Spending</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Total expenditure on education by the school district, including operational costs, facilities, and administrative expenses.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Total expenditure on education by the school district, including operational costs, facilities, and administrative expenses.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Instructor Spending</td>
+                    <tr style="border-bottom:1px solid #eef0f2;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Instructor Spending</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Total expenditure specifically allocated to instructional staff, including teacher salaries, benefits, and instructional materials.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Total expenditure specifically allocated to instructional staff, including teacher salaries, benefits, and instructional materials.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;background:#fff;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Spending Per Student</td>
+                    <tr style="border-bottom:1px solid #21262d;background:#1c2333;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Spending Per Student</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Education spending divided by total student enrollment, representing the per-pupil investment in education.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Education spending divided by total student enrollment, representing the per-pupil investment in education.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Enrollment</td>
+                    <tr style="border-bottom:1px solid #eef0f2;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Enrollment</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Number of students enrolled in the school district for the given academic year.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Number of students enrolled in the school district for the given academic year.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;background:#fff;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Total Enrollment</td>
+                    <tr style="border-bottom:1px solid #21262d;background:#1c2333;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Total Enrollment</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Total student enrollment count including all grade levels served by the district.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Total student enrollment count including all grade levels served by the district.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Number of Instructors</td>
+                    <tr style="border-bottom:1px solid #eef0f2;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Number of Instructors</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Total number of instructional staff (teachers) employed by the district.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Total number of instructional staff (teachers) employed by the district.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;background:#fff;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Low Income Enrollment</td>
+                    <tr style="border-bottom:1px solid #21262d;background:#1c2333;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Low Income Enrollment</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Number of students classified as economically disadvantaged, typically qualifying for free or reduced-price lunch programs.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Number of students classified as economically disadvantaged, typically qualifying for free or reduced-price lunch programs.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">% Enrollment</td>
+                    <tr style="border-bottom:1px solid #eef0f2;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">% Enrollment</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Percentage of total enrollment from low-income households (Low Income Enrollment / Total Enrollment).</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Percentage of total enrollment from low-income households (Low Income Enrollment / Total Enrollment).</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;background:#fff;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Education Level</td>
+                    <tr style="border-bottom:1px solid #21262d;background:#1c2333;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Education Level</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Highest education level attained by the district's superintendent (e.g., Master's, Doctoral).</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Highest education level attained by the district's superintendent (e.g., Master's, Doctoral).</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Superintendent Salary</td>
+                    <tr style="border-bottom:1px solid #eef0f2;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Superintendent Salary</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Annual salary of the school district's superintendent.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Annual salary of the school district's superintendent.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;background:#fff;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Supt. Years in District</td>
+                    <tr style="border-bottom:1px solid #21262d;background:#1c2333;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Supt. Years in District</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Number of years the superintendent has served in the current district.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Number of years the superintendent has served in the current district.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Supt. Total Experience</td>
+                    <tr style="border-bottom:1px solid #eef0f2;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Supt. Total Experience</td>
                         <td style="padding:8px 12px;color:#666;">District</td>
-                        <td style="padding:8px 12px;color:#333;">Total years of professional experience the superintendent has across all districts.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Total years of professional experience the superintendent has across all districts.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;background:#fff;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Property Tax</td>
+                    <tr style="border-bottom:1px solid #21262d;background:#1c2333;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Property Tax</td>
                         <td style="padding:8px 12px;color:#666;">County</td>
-                        <td style="padding:8px 12px;color:#333;">County-level property tax rate (mills). This value is the same for all districts within a county.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">County-level property tax rate (mills). This value is the same for all districts within a county.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">Violent Crimes</td>
+                    <tr style="border-bottom:1px solid #eef0f2;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">Violent Crimes</td>
                         <td style="padding:8px 12px;color:#666;">County</td>
-                        <td style="padding:8px 12px;color:#333;">Total number of violent crimes reported in the county for the year. This is a county-level statistic shared across all districts.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Total number of violent crimes reported in the county for the year. This is a county-level statistic shared across all districts.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;background:#fff;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">All Crimes</td>
+                    <tr style="border-bottom:1px solid #21262d;background:#1c2333;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">All Crimes</td>
                         <td style="padding:8px 12px;color:#666;">County</td>
-                        <td style="padding:8px 12px;color:#333;">Total number of all crimes (violent and non-violent) reported in the county for the year. County-level statistic.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Total number of all crimes (violent and non-violent) reported in the county for the year. County-level statistic.</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #e0c4c4;background:#fff;">
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">COVID-19 Cases</td>
+                    <tr style="border-bottom:1px solid #21262d;background:#1c2333;">
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">COVID-19 Cases</td>
                         <td style="padding:8px 12px;color:#666;">County</td>
-                        <td style="padding:8px 12px;color:#333;">Total confirmed COVID-19 cases reported in the county. Only applicable for years 2019&ndash;2020 onward.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Total confirmed COVID-19 cases reported in the county. Only applicable for years 2019&ndash;2020 onward.</td>
                     </tr>
                     <tr>
-                        <td style="padding:8px 12px;font-weight:600;color:#333;">COVID-19 Deaths</td>
+                        <td style="padding:8px 12px;font-weight:600;color:#e0e0e0;">COVID-19 Deaths</td>
                         <td style="padding:8px 12px;color:#666;">County</td>
-                        <td style="padding:8px 12px;color:#333;">Total confirmed COVID-19 deaths reported in the county. Only applicable for years 2019&ndash;2020 onward.</td>
+                        <td style="padding:8px 12px;color:#e0e0e0;">Total confirmed COVID-19 deaths reported in the county. Only applicable for years 2019&ndash;2020 onward.</td>
                     </tr>
                 </tbody>
             </table>
@@ -487,38 +535,38 @@ footer {
 </section>
 
 <section style="max-width:1200px;margin:16px auto 0;padding:0 24px 24px;">
-    <div style="background:#fef2f2;border:1px solid #e0c4c4;border-radius:8px;overflow:hidden;">
-        <button id="srcToggle" style="width:100%;padding:16px 20px;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Playfair Display',Georgia,serif;font-size:20px;color:#c62828;text-align:left;">
+    <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;overflow:hidden;">
+        <button id="srcToggle" style="width:100%;padding:16px 20px;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Playfair Display',Georgia,serif;font-size:20px;color:#a93226;text-align:left;">
             Data Sources
             <span id="srcArrow" style="font-size:14px;transition:transform 0.3s;font-family:'Inter',sans-serif;">&#9660;</span>
         </button>
         <div id="srcContent" style="display:none;padding:0 20px 20px;">
-            <div style="font-size:13px;color:#333;line-height:1.8;">
+            <div style="font-size:13px;color:#e0e0e0;line-height:1.8;">
 
                 <div style="margin-bottom:20px;">
-                    <h4 style="font-family:'Playfair Display',Georgia,serif;color:#c62828;font-size:16px;margin-bottom:8px;">Pennsylvania Department of Education</h4>
+                    <h4 style="font-family:'Playfair Display',Georgia,serif;color:#a93226;font-size:16px;margin-bottom:8px;">Pennsylvania Department of Education</h4>
                     <p style="margin-bottom:8px;">Data obtained from the Pennsylvania Department of Education included information on emergency certification, education spending, instructor spending, enrollment figures, number of instructors, spending per student, total enrollment, enrollment of low-income students, superintendent annual salary, superintendent years of experience in the district, and superintendent total years of experience.</p>
                     <p>Pennsylvania Department of Education often used standardized reporting forms that school districts were required to complete. The data was also supplemented by direct submissions from schools.</p>
                 </div>
 
                 <div style="margin-bottom:20px;">
-                    <h4 style="font-family:'Playfair Display',Georgia,serif;color:#c62828;font-size:16px;margin-bottom:8px;">Johns Hopkins University &mdash; COVID-19 Data</h4>
+                    <h4 style="font-family:'Playfair Display',Georgia,serif;color:#a93226;font-size:16px;margin-bottom:8px;">Johns Hopkins University &mdash; COVID-19 Data</h4>
                     <p style="margin-bottom:8px;">COVID-19 cases and deaths data were sourced from Johns Hopkins University to examine the impact of the pandemic on education. Johns Hopkins University aggregates data from multiple sources, including health departments globally, the World Health Organization (WHO), the Centers for Disease Control and Prevention (CDC), and other public health organizations.</p>
                     <p>According to the university website, the data collection involved both automated and manual processes, ensuring timely updates. They compiled, verified, and distributed data on COVID-19 cases and deaths, providing a comprehensive view of the pandemic&rsquo;s impact worldwide, including specific regions like Pennsylvania.</p>
                 </div>
 
                 <div style="margin-bottom:20px;">
-                    <h4 style="font-family:'Playfair Display',Georgia,serif;color:#c62828;font-size:16px;margin-bottom:8px;">Pennsylvania Attorney General &mdash; Crime Data</h4>
+                    <h4 style="font-family:'Playfair Display',Georgia,serif;color:#a93226;font-size:16px;margin-bottom:8px;">Pennsylvania Attorney General &mdash; Crime Data</h4>
                     <p style="margin-bottom:8px;">Violent crimes and all crime data were acquired from the Attorney General&rsquo;s website to assess community safety factors. The Pennsylvania Uniform Crime Reporting (UCR) system meticulously documented comprehensive details on crimes, arrests, and victimization throughout Pennsylvania.</p>
                     <p>The data collection process was standardized across law enforcement agencies using the Uniform Crime Reporting (UCR) system or the National Incident-Based Reporting System (NIBRS), which categorized crimes, reports incidents, and aggregates data at the state level (Federal Bureau of Investigation, 2000).</p>
                 </div>
 
                 <div style="margin-bottom:20px;">
-                    <h4 style="font-family:'Playfair Display',Georgia,serif;color:#c62828;font-size:16px;margin-bottom:8px;">Pennsylvania Department of Community and Economic Development &mdash; Property Tax Data</h4>
+                    <h4 style="font-family:'Playfair Display',Georgia,serif;color:#a93226;font-size:16px;margin-bottom:8px;">Pennsylvania Department of Community and Economic Development &mdash; Property Tax Data</h4>
                     <p>Property tax data, crucial for understanding socioeconomic factors, was gathered from the Pennsylvania Department of Community and Economic Development website. Data was sourced from property tax records, budget reports, and direct submissions by local governments via mandatory municipal e-filing forms.</p>
                 </div>
 
-                <div style="background:#fff;border:1px solid #e0c4c4;border-radius:6px;padding:12px 16px;">
+                <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:12px 16px;">
                     <p style="color:#666;font-style:italic;margin:0;">By integrating these diverse datasets, the analysis aimed to provide a comprehensive understanding of the multifaceted influences contributing to teacher shortages in Pennsylvania.</p>
                 </div>
 
@@ -552,8 +600,122 @@ document.getElementById('srcToggle').addEventListener('click', function() {
 });
 </script>
 
+<section id="pricingSection" style="max-width:1200px;margin:32px auto 0;padding:0 24px 32px;">
+    <div style="text-align:center;margin-bottom:32px;">
+        <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:30px;color:#ffffff;margin-bottom:8px;">Research Data Products</h2>
+        <p style="font-family:'Inter',sans-serif;font-size:15px;color:#7f8c8d;max-width:600px;margin:0 auto;">Access the most comprehensive district-level teacher shortage dataset in Pennsylvania. Built from 12 years of verified public records.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px;">
+
+        <!-- Free Tier -->
+        <div style="background:#161b22;border:1px solid #30363d;border-radius:12px;padding:28px 24px;text-align:center;">
+            <div style="font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:#7f8c8d;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Explorer</div>
+            <div style="font-family:'Playfair Display',Georgia,serif;font-size:36px;color:#ffffff;margin-bottom:4px;">Free</div>
+            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#7f8c8d;margin-bottom:20px;">What you see on this page</div>
+            <ul style="list-style:none;padding:0;margin:0 0 24px;font-family:'Inter',sans-serif;font-size:13px;color:#8b949e;line-height:2.2;text-align:left;">
+                <li>&#10003; Interactive county map</li>
+                <li>&#10003; Statewide summary statistics</li>
+                <li>&#10003; Top 5 counties ranking</li>
+                <li>&#10003; Year-by-year county view</li>
+                <li style="color:#30363d;">&#10007; District-level data</li>
+                <li style="color:#30363d;">&#10007; CSV/Excel downloads</li>
+            </ul>
+            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#c0392b;font-weight:600;">Currently Active</div>
+        </div>
+
+        <!-- Single County -->
+        <div style="background:#161b22;border:2px solid #c0392b;border-radius:12px;padding:28px 24px;text-align:center;position:relative;">
+            <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#c0392b;color:#fff;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;">Most Popular</div>
+            <div style="font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:#c0392b;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Researcher</div>
+            <div style="font-family:'Playfair Display',Georgia,serif;font-size:36px;color:#ffffff;margin-bottom:4px;">$299</div>
+            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#7f8c8d;margin-bottom:20px;">Full state dataset</div>
+            <ul style="list-style:none;padding:0;margin:0 0 24px;font-family:'Inter',sans-serif;font-size:13px;color:#e0e0e0;line-height:2.2;text-align:left;">
+                <li>&#10003; Everything in Explorer</li>
+                <li>&#10003; <strong>All 500+ districts</strong></li>
+                <li>&#10003; <strong>All 67 counties</strong></li>
+                <li>&#10003; Full 2010&ndash;2022 data</li>
+                <li>&#10003; CSV &amp; Excel formats</li>
+                <li>&#10003; Variable codebook</li>
+            </ul>
+            <a href="https://semihasekerli.gumroad.com/l/qykzc" target="_blank" class="download-btn" style="width:100%;justify-content:center;padding:12px;display:inline-flex;text-decoration:none;" id="purchaseResearcher">Purchase Dataset</a>
+        </div>
+
+        <!-- Research Package -->
+        <div style="background:#161b22;border:1px solid #30363d;border-radius:12px;padding:28px 24px;text-align:center;position:relative;z-index:1;">
+            <div style="font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:#7f8c8d;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Institution</div>
+            <div style="font-family:'Playfair Display',Georgia,serif;font-size:36px;color:#ffffff;margin-bottom:4px;">$1,299</div>
+            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#7f8c8d;margin-bottom:20px;">Research package</div>
+            <ul style="list-style:none;padding:0;margin:0 0 24px;font-family:'Inter',sans-serif;font-size:13px;color:#e0e0e0;line-height:2.2;text-align:left;">
+                <li>&#10003; Everything in Researcher</li>
+                <li>&#10003; <strong>Methodology document</strong></li>
+                <li>&#10003; <strong>Pre-built trend tables</strong></li>
+                <li>&#10003; <strong>Summary statistics</strong></li>
+                <li>&#10003; Institutional license</li>
+                <li>&#10003; Priority email support</li>
+            </ul>
+            <a href="https://semihasekerli.gumroad.com/l/dtaldz" target="_blank" class="download-btn" style="width:100%;justify-content:center;padding:12px;display:inline-flex;text-decoration:none;cursor:pointer;pointer-events:auto;position:relative;z-index:10;" id="purchaseInstitution">Purchase Package</a>
+        </div>
+    </div>
+
+</section>
+
+<!-- Hire Me Modal Popup -->
+<div class="modal-overlay" id="hireMeOverlay">
+    <div class="modal-content" style="max-width:540px;">
+        <button class="modal-close" onclick="document.getElementById('hireMeOverlay').classList.remove('active');">&times;</button>
+        <div style="text-align:center;margin-bottom:24px;">
+            <div style="font-size:42px;margin-bottom:10px;">&#128188;</div>
+            <h3 style="font-family:'Playfair Display',Georgia,serif;font-size:24px;color:#ffffff;margin-bottom:8px;">Work With Dr. Sekerli</h3>
+            <p style="font-family:'Inter',sans-serif;font-size:14px;color:#7f8c8d;max-width:440px;margin:0 auto;line-height:1.6;">Whether you need help with your dissertation, data analysis, research design, or web development &mdash; I can help. Fill out the form below and I&rsquo;ll send you a personalized quote.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;gap:12px;">
+                <div style="flex:1;">
+                    <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">First Name</label>
+                    <input id="hireFirstName" type="text" placeholder="e.g. Jane" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+                </div>
+                <div style="flex:1;">
+                    <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Last Name</label>
+                    <input id="hireLastName" type="text" placeholder="e.g. Smith" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+                </div>
+            </div>
+            <div>
+                <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Email Address</label>
+                <input id="hireEmail" type="email" placeholder="e.g. jsmith@university.edu" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+            </div>
+            <div>
+                <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">What Do You Need Help With?</label>
+                <select id="hireService" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;cursor:pointer;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+                    <option value="" disabled selected>Select a service...</option>
+                    <option value="Dissertation Methodology Support">Dissertation Methodology Support</option>
+                    <option value="Dissertation Data Analysis Support">Dissertation Data Analysis Support</option>
+                    <option value="Professional Data Analysis Support">Professional Data Analysis Support</option>
+                    <option value="Website Builder / Web Developer">Website Builder / Web Developer</option>
+                    <option value="App Developer">App Developer</option>
+                    <option value="Senior Researcher">Senior Researcher</option>
+                    <option value="Research Support">Research Support</option>
+                    <option value="Part-Time Researcher">Part-Time Researcher</option>
+                    <option value="Project Manager">Project Manager</option>
+                    <option value="Custom Data Report">Custom Data Report</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div>
+                <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Brief Description (Optional)</label>
+                <textarea id="hireMessage" rows="3" placeholder="Tell me a bit about your project or what you need help with..." style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;resize:vertical;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'"></textarea>
+            </div>
+            <div id="hireError" style="display:none;font-family:'Inter',sans-serif;font-size:12px;color:#c0392b;"></div>
+            <div id="hireSuccess" style="display:none;font-family:'Inter',sans-serif;font-size:13px;color:#27ae60;background:#162016;border:1px solid #27ae60;border-radius:6px;padding:12px;text-align:center;"></div>
+            <button id="hireSubmitBtn" class="download-btn" style="width:100%;justify-content:center;padding:14px;font-size:15px;">Send Request &amp; Get a Quote</button>
+        </div>
+        <p style="font-family:'Inter',sans-serif;font-size:11px;color:#7f8c8d;text-align:center;margin-top:16px;">Your information is sent directly to Dr. Sekerli and will not be shared with third parties.</p>
+    </div>
+</div>
+
 <footer>Dr. Semiha B. Sekerli, PhD &mdash; Dissertation Research</footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 var countyData = {"Lackawanna":{"2010-2011":{"ec":274.0,"districts":6,"enrollment":18695,"instructors":1783,"low_income":8355},"2011-2012":{"ec":160.0,"districts":6,"enrollment":18749,"instructors":1531,"low_income":8912},"2012-2013":{"ec":187.0,"districts":6,"enrollment":18819,"instructors":1526,"low_income":9699},"2013-2014":{"ec":169.0,"districts":6,"enrollment":18570,"instructors":1660,"low_income":9741},"2014-2015":{"ec":105.0,"districts":6,"enrollment":18758,"instructors":1693,"low_income":10224},"2015-2016":{"ec":268.0,"districts":6,"enrollment":18869,"instructors":1687,"low_income":11005},"2016-2017":{"ec":344.0,"districts":6,"enrollment":18864,"instructors":1702,"low_income":11281},"2017-2018":{"ec":304.0,"districts":6,"enrollment":18912,"instructors":1697,"low_income":10954},"2018-2019":{"ec":424.0,"districts":6,"enrollment":18814,"instructors":1635,"low_income":9656},"2019-2020":{"ec":207.0,"districts":6,"enrollment":18735,"instructors":1613,"low_income":10643},"2020-2021":{"ec":174.0,"districts":6,"enrollment":17828,"instructors":1597,"low_income":9896},"2021-2022":{"ec":0,"districts":6,"enrollment":0,"instructors":0,"low_income":0}},"Montgomery":{"2010-2011":{"ec":222.0,"districts":11,"enrollment":49785,"instructors":4156,"low_income":13240},"2011-2012":{"ec":93.0,"districts":11,"enrollment":49738,"instructors":3814,"low_income":13528},"2012-2013":{"ec":104.0,"districts":11,"enrollment":50115,"instructors":3760,"low_income":14824},"2013-2014":{"ec":83.0,"districts":11,"enrollment":50508,"instructors":4033,"low_income":15687},"2014-2015":{"ec":86.0,"districts":11,"enrollment":50715,"instructors":4070,"low_income":16738},"2015-2016":{"ec":92.0,"districts":11,"enrollment":50837,"instructors":4096,"low_income":17814},"2016-2017":{"ec":251.0,"districts":11,"enrollment":51844,"instructors":4567,"low_income":18212},"2017-2018":{"ec":306.0,"districts":11,"enrollment":51904,"instructors":4576,"low_income":19168},"2018-2019":{"ec":300.0,"districts":11,"enrollment":52223,"instructors":4649,"low_income":19567},"2019-2020":{"ec":260.0,"districts":11,"enrollment":52878,"instructors":4742,"low_income":19315},"2020-2021":{"ec":324.0,"districts":11,"enrollment":51875,"instructors":4770,"low_income":19471},"2021-2022":{"ec":0,"districts":11,"enrollment":0,"instructors":0,"low_income":0}},"Fayette":{"2010-2011":{"ec":163.0,"districts":5,"enrollment":13389,"instructors":1090,"low_income":7637},"2011-2012":{"ec":86.0,"districts":5,"enrollment":12979,"instructors":1031,"low_income":7818},"2012-2013":{"ec":124.0,"districts":5,"enrollment":12757,"instructors":1023,"low_income":8030},"2013-2014":{"ec":74.0,"districts":5,"enrollment":12517,"instructors":1044,"low_income":8134},"2014-2015":{"ec":68.0,"districts":5,"enrollment":12268,"instructors":1043,"low_income":7978},"2015-2016":{"ec":82.0,"districts":5,"enrollment":12116,"instructors":994,"low_income":7861},"2016-2017":{"ec":85.0,"districts":5,"enrollment":11923,"instructors":965,"low_income":7866},"2017-2018":{"ec":124.0,"districts":5,"enrollment":11798,"instructors":940,"low_income":7546},"2018-2019":{"ec":117.0,"districts":5,"enrollment":11714,"instructors":933,"low_income":7998},"2019-2020":{"ec":80.0,"districts":5,"enrollment":11616,"instructors":907,"low_income":7889},"2020-2021":{"ec":87.0,"districts":5,"enrollment":11002,"instructors":877,"low_income":7296},"2021-2022":{"ec":0,"districts":5,"enrollment":0,"instructors":0,"low_income":0}},"Allegheny":{"2010-2011":{"ec":158.0,"districts":9,"enrollment":44992,"instructors":3978,"low_income":26879},"2011-2012":{"ec":129.0,"districts":9,"enrollment":43255,"instructors":3720,"low_income":27172},"2012-2013":{"ec":167.0,"districts":9,"enrollment":42414,"instructors":3563,"low_income":26795},"2013-2014":{"ec":303.0,"districts":9,"enrollment":42069,"instructors":4178,"low_income":28465},"2014-2015":{"ec":265.0,"districts":9,"enrollment":40794,"instructors":4026,"low_income":25670},"2015-2016":{"ec":288.0,"districts":9,"enrollment":40296,"instructors":4146,"low_income":23574},"2016-2017":{"ec":646.0,"districts":9,"enrollment":38158,"instructors":4173,"low_income":22357},"2017-2018":{"ec":619.0,"districts":9,"enrollment":37849,"instructors":4220,"low_income":23244},"2018-2019":{"ec":797.0,"districts":9,"enrollment":38361,"instructors":4263,"low_income":23594},"2019-2020":{"ec":441.0,"districts":9,"enrollment":38084,"instructors":4227,"low_income":22093},"2020-2021":{"ec":178.0,"districts":9,"enrollment":36637,"instructors":4173,"low_income":21348},"2021-2022":{"ec":0,"districts":9,"enrollment":0,"instructors":0,"low_income":0}},"Lehigh":{"2010-2011":{"ec":710.0,"districts":8,"enrollment":33969,"instructors":3093,"low_income":19802},"2011-2012":{"ec":482.0,"districts":8,"enrollment":33618,"instructors":2528,"low_income":18812},"2012-2013":{"ec":556.0,"districts":8,"enrollment":32820,"instructors":2520,"low_income":19982},"2013-2014":{"ec":381.0,"districts":8,"enrollment":32953,"instructors":2738,"low_income":22489},"2014-2015":{"ec":317.0,"districts":8,"enrollment":32402,"instructors":2635,"low_income":17851},"2015-2016":{"ec":408.0,"districts":8,"enrollment":32051,"instructors":2724,"low_income":17843},"2016-2017":{"ec":472.0,"districts":8,"enrollment":32330,"instructors":2803,"low_income":19926},"2017-2018":{"ec":427.0,"districts":8,"enrollment":31869,"instructors":2867,"low_income":19241},"2018-2019":{"ec":525.0,"districts":8,"enrollment":32522,"instructors":2891,"low_income":18845},"2019-2020":{"ec":568.0,"districts":8,"enrollment":32249,"instructors":2931,"low_income":17293},"2020-2021":{"ec":635.0,"districts":8,"enrollment":31259,"instructors":2937,"low_income":17310},"2021-2022":{"ec":0,"districts":7,"enrollment":0,"instructors":0,"low_income":0}},"Blair":{"2010-2011":{"ec":80.0,"districts":4,"enrollment":14323,"instructors":1132,"low_income":6525},"2011-2012":{"ec":65.0,"districts":4,"enrollment":14176,"instructors":1067,"low_income":6927},"2012-2013":{"ec":54.0,"districts":4,"enrollment":14102,"instructors":1071,"low_income":7164},"2013-2014":{"ec":70.0,"districts":4,"enrollment":14049,"instructors":1048,"low_income":7425},"2014-2015":{"ec":69.0,"districts":4,"enrollment":14044,"instructors":1040,"low_income":7587},"2015-2016":{"ec":74.0,"districts":4,"enrollment":14138,"instructors":1066,"low_income":7676},"2016-2017":{"ec":89.0,"districts":4,"enrollment":14070,"instructors":1085,"low_income":7771},"2017-2018":{"ec":114.0,"districts":4,"enrollment":13888,"instructors":1090,"low_income":7593},"2018-2019":{"ec":156.0,"districts":4,"enrollment":13746,"instructors":1095,"low_income":7518},"2019-2020":{"ec":138.0,"districts":4,"enrollment":13786,"instructors":1089,"low_income":7616},"2020-2021":{"ec":196.0,"districts":4,"enrollment":13263,"instructors":1083,"low_income":7020},"2021-2022":{"ec":0,"districts":4,"enrollment":0,"instructors":0,"low_income":0}},"Cambria":{"2010-2011":{"ec":313.0,"districts":5,"enrollment":7720,"instructors":819,"low_income":3734},"2011-2012":{"ec":218.0,"districts":5,"enrollment":7487,"instructors":580,"low_income":3785},"2012-2013":{"ec":242.0,"districts":5,"enrollment":7430,"instructors":572,"low_income":3921},"2013-2014":{"ec":213.0,"districts":5,"enrollment":7212,"instructors":738,"low_income":4588},"2014-2015":{"ec":201.0,"districts":5,"enrollment":6984,"instructors":715,"low_income":3599},"2015-2016":{"ec":228.0,"districts":5,"enrollment":6917,"instructors":712,"low_income":4054},"2016-2017":{"ec":326.0,"districts":5,"enrollment":6634,"instructors":702,"low_income":3997},"2017-2018":{"ec":356.0,"districts":5,"enrollment":6742,"instructors":691,"low_income":3901},"2018-2019":{"ec":362.0,"districts":5,"enrollment":6651,"instructors":697,"low_income":4045},"2019-2020":{"ec":277.0,"districts":5,"enrollment":6647,"instructors":725,"low_income":4029},"2020-2021":{"ec":377.0,"districts":5,"enrollment":6518,"instructors":716,"low_income":3639},"2021-2022":{"ec":0,"districts":5,"enrollment":0,"instructors":0,"low_income":0}},"Indiana":{"2010-2011":{"ec":298.0,"districts":1,"enrollment":103,"instructors":92,"low_income":0},"2011-2012":{"ec":203.0,"districts":1,"enrollment":12,"instructors":0,"low_income":0},"2012-2013":{"ec":230.0,"districts":1,"enrollment":8,"instructors":0,"low_income":0},"2013-2014":{"ec":205.0,"districts":1,"enrollment":11,"instructors":71,"low_income":0},"2014-2015":{"ec":176.0,"districts":1,"enrollment":37,"instructors":71,"low_income":0},"2015-2016":{"ec":220.0,"districts":1,"enrollment":14,"instructors":70,"low_income":0},"2016-2017":{"ec":244.0,"districts":1,"enrollment":86,"instructors":71,"low_income":0},"2017-2018":{"ec":237.0,"districts":1,"enrollment":60,"instructors":68,"low_income":0},"2018-2019":{"ec":240.0,"districts":1,"enrollment":57,"instructors":69,"low_income":0},"2019-2020":{"ec":189.0,"districts":1,"enrollment":46,"instructors":63,"low_income":0},"2020-2021":{"ec":300.0,"districts":1,"enrollment":34,"instructors":62,"low_income":0},"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"Bradford":{"2010-2011":{"ec":59.0,"districts":3,"enrollment":4860,"instructors":422,"low_income":1990},"2011-2012":{"ec":40.0,"districts":3,"enrollment":4779,"instructors":395,"low_income":2144},"2012-2013":{"ec":35.0,"districts":3,"enrollment":4691,"instructors":386,"low_income":2095},"2013-2014":{"ec":41.0,"districts":3,"enrollment":4621,"instructors":373,"low_income":2005},"2014-2015":{"ec":37.0,"districts":3,"enrollment":4572,"instructors":371,"low_income":2066},"2015-2016":{"ec":14.0,"districts":3,"enrollment":4489,"instructors":363,"low_income":2248},"2016-2017":{"ec":40.0,"districts":3,"enrollment":4374,"instructors":358,"low_income":2220},"2017-2018":{"ec":13.0,"districts":3,"enrollment":4436,"instructors":346,"low_income":2244},"2018-2019":{"ec":23.0,"districts":3,"enrollment":4435,"instructors":347,"low_income":2222},"2019-2020":{"ec":31.0,"districts":3,"enrollment":4468,"instructors":347,"low_income":2006},"2020-2021":{"ec":37.0,"districts":3,"enrollment":4330,"instructors":353,"low_income":1905},"2021-2022":{"ec":0,"districts":3,"enrollment":0,"instructors":0,"low_income":0}},"Washington":{"2010-2011":{"ec":217.0,"districts":6,"enrollment":7899,"instructors":1008,"low_income":2707},"2011-2012":{"ec":208.0,"districts":6,"enrollment":7596,"instructors":924,"low_income":2864},"2012-2013":{"ec":202.0,"districts":6,"enrollment":7317,"instructors":909,"low_income":2659},"2013-2014":{"ec":166.0,"districts":6,"enrollment":7184,"instructors":914,"low_income":3025},"2014-2015":{"ec":163.0,"districts":6,"enrollment":7226,"instructors":923,"low_income":3035},"2015-2016":{"ec":165.0,"districts":6,"enrollment":7069,"instructors":910,"low_income":2989},"2016-2017":{"ec":190.0,"districts":6,"enrollment":6881,"instructors":889,"low_income":2964},"2017-2018":{"ec":169.0,"districts":6,"enrollment":6749,"instructors":858,"low_income":3022},"2018-2019":{"ec":178.0,"districts":6,"enrollment":6602,"instructors":856,"low_income":2796},"2019-2020":{"ec":129.0,"districts":6,"enrollment":6617,"instructors":891,"low_income":2713},"2020-2021":{"ec":136.0,"districts":6,"enrollment":6343,"instructors":861,"low_income":2717},"2021-2022":{"ec":0,"districts":6,"enrollment":0,"instructors":0,"low_income":0}},"Chester":{"2010-2011":{"ec":498.0,"districts":9,"enrollment":49207,"instructors":3948,"low_income":7021},"2011-2012":{"ec":366.0,"districts":9,"enrollment":48463,"instructors":3862,"low_income":7394},"2012-2013":{"ec":325.0,"districts":9,"enrollment":48187,"instructors":3845,"low_income":7998},"2013-2014":{"ec":329.0,"districts":9,"enrollment":48235,"instructors":4308,"low_income":8431},"2014-2015":{"ec":354.0,"districts":9,"enrollment":48041,"instructors":4321,"low_income":9204},"2015-2016":{"ec":482.0,"districts":9,"enrollment":47966,"instructors":4360,"low_income":9086},"2016-2017":{"ec":464.0,"districts":9,"enrollment":48454,"instructors":4397,"low_income":9273},"2017-2018":{"ec":574.0,"districts":9,"enrollment":48990,"instructors":4487,"low_income":9674},"2018-2019":{"ec":712.0,"districts":9,"enrollment":49112,"instructors":4541,"low_income":9817},"2019-2020":{"ec":497.0,"districts":9,"enrollment":49486,"instructors":4585,"low_income":9894},"2020-2021":{"ec":599.0,"districts":9,"enrollment":48524,"instructors":4630,"low_income":9631},"2021-2022":{"ec":0,"districts":9,"enrollment":0,"instructors":0,"low_income":0}},"Centre":{"2010-2011":{"ec":173.0,"districts":2,"enrollment":3997,"instructors":848,"low_income":1752},"2011-2012":{"ec":125.0,"districts":2,"enrollment":4022,"instructors":827,"low_income":1620},"2012-2013":{"ec":125.0,"districts":2,"enrollment":4043,"instructors":822,"low_income":1970},"2013-2014":{"ec":119.0,"districts":2,"enrollment":4003,"instructors":814,"low_income":1755},"2014-2015":{"ec":86.0,"districts":2,"enrollment":4014,"instructors":815,"low_income":1660},"2015-2016":{"ec":150.0,"districts":2,"enrollment":4047,"instructors":808,"low_income":1741},"2016-2017":{"ec":140.0,"districts":2,"enrollment":4084,"instructors":817,"low_income":1824},"2017-2018":{"ec":165.0,"districts":2,"enrollment":4113,"instructors":834,"low_income":1971},"2018-2019":{"ec":152.0,"districts":2,"enrollment":4144,"instructors":846,"low_income":2026},"2019-2020":{"ec":102.0,"districts":2,"enrollment":4109,"instructors":852,"low_income":1988},"2020-2021":{"ec":8.0,"districts":2,"enrollment":1528,"instructors":155,"low_income":1718},"2021-2022":{"ec":0,"districts":2,"enrollment":0,"instructors":0,"low_income":0}},"Northampton":{"2010-2011":{"ec":561.0,"districts":8,"enrollment":34987,"instructors":3046,"low_income":11046},"2011-2012":{"ec":280.0,"districts":8,"enrollment":34545,"instructors":2518,"low_income":11821},"2012-2013":{"ec":316.0,"districts":8,"enrollment":34200,"instructors":2486,"low_income":11838},"2013-2014":{"ec":335.0,"districts":8,"enrollment":33885,"instructors":2895,"low_income":12034},"2014-2015":{"ec":318.0,"districts":8,"enrollment":33654,"instructors":2877,"low_income":12792},"2015-2016":{"ec":456.0,"districts":8,"enrollment":33664,"instructors":2924,"low_income":13390},"2016-2017":{"ec":402.0,"districts":8,"enrollment":33670,"instructors":2932,"low_income":13600},"2017-2018":{"ec":510.0,"districts":8,"enrollment":33762,"instructors":2935,"low_income":14149},"2018-2019":{"ec":505.0,"districts":8,"enrollment":33644,"instructors":2955,"low_income":14243},"2019-2020":{"ec":523.0,"districts":8,"enrollment":33035,"instructors":2961,"low_income":13913},"2020-2021":{"ec":447.0,"districts":8,"enrollment":32026,"instructors":2985,"low_income":13428},"2021-2022":{"ec":0,"districts":8,"enrollment":0,"instructors":0,"low_income":0}},"Beaver":{"2010-2011":{"ec":166.0,"districts":2,"enrollment":2159,"instructors":220,"low_income":322},"2011-2012":{"ec":151.0,"districts":2,"enrollment":2141,"instructors":145,"low_income":348},"2012-2013":{"ec":127.0,"districts":2,"enrollment":2169,"instructors":147,"low_income":369},"2013-2014":{"ec":140.0,"districts":2,"enrollment":2148,"instructors":219,"low_income":381},"2014-2015":{"ec":142.0,"districts":2,"enrollment":2120,"instructors":216,"low_income":357},"2015-2016":{"ec":172.0,"districts":2,"enrollment":2242,"instructors":213,"low_income":423},"2016-2017":{"ec":158.0,"districts":2,"enrollment":2210,"instructors":213,"low_income":439},"2017-2018":{"ec":148.0,"districts":2,"enrollment":2140,"instructors":218,"low_income":450},"2018-2019":{"ec":160.0,"districts":2,"enrollment":2154,"instructors":220,"low_income":449},"2019-2020":{"ec":73.0,"districts":2,"enrollment":2218,"instructors":222,"low_income":395},"2020-2021":{"ec":119.0,"districts":2,"enrollment":2143,"instructors":230,"low_income":436},"2021-2022":{"ec":0,"districts":2,"enrollment":0,"instructors":0,"low_income":0}},"Berks":{"2010-2011":{"ec":118.0,"districts":4,"enrollment":31436,"instructors":2366,"low_income":18686},"2011-2012":{"ec":45.0,"districts":4,"enrollment":31172,"instructors":2266,"low_income":18630},"2012-2013":{"ec":73.0,"districts":4,"enrollment":30608,"instructors":2140,"low_income":18349},"2013-2014":{"ec":63.0,"districts":4,"enrollment":30357,"instructors":2076,"low_income":19296},"2014-2015":{"ec":68.0,"districts":4,"enrollment":30103,"instructors":2055,"low_income":20371},"2015-2016":{"ec":82.0,"districts":4,"enrollment":30091,"instructors":2072,"low_income":20882},"2016-2017":{"ec":184.0,"districts":4,"enrollment":30139,"instructors":2098,"low_income":19476},"2017-2018":{"ec":121.0,"districts":4,"enrollment":30199,"instructors":2135,"low_income":20501},"2018-2019":{"ec":248.0,"districts":4,"enrollment":30276,"instructors":2193,"low_income":20751},"2019-2020":{"ec":171.0,"districts":4,"enrollment":30132,"instructors":2243,"low_income":20520},"2020-2021":{"ec":106.0,"districts":4,"enrollment":29711,"instructors":2245,"low_income":20321},"2021-2022":{"ec":0,"districts":4,"enrollment":0,"instructors":0,"low_income":0}},"Somerset":{"2010-2011":{"ec":210.0,"districts":7,"enrollment":6972,"instructors":621,"low_income":2747},"2011-2012":{"ec":191.0,"districts":7,"enrollment":6737,"instructors":595,"low_income":2707},"2012-2013":{"ec":126.0,"districts":7,"enrollment":6680,"instructors":585,"low_income":2868},"2013-2014":{"ec":83.0,"districts":7,"enrollment":6541,"instructors":575,"low_income":2958},"2014-2015":{"ec":120.0,"districts":7,"enrollment":6480,"instructors":577,"low_income":2967},"2015-2016":{"ec":156.0,"districts":7,"enrollment":6339,"instructors":580,"low_income":2999},"2016-2017":{"ec":203.0,"districts":7,"enrollment":6152,"instructors":581,"low_income":2974},"2017-2018":{"ec":163.0,"districts":7,"enrollment":6157,"instructors":567,"low_income":3032},"2018-2019":{"ec":188.0,"districts":7,"enrollment":6089,"instructors":562,"low_income":3013},"2019-2020":{"ec":139.0,"districts":7,"enrollment":6003,"instructors":563,"low_income":2805},"2020-2021":{"ec":158.0,"districts":7,"enrollment":5931,"instructors":580,"low_income":5439},"2021-2022":{"ec":0,"districts":7,"enrollment":0,"instructors":0,"low_income":0}},"Adams":{"2010-2011":{"ec":861.0,"districts":6,"enrollment":15117,"instructors":1767,"low_income":4451},"2011-2012":{"ec":503.0,"districts":6,"enrollment":14682,"instructors":1046,"low_income":4660},"2012-2013":{"ec":467.0,"districts":6,"enrollment":14202,"instructors":1053,"low_income":4772},"2013-2014":{"ec":379.0,"districts":6,"enrollment":14397,"instructors":1660,"low_income":4892},"2014-2015":{"ec":333.0,"districts":6,"enrollment":14229,"instructors":1573,"low_income":4990},"2015-2016":{"ec":835.0,"districts":6,"enrollment":14213,"instructors":1618,"low_income":5342},"2016-2017":{"ec":1014.0,"districts":6,"enrollment":14102,"instructors":1602,"low_income":5482},"2017-2018":{"ec":922.0,"districts":6,"enrollment":14040,"instructors":1571,"low_income":5543},"2018-2019":{"ec":905.0,"districts":6,"enrollment":14009,"instructors":1581,"low_income":5362},"2019-2020":{"ec":782.0,"districts":6,"enrollment":13993,"instructors":1593,"low_income":5290},"2020-2021":{"ec":579.0,"districts":6,"enrollment":12979,"instructors":1587,"low_income":4732},"2021-2022":{"ec":0,"districts":6,"enrollment":0,"instructors":0,"low_income":0}},"Lycoming":{"2010-2011":{"ec":163.0,"districts":2,"enrollment":5780,"instructors":649,"low_income":3068},"2011-2012":{"ec":101.0,"districts":2,"enrollment":5726,"instructors":483,"low_income":3124},"2012-2013":{"ec":126.0,"districts":2,"enrollment":5499,"instructors":448,"low_income":3078},"2013-2014":{"ec":86.0,"districts":2,"enrollment":5395,"instructors":594,"low_income":3091},"2014-2015":{"ec":175.0,"districts":2,"enrollment":5299,"instructors":603,"low_income":3016},"2015-2016":{"ec":241.0,"districts":2,"enrollment":5321,"instructors":567,"low_income":2616},"2016-2017":{"ec":237.0,"districts":2,"enrollment":5248,"instructors":553,"low_income":3428},"2017-2018":{"ec":222.0,"districts":2,"enrollment":5253,"instructors":532,"low_income":3242},"2018-2019":{"ec":219.0,"districts":2,"enrollment":5248,"instructors":530,"low_income":3326},"2019-2020":{"ec":268.0,"districts":2,"enrollment":5246,"instructors":577,"low_income":3195},"2020-2021":{"ec":297.0,"districts":2,"enrollment":5064,"instructors":556,"low_income":0},"2021-2022":{"ec":0,"districts":2,"enrollment":0,"instructors":0,"low_income":0}},"Schuylkill":{"2010-2011":{"ec":178.0,"districts":3,"enrollment":6147,"instructors":668,"low_income":2086},"2011-2012":{"ec":98.0,"districts":3,"enrollment":6004,"instructors":471,"low_income":2128},"2012-2013":{"ec":122.0,"districts":3,"enrollment":5861,"instructors":468,"low_income":2349},"2013-2014":{"ec":105.0,"districts":3,"enrollment":5793,"instructors":584,"low_income":2308},"2014-2015":{"ec":85.0,"districts":3,"enrollment":5613,"instructors":578,"low_income":2348},"2015-2016":{"ec":158.0,"districts":3,"enrollment":5519,"instructors":576,"low_income":2292},"2016-2017":{"ec":167.0,"districts":3,"enrollment":5485,"instructors":566,"low_income":2498},"2017-2018":{"ec":155.0,"districts":3,"enrollment":5415,"instructors":537,"low_income":2314},"2018-2019":{"ec":154.0,"districts":3,"enrollment":5278,"instructors":534,"low_income":2387},"2019-2020":{"ec":122.0,"districts":3,"enrollment":5173,"instructors":542,"low_income":2150},"2020-2021":{"ec":126.0,"districts":3,"enrollment":4997,"instructors":550,"low_income":1990},"2021-2022":{"ec":0,"districts":3,"enrollment":0,"instructors":0,"low_income":0}},"Susquehanna":{"2010-2011":{"ec":85.0,"districts":7,"enrollment":7333,"instructors":708,"low_income":2949},"2011-2012":{"ec":54.0,"districts":7,"enrollment":6993,"instructors":678,"low_income":3094},"2012-2013":{"ec":57.0,"districts":7,"enrollment":7089,"instructors":643,"low_income":3531},"2013-2014":{"ec":60.0,"districts":7,"enrollment":6867,"instructors":625,"low_income":3163},"2014-2015":{"ec":55.0,"districts":7,"enrollment":6790,"instructors":618,"low_income":3169},"2015-2016":{"ec":113.0,"districts":7,"enrollment":6599,"instructors":614,"low_income":2958},"2016-2017":{"ec":91.0,"districts":7,"enrollment":6525,"instructors":606,"low_income":3166},"2017-2018":{"ec":106.0,"districts":7,"enrollment":6406,"instructors":602,"low_income":3187},"2018-2019":{"ec":163.0,"districts":7,"enrollment":6312,"instructors":591,"low_income":3117},"2019-2020":{"ec":103.0,"districts":7,"enrollment":6379,"instructors":591,"low_income":3134},"2020-2021":{"ec":95.0,"districts":7,"enrollment":6063,"instructors":705,"low_income":2495},"2021-2022":{"ec":0,"districts":7,"enrollment":0,"instructors":0,"low_income":0}},"McKean":{"2010-2011":{"ec":190.0,"districts":5,"enrollment":6487,"instructors":641,"low_income":2433},"2011-2012":{"ec":137.0,"districts":5,"enrollment":6323,"instructors":499,"low_income":2595},"2012-2013":{"ec":174.0,"districts":5,"enrollment":6251,"instructors":502,"low_income":2673},"2013-2014":{"ec":134.0,"districts":5,"enrollment":6299,"instructors":599,"low_income":2689},"2014-2015":{"ec":84.0,"districts":5,"enrollment":6158,"instructors":575,"low_income":2858},"2015-2016":{"ec":123.0,"districts":5,"enrollment":6134,"instructors":564,"low_income":3019},"2016-2017":{"ec":142.0,"districts":5,"enrollment":5824,"instructors":547,"low_income":3058},"2017-2018":{"ec":149.0,"districts":5,"enrollment":5848,"instructors":540,"low_income":2988},"2018-2019":{"ec":107.0,"districts":5,"enrollment":5818,"instructors":540,"low_income":3055},"2019-2020":{"ec":119.0,"districts":5,"enrollment":5870,"instructors":537,"low_income":3139},"2020-2021":{"ec":85.0,"districts":5,"enrollment":5671,"instructors":559,"low_income":3218},"2021-2022":{"ec":0,"districts":5,"enrollment":0,"instructors":0,"low_income":0}},"Bucks":{"2010-2011":{"ec":863.0,"districts":8,"enrollment":42721,"instructors":3667,"low_income":7481},"2011-2012":{"ec":549.0,"districts":8,"enrollment":42148,"instructors":3033,"low_income":8207},"2012-2013":{"ec":432.0,"districts":8,"enrollment":41880,"instructors":2999,"low_income":9365},"2013-2014":{"ec":391.0,"districts":8,"enrollment":41681,"instructors":3507,"low_income":9765},"2014-2015":{"ec":291.0,"districts":8,"enrollment":41062,"instructors":3495,"low_income":9960},"2015-2016":{"ec":702.0,"districts":8,"enrollment":40367,"instructors":3492,"low_income":10086},"2016-2017":{"ec":644.0,"districts":8,"enrollment":40105,"instructors":3583,"low_income":10748},"2017-2018":{"ec":774.0,"districts":8,"enrollment":39715,"instructors":3578,"low_income":10404},"2018-2019":{"ec":765.0,"districts":8,"enrollment":39522,"instructors":3538,"low_income":11281},"2019-2020":{"ec":604.0,"districts":8,"enrollment":39412,"instructors":3586,"low_income":11035},"2020-2021":{"ec":746.0,"districts":8,"enrollment":37922,"instructors":3708,"low_income":10663},"2021-2022":{"ec":0,"districts":8,"enrollment":0,"instructors":0,"low_income":0}},"Jefferson":{"2010-2011":{"ec":23.0,"districts":3,"enrollment":3065,"instructors":287,"low_income":1397},"2011-2012":{"ec":11.0,"districts":3,"enrollment":2997,"instructors":279,"low_income":1369},"2012-2013":{"ec":9.0,"districts":3,"enrollment":2976,"instructors":275,"low_income":1364},"2013-2014":{"ec":12.0,"districts":3,"enrollment":2996,"instructors":276,"low_income":1477},"2014-2015":{"ec":18.0,"districts":3,"enrollment":2970,"instructors":273,"low_income":1444},"2015-2016":{"ec":53.0,"districts":3,"enrollment":2902,"instructors":272,"low_income":1447},"2016-2017":{"ec":34.0,"districts":3,"enrollment":2829,"instructors":273,"low_income":1411},"2017-2018":{"ec":44.0,"districts":3,"enrollment":2807,"instructors":270,"low_income":1405},"2018-2019":{"ec":40.0,"districts":3,"enrollment":2798,"instructors":269,"low_income":1125},"2019-2020":{"ec":28.0,"districts":3,"enrollment":2803,"instructors":268,"low_income":1343},"2020-2021":{"ec":55.0,"districts":3,"enrollment":2735,"instructors":272,"low_income":1408},"2021-2022":{"ec":0,"districts":3,"enrollment":0,"instructors":0,"low_income":0}},"Butler":{"2010-2011":{"ec":79.0,"districts":3,"enrollment":10850,"instructors":867,"low_income":1618},"2011-2012":{"ec":38.0,"districts":3,"enrollment":10802,"instructors":813,"low_income":1688},"2012-2013":{"ec":49.0,"districts":3,"enrollment":10775,"instructors":799,"low_income":1917},"2013-2014":{"ec":45.0,"districts":3,"enrollment":10646,"instructors":774,"low_income":2021},"2014-2015":{"ec":24.0,"districts":3,"enrollment":10544,"instructors":777,"low_income":2019},"2015-2016":{"ec":54.0,"districts":3,"enrollment":10543,"instructors":787,"low_income":2198},"2016-2017":{"ec":52.0,"districts":3,"enrollment":10424,"instructors":803,"low_income":2191},"2017-2018":{"ec":64.0,"districts":3,"enrollment":10356,"instructors":801,"low_income":2309},"2018-2019":{"ec":69.0,"districts":3,"enrollment":10422,"instructors":805,"low_income":2026},"2019-2020":{"ec":57.0,"districts":3,"enrollment":10429,"instructors":806,"low_income":2196},"2020-2021":{"ec":69.0,"districts":3,"enrollment":10211,"instructors":804,"low_income":2302},"2021-2022":{"ec":0,"districts":3,"enrollment":0,"instructors":0,"low_income":0}},"Cumberland":{"2010-2011":{"ec":786.0,"districts":8,"enrollment":23036,"instructors":2181,"low_income":4650},"2011-2012":{"ec":452.0,"districts":8,"enrollment":23019,"instructors":1821,"low_income":5104},"2012-2013":{"ec":465.0,"districts":8,"enrollment":23378,"instructors":1828,"low_income":5887},"2013-2014":{"ec":392.0,"districts":8,"enrollment":23773,"instructors":2142,"low_income":6070},"2014-2015":{"ec":288.0,"districts":8,"enrollment":23948,"instructors":2168,"low_income":6468},"2015-2016":{"ec":414.0,"districts":8,"enrollment":24034,"instructors":2175,"low_income":6709},"2016-2017":{"ec":387.0,"districts":8,"enrollment":24535,"instructors":2179,"low_income":7063},"2017-2018":{"ec":411.0,"districts":8,"enrollment":24815,"instructors":2211,"low_income":7250},"2018-2019":{"ec":368.0,"districts":8,"enrollment":25368,"instructors":2235,"low_income":7466},"2019-2020":{"ec":272.0,"districts":8,"enrollment":26066,"instructors":2270,"low_income":8229},"2020-2021":{"ec":325.0,"districts":8,"enrollment":25459,"instructors":2280,"low_income":8216},"2021-2022":{"ec":0,"districts":8,"enrollment":0,"instructors":0,"low_income":0}},"Dauphin":{"2010-2011":{"ec":353.0,"districts":10,"enrollment":32043,"instructors":3563,"low_income":14389},"2011-2012":{"ec":129.0,"districts":10,"enrollment":31833,"instructors":2856,"low_income":11544},"2012-2013":{"ec":148.0,"districts":10,"enrollment":31642,"instructors":2754,"low_income":14437},"2013-2014":{"ec":161.0,"districts":10,"enrollment":31782,"instructors":2734,"low_income":15420},"2014-2015":{"ec":146.0,"districts":10,"enrollment":31572,"instructors":2767,"low_income":16466},"2015-2016":{"ec":170.0,"districts":10,"enrollment":31853,"instructors":2774,"low_income":16035},"2016-2017":{"ec":176.0,"districts":10,"enrollment":31894,"instructors":2800,"low_income":16827},"2017-2018":{"ec":170.0,"districts":10,"enrollment":32615,"instructors":2798,"low_income":17742},"2018-2019":{"ec":267.0,"districts":10,"enrollment":32688,"instructors":2817,"low_income":18260},"2019-2020":{"ec":249.0,"districts":10,"enrollment":33099,"instructors":2816,"low_income":17932},"2020-2021":{"ec":215.0,"districts":10,"enrollment":32191,"instructors":2830,"low_income":16310},"2021-2022":{"ec":0,"districts":10,"enrollment":0,"instructors":0,"low_income":0}},"Clearfield":{"2010-2011":{"ec":142.0,"districts":6,"enrollment":10560,"instructors":990,"low_income":5021},"2011-2012":{"ec":93.0,"districts":6,"enrollment":10326,"instructors":903,"low_income":4923},"2012-2013":{"ec":79.0,"districts":6,"enrollment":10135,"instructors":883,"low_income":4999},"2013-2014":{"ec":98.0,"districts":6,"enrollment":9990,"instructors":920,"low_income":5007},"2014-2015":{"ec":113.0,"districts":6,"enrollment":9705,"instructors":905,"low_income":5054},"2015-2016":{"ec":144.0,"districts":6,"enrollment":9675,"instructors":903,"low_income":5185},"2016-2017":{"ec":190.0,"districts":6,"enrollment":9521,"instructors":939,"low_income":5070},"2017-2018":{"ec":177.0,"districts":6,"enrollment":9394,"instructors":925,"low_income":4927},"2018-2019":{"ec":164.0,"districts":6,"enrollment":9275,"instructors":924,"low_income":4769},"2019-2020":{"ec":156.0,"districts":6,"enrollment":9193,"instructors":919,"low_income":4776},"2020-2021":{"ec":49.0,"districts":6,"enrollment":8947,"instructors":812,"low_income":4487},"2021-2022":{"ec":104.0,"districts":6,"enrollment":40,"instructors":106,"low_income":0}},"Union":{"2010-2011":{"ec":116.0,"districts":1,"enrollment":267,"instructors":190,"low_income":15},"2011-2012":{"ec":83.0,"districts":1,"enrollment":277,"instructors":0,"low_income":12},"2012-2013":{"ec":78.0,"districts":1,"enrollment":225,"instructors":0,"low_income":8},"2013-2014":{"ec":69.0,"districts":1,"enrollment":290,"instructors":141,"low_income":0},"2014-2015":{"ec":75.0,"districts":1,"enrollment":271,"instructors":136,"low_income":97},"2015-2016":{"ec":100.0,"districts":1,"enrollment":252,"instructors":129,"low_income":45},"2016-2017":{"ec":127.0,"districts":1,"enrollment":233,"instructors":127,"low_income":24},"2017-2018":{"ec":157.0,"districts":1,"enrollment":360,"instructors":129,"low_income":20},"2018-2019":{"ec":215.0,"districts":1,"enrollment":293,"instructors":131,"low_income":0},"2019-2020":{"ec":180.0,"districts":1,"enrollment":445,"instructors":136,"low_income":0},"2020-2021":{"ec":149.0,"districts":1,"enrollment":396,"instructors":137,"low_income":0},"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"Franklin":{"2010-2011":{"ec":561.0,"districts":6,"enrollment":18909,"instructors":1467,"low_income":6752},"2011-2012":{"ec":373.0,"districts":6,"enrollment":19124,"instructors":1356,"low_income":6828},"2012-2013":{"ec":461.0,"districts":6,"enrollment":19387,"instructors":1364,"low_income":7101},"2013-2014":{"ec":439.0,"districts":6,"enrollment":19410,"instructors":1464,"low_income":8361},"2014-2015":{"ec":342.0,"districts":6,"enrollment":19441,"instructors":1446,"low_income":9254},"2015-2016":{"ec":292.0,"districts":6,"enrollment":19895,"instructors":1474,"low_income":9397},"2016-2017":{"ec":183.0,"districts":6,"enrollment":19869,"instructors":1458,"low_income":9257},"2017-2018":{"ec":167.0,"districts":6,"enrollment":19651,"instructors":1457,"low_income":9266},"2018-2019":{"ec":182.0,"districts":6,"enrollment":19720,"instructors":1448,"low_income":9467},"2019-2020":{"ec":135.0,"districts":6,"enrollment":19812,"instructors":1464,"low_income":9805},"2020-2021":{"ec":151.0,"districts":6,"enrollment":19025,"instructors":1392,"low_income":9771},"2021-2022":{"ec":0,"districts":6,"enrollment":0,"instructors":0,"low_income":0}},"Delaware":{"2010-2011":{"ec":200.0,"districts":11,"enrollment":48258,"instructors":4319,"low_income":18357},"2011-2012":{"ec":183.0,"districts":11,"enrollment":48248,"instructors":3883,"low_income":18804},"2012-2013":{"ec":114.0,"districts":11,"enrollment":48093,"instructors":3864,"low_income":21124},"2013-2014":{"ec":128.0,"districts":11,"enrollment":48272,"instructors":4171,"low_income":21631},"2014-2015":{"ec":104.0,"districts":11,"enrollment":47979,"instructors":4217,"low_income":21950},"2015-2016":{"ec":130.0,"districts":11,"enrollment":47977,"instructors":4244,"low_income":23898},"2016-2017":{"ec":239.0,"districts":11,"enrollment":49223,"instructors":4266,"low_income":24487},"2017-2018":{"ec":314.0,"districts":11,"enrollment":50040,"instructors":4309,"low_income":26621},"2018-2019":{"ec":422.0,"districts":11,"enrollment":50787,"instructors":4303,"low_income":25989},"2019-2020":{"ec":401.0,"districts":11,"enrollment":51257,"instructors":4381,"low_income":24753},"2020-2021":{"ec":443.0,"districts":11,"enrollment":50360,"instructors":4418,"low_income":25198},"2021-2022":{"ec":0,"districts":11,"enrollment":0,"instructors":0,"low_income":0}},"Columbia":{"2010-2011":{"ec":4.0,"districts":1,"enrollment":633,"instructors":57,"low_income":244},"2011-2012":{"ec":0,"districts":1,"enrollment":631,"instructors":56,"low_income":251},"2012-2013":{"ec":8.0,"districts":1,"enrollment":625,"instructors":56,"low_income":247},"2013-2014":{"ec":1.0,"districts":1,"enrollment":624,"instructors":56,"low_income":263},"2014-2015":{"ec":3.0,"districts":1,"enrollment":627,"instructors":57,"low_income":257},"2015-2016":{"ec":1.0,"districts":1,"enrollment":642,"instructors":56,"low_income":319},"2016-2017":{"ec":2.0,"districts":1,"enrollment":630,"instructors":58,"low_income":339},"2017-2018":{"ec":7.0,"districts":1,"enrollment":645,"instructors":57,"low_income":339},"2018-2019":{"ec":2.0,"districts":1,"enrollment":637,"instructors":61,"low_income":320},"2019-2020":{"ec":5.0,"districts":1,"enrollment":644,"instructors":61,"low_income":322},"2020-2021":{"ec":12.0,"districts":1,"enrollment":614,"instructors":59,"low_income":281},"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"Crawford":{"2010-2011":{"ec":16.0,"districts":3,"enrollment":9887,"instructors":893,"low_income":4220},"2011-2012":{"ec":16.0,"districts":3,"enrollment":9653,"instructors":810,"low_income":4404},"2012-2013":{"ec":9.0,"districts":3,"enrollment":9426,"instructors":773,"low_income":4327},"2013-2014":{"ec":14.0,"districts":3,"enrollment":9146,"instructors":764,"low_income":4466},"2014-2015":{"ec":53.0,"districts":3,"enrollment":8945,"instructors":758,"low_income":4232},"2015-2016":{"ec":273.0,"districts":3,"enrollment":8739,"instructors":755,"low_income":4276},"2016-2017":{"ec":202.0,"districts":3,"enrollment":8618,"instructors":715,"low_income":4111},"2017-2018":{"ec":179.0,"districts":3,"enrollment":8461,"instructors":710,"low_income":4279},"2018-2019":{"ec":138.0,"districts":3,"enrollment":8197,"instructors":705,"low_income":4166},"2019-2020":{"ec":161.0,"districts":3,"enrollment":7979,"instructors":695,"low_income":3940},"2020-2021":{"ec":90.0,"districts":3,"enrollment":7614,"instructors":681,"low_income":3959},"2021-2022":{"ec":0,"districts":3,"enrollment":0,"instructors":0,"low_income":0}},"Lebanon":{"2010-2011":{"ec":58.0,"districts":4,"enrollment":13042,"instructors":1010,"low_income":5057},"2011-2012":{"ec":21.0,"districts":4,"enrollment":13061,"instructors":973,"low_income":5790},"2012-2013":{"ec":67.0,"districts":4,"enrollment":13356,"instructors":987,"low_income":6016},"2013-2014":{"ec":38.0,"districts":4,"enrollment":13336,"instructors":993,"low_income":5971},"2014-2015":{"ec":39.0,"districts":4,"enrollment":13459,"instructors":993,"low_income":6460},"2015-2016":{"ec":78.0,"districts":4,"enrollment":13695,"instructors":1004,"low_income":6060},"2016-2017":{"ec":71.0,"districts":4,"enrollment":13878,"instructors":1017,"low_income":3295},"2017-2018":{"ec":62.0,"districts":4,"enrollment":14110,"instructors":1030,"low_income":6376},"2018-2019":{"ec":55.0,"districts":4,"enrollment":14416,"instructors":1027,"low_income":6698},"2019-2020":{"ec":56.0,"districts":4,"enrollment":14402,"instructors":1031,"low_income":6742},"2020-2021":{"ec":77.0,"districts":4,"enrollment":13902,"instructors":1036,"low_income":6408},"2021-2022":{"ec":0,"districts":4,"enrollment":0,"instructors":0,"low_income":0}},"Erie":{"2010-2011":{"ec":517.0,"districts":8,"enrollment":22239,"instructors":2251,"low_income":13182},"2011-2012":{"ec":317.0,"districts":8,"enrollment":21927,"instructors":1886,"low_income":10767},"2012-2013":{"ec":389.0,"districts":8,"enrollment":21568,"instructors":1694,"low_income":13509},"2013-2014":{"ec":345.0,"districts":8,"enrollment":21285,"instructors":1952,"low_income":13989},"2014-2015":{"ec":528.0,"districts":8,"enrollment":21104,"instructors":1940,"low_income":13991},"2015-2016":{"ec":561.0,"districts":8,"enrollment":20840,"instructors":1947,"low_income":13964},"2016-2017":{"ec":512.0,"districts":8,"enrollment":20441,"instructors":1895,"low_income":13230},"2017-2018":{"ec":459.0,"districts":8,"enrollment":19998,"instructors":1823,"low_income":12665},"2018-2019":{"ec":301.0,"districts":8,"enrollment":19771,"instructors":1840,"low_income":12900},"2019-2020":{"ec":347.0,"districts":8,"enrollment":19391,"instructors":1890,"low_income":12551},"2020-2021":{"ec":291.0,"districts":8,"enrollment":18956,"instructors":1945,"low_income":11848},"2021-2022":{"ec":0,"districts":8,"enrollment":0,"instructors":0,"low_income":0}},"Potter":{"2010-2011":{"ec":38.0,"districts":4,"enrollment":2375,"instructors":233,"low_income":1115},"2011-2012":{"ec":31.0,"districts":4,"enrollment":2295,"instructors":225,"low_income":1039},"2012-2013":{"ec":37.0,"districts":4,"enrollment":2290,"instructors":228,"low_income":1077},"2013-2014":{"ec":52.0,"districts":4,"enrollment":2227,"instructors":221,"low_income":1101},"2014-2015":{"ec":30.0,"districts":4,"enrollment":2151,"instructors":216,"low_income":1150},"2015-2016":{"ec":53.0,"districts":4,"enrollment":2133,"instructors":204,"low_income":1110},"2016-2017":{"ec":58.0,"districts":4,"enrollment":2121,"instructors":206,"low_income":1131},"2017-2018":{"ec":41.0,"districts":4,"enrollment":2079,"instructors":205,"low_income":1211},"2018-2019":{"ec":40.0,"districts":4,"enrollment":2040,"instructors":205,"low_income":1148},"2019-2020":{"ec":50.0,"districts":4,"enrollment":2030,"instructors":209,"low_income":1114},"2020-2021":{"ec":50.0,"districts":4,"enrollment":1889,"instructors":206,"low_income":1000},"2021-2022":{"ec":0,"districts":4,"enrollment":0,"instructors":0,"low_income":0}},"York":{"2010-2011":{"ec":303.0,"districts":12,"enrollment":47059,"instructors":4034,"low_income":15650},"2011-2012":{"ec":231.0,"districts":12,"enrollment":46392,"instructors":3820,"low_income":16139},"2012-2013":{"ec":290.0,"districts":12,"enrollment":45836,"instructors":3688,"low_income":16476},"2013-2014":{"ec":209.0,"districts":12,"enrollment":46034,"instructors":3590,"low_income":17033},"2014-2015":{"ec":320.0,"districts":12,"enrollment":46388,"instructors":3486,"low_income":17398},"2015-2016":{"ec":338.0,"districts":12,"enrollment":46969,"instructors":3612,"low_income":19825},"2016-2017":{"ec":240.0,"districts":12,"enrollment":46565,"instructors":3654,"low_income":18096},"2017-2018":{"ec":179.0,"districts":12,"enrollment":46600,"instructors":3676,"low_income":18961},"2018-2019":{"ec":141.0,"districts":12,"enrollment":47391,"instructors":3794,"low_income":20149},"2019-2020":{"ec":104.0,"districts":11,"enrollment":41600,"instructors":3382,"low_income":17053},"2020-2021":{"ec":174.0,"districts":11,"enrollment":40152,"instructors":3372,"low_income":14379},"2021-2022":{"ec":0,"districts":11,"enrollment":0,"instructors":0,"low_income":0}},"york":{"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"#N/A":{"2010-2011":{"ec":91.0,"districts":7,"enrollment":645,"instructors":75,"low_income":645},"2011-2012":{"ec":64.0,"districts":7,"enrollment":696,"instructors":0,"low_income":696},"2012-2013":{"ec":83.0,"districts":7,"enrollment":735,"instructors":79,"low_income":407},"2013-2014":{"ec":99.0,"districts":7,"enrollment":770,"instructors":81,"low_income":649},"2014-2015":{"ec":96.0,"districts":7,"enrollment":787,"instructors":86,"low_income":758},"2015-2016":{"ec":87.0,"districts":7,"enrollment":879,"instructors":71,"low_income":689},"2016-2017":{"ec":139.0,"districts":7,"enrollment":890,"instructors":80,"low_income":781},"2017-2018":{"ec":143.0,"districts":7,"enrollment":983,"instructors":80,"low_income":643},"2018-2019":{"ec":186.0,"districts":7,"enrollment":908,"instructors":92,"low_income":628},"2019-2020":{"ec":124.0,"districts":7,"enrollment":888,"instructors":89,"low_income":789},"2020-2021":{"ec":108.0,"districts":8,"enrollment":867,"instructors":0,"low_income":744},"2021-2022":{"ec":0,"districts":5,"enrollment":0,"instructors":0,"low_income":0}},"Pike":{"2010-2011":{"ec":79.0,"districts":2,"enrollment":8913,"instructors":779,"low_income":3261},"2011-2012":{"ec":37.0,"districts":2,"enrollment":8621,"instructors":758,"low_income":3253},"2012-2013":{"ec":55.0,"districts":2,"enrollment":8422,"instructors":744,"low_income":3060},"2013-2014":{"ec":66.0,"districts":2,"enrollment":8169,"instructors":730,"low_income":3172},"2014-2015":{"ec":59.0,"districts":2,"enrollment":7905,"instructors":727,"low_income":3348},"2015-2016":{"ec":115.0,"districts":2,"enrollment":7749,"instructors":724,"low_income":3100},"2016-2017":{"ec":105.0,"districts":2,"enrollment":7625,"instructors":726,"low_income":3114},"2017-2018":{"ec":119.0,"districts":2,"enrollment":7524,"instructors":722,"low_income":3253},"2018-2019":{"ec":146.0,"districts":2,"enrollment":7360,"instructors":720,"low_income":3366},"2019-2020":{"ec":145.0,"districts":2,"enrollment":7402,"instructors":718,"low_income":3216},"2020-2021":{"ec":165.0,"districts":2,"enrollment":7169,"instructors":711,"low_income":3358},"2021-2022":{"ec":0,"districts":2,"enrollment":0,"instructors":0,"low_income":0}},"Westmoreland":{"2010-2011":{"ec":57.0,"districts":6,"enrollment":15714,"instructors":1335,"low_income":3613},"2011-2012":{"ec":43.0,"districts":6,"enrollment":13958,"instructors":998,"low_income":3655},"2012-2013":{"ec":89.0,"districts":6,"enrollment":13898,"instructors":1003,"low_income":3716},"2013-2014":{"ec":32.0,"districts":6,"enrollment":13937,"instructors":1318,"low_income":4004},"2014-2015":{"ec":56.0,"districts":6,"enrollment":13944,"instructors":1293,"low_income":3910},"2015-2016":{"ec":153.0,"districts":6,"enrollment":13835,"instructors":1278,"low_income":4222},"2016-2017":{"ec":245.0,"districts":6,"enrollment":13594,"instructors":1186,"low_income":4467},"2017-2018":{"ec":244.0,"districts":6,"enrollment":13401,"instructors":1168,"low_income":4464},"2018-2019":{"ec":201.0,"districts":6,"enrollment":13288,"instructors":1135,"low_income":4470},"2019-2020":{"ec":210.0,"districts":6,"enrollment":13076,"instructors":1144,"low_income":4107},"2020-2021":{"ec":167.0,"districts":6,"enrollment":12627,"instructors":1189,"low_income":3919},"2021-2022":{"ec":0,"districts":5,"enrollment":0,"instructors":0,"low_income":0}},"Monroe":{"2010-2011":{"ec":195.0,"districts":5,"enrollment":30896,"instructors":2860,"low_income":13288},"2011-2012":{"ec":110.0,"districts":5,"enrollment":29885,"instructors":2724,"low_income":13472},"2012-2013":{"ec":94.0,"districts":5,"enrollment":28981,"instructors":2459,"low_income":16028},"2013-2014":{"ec":108.0,"districts":5,"enrollment":27913,"instructors":2414,"low_income":13984},"2014-2015":{"ec":102.0,"districts":5,"enrollment":27168,"instructors":2346,"low_income":13583},"2015-2016":{"ec":142.0,"districts":5,"enrollment":26844,"instructors":2363,"low_income":13675},"2016-2017":{"ec":104.0,"districts":5,"enrollment":26504,"instructors":2333,"low_income":13523},"2017-2018":{"ec":132.0,"districts":5,"enrollment":26268,"instructors":2246,"low_income":13443},"2018-2019":{"ec":328.0,"districts":5,"enrollment":26116,"instructors":2310,"low_income":13281},"2019-2020":{"ec":215.0,"districts":5,"enrollment":25938,"instructors":2347,"low_income":12786},"2020-2021":{"ec":210.0,"districts":5,"enrollment":24118,"instructors":2274,"low_income":11039},"2021-2022":{"ec":0,"districts":5,"enrollment":0,"instructors":0,"low_income":0}},"Bedford":{"2010-2011":{"ec":8.0,"districts":2,"enrollment":2532,"instructors":219,"low_income":1288},"2011-2012":{"ec":7.0,"districts":2,"enrollment":2520,"instructors":203,"low_income":1235},"2012-2013":{"ec":7.0,"districts":2,"enrollment":2431,"instructors":206,"low_income":1302},"2013-2014":{"ec":5.0,"districts":2,"enrollment":2414,"instructors":203,"low_income":1407},"2014-2015":{"ec":14.0,"districts":2,"enrollment":2378,"instructors":201,"low_income":1438},"2015-2016":{"ec":23.0,"districts":2,"enrollment":2346,"instructors":198,"low_income":1438},"2016-2017":{"ec":34.0,"districts":2,"enrollment":2238,"instructors":193,"low_income":1332},"2017-2018":{"ec":23.0,"districts":2,"enrollment":2187,"instructors":185,"low_income":1314},"2018-2019":{"ec":27.0,"districts":2,"enrollment":2148,"instructors":185,"low_income":1330},"2019-2020":{"ec":20.0,"districts":2,"enrollment":2163,"instructors":183,"low_income":1312},"2020-2021":{"ec":10.0,"districts":2,"enrollment":2160,"instructors":183,"low_income":1268},"2021-2022":{"ec":0,"districts":2,"enrollment":0,"instructors":0,"low_income":0}},"Forest":{"2010-2011":{"ec":0,"districts":1,"enrollment":558,"instructors":60,"low_income":270},"2011-2012":{"ec":1.0,"districts":1,"enrollment":535,"instructors":61,"low_income":277},"2012-2013":{"ec":1.0,"districts":1,"enrollment":525,"instructors":58,"low_income":288},"2013-2014":{"ec":1.0,"districts":1,"enrollment":515,"instructors":57,"low_income":305},"2014-2015":{"ec":8.0,"districts":1,"enrollment":461,"instructors":56,"low_income":276},"2015-2016":{"ec":19.0,"districts":1,"enrollment":451,"instructors":53,"low_income":260},"2016-2017":{"ec":28.0,"districts":1,"enrollment":473,"instructors":52,"low_income":279},"2017-2018":{"ec":23.0,"districts":1,"enrollment":443,"instructors":51,"low_income":247},"2018-2019":{"ec":26.0,"districts":1,"enrollment":419,"instructors":51,"low_income":236},"2019-2020":{"ec":18.0,"districts":1,"enrollment":426,"instructors":52,"low_income":233},"2020-2021":{"ec":19.0,"districts":1,"enrollment":412,"instructors":52,"low_income":215},"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"Venango":{"2010-2011":{"ec":18.0,"districts":2,"enrollment":4145,"instructors":377,"low_income":2118},"2011-2012":{"ec":17.0,"districts":2,"enrollment":4111,"instructors":351,"low_income":2066},"2012-2013":{"ec":15.0,"districts":2,"enrollment":4045,"instructors":346,"low_income":2179},"2013-2014":{"ec":6.0,"districts":2,"enrollment":4050,"instructors":342,"low_income":2254},"2014-2015":{"ec":15.0,"districts":2,"enrollment":4026,"instructors":325,"low_income":2278},"2015-2016":{"ec":61.0,"districts":2,"enrollment":3905,"instructors":333,"low_income":2238},"2016-2017":{"ec":36.0,"districts":2,"enrollment":3960,"instructors":331,"low_income":2343},"2017-2018":{"ec":51.0,"districts":2,"enrollment":3981,"instructors":331,"low_income":2390},"2018-2019":{"ec":49.0,"districts":2,"enrollment":3872,"instructors":331,"low_income":2176},"2019-2020":{"ec":49.0,"districts":2,"enrollment":3850,"instructors":332,"low_income":2257},"2020-2021":{"ec":43.0,"districts":2,"enrollment":3674,"instructors":329,"low_income":2205},"2021-2022":{"ec":0,"districts":2,"enrollment":0,"instructors":0,"low_income":0}},"Luzerne":{"2010-2011":{"ec":122.0,"districts":3,"enrollment":15081,"instructors":1100,"low_income":8678},"2011-2012":{"ec":23.0,"districts":3,"enrollment":15028,"instructors":1028,"low_income":8966},"2012-2013":{"ec":68.0,"districts":3,"enrollment":15058,"instructors":1008,"low_income":8963},"2013-2014":{"ec":54.0,"districts":3,"enrollment":15123,"instructors":1038,"low_income":9494},"2014-2015":{"ec":71.0,"districts":3,"enrollment":15465,"instructors":1056,"low_income":9601},"2015-2016":{"ec":77.0,"districts":3,"enrollment":15577,"instructors":1087,"low_income":9156},"2016-2017":{"ec":75.0,"districts":3,"enrollment":15776,"instructors":1070,"low_income":8654},"2017-2018":{"ec":121.0,"districts":3,"enrollment":16028,"instructors":1094,"low_income":9100},"2018-2019":{"ec":111.0,"districts":3,"enrollment":15882,"instructors":1101,"low_income":9015},"2019-2020":{"ec":90.0,"districts":3,"enrollment":16033,"instructors":1102,"low_income":7831},"2020-2021":{"ec":59.0,"districts":3,"enrollment":15807,"instructors":1077,"low_income":7998},"2021-2022":{"ec":0,"districts":3,"enrollment":0,"instructors":0,"low_income":0}},"Perry":{"2010-2011":{"ec":32.0,"districts":4,"enrollment":6542,"instructors":583,"low_income":2169},"2011-2012":{"ec":10.0,"districts":4,"enrollment":6354,"instructors":559,"low_income":2187},"2012-2013":{"ec":20.0,"districts":4,"enrollment":6250,"instructors":545,"low_income":2301},"2013-2014":{"ec":11.0,"districts":4,"enrollment":6104,"instructors":551,"low_income":2399},"2014-2015":{"ec":11.0,"districts":4,"enrollment":6071,"instructors":551,"low_income":2445},"2015-2016":{"ec":21.0,"districts":4,"enrollment":6072,"instructors":553,"low_income":2421},"2016-2017":{"ec":23.0,"districts":4,"enrollment":6139,"instructors":525,"low_income":2506},"2017-2018":{"ec":44.0,"districts":4,"enrollment":6027,"instructors":528,"low_income":2602},"2018-2019":{"ec":36.0,"districts":4,"enrollment":5972,"instructors":531,"low_income":2448},"2019-2020":{"ec":33.0,"districts":4,"enrollment":5963,"instructors":536,"low_income":2407},"2020-2021":{"ec":57.0,"districts":4,"enrollment":5648,"instructors":532,"low_income":2293},"2021-2022":{"ec":0,"districts":4,"enrollment":0,"instructors":0,"low_income":0}},"Mercer":{"2010-2011":{"ec":369.0,"districts":3,"enrollment":4312,"instructors":587,"low_income":1485},"2011-2012":{"ec":211.0,"districts":3,"enrollment":4241,"instructors":308,"low_income":1506},"2012-2013":{"ec":264.0,"districts":3,"enrollment":4147,"instructors":316,"low_income":1629},"2013-2014":{"ec":243.0,"districts":3,"enrollment":3960,"instructors":536,"low_income":1549},"2014-2015":{"ec":297.0,"districts":3,"enrollment":3870,"instructors":525,"low_income":1574},"2015-2016":{"ec":450.0,"districts":3,"enrollment":3644,"instructors":502,"low_income":1495},"2016-2017":{"ec":351.0,"districts":3,"enrollment":3561,"instructors":478,"low_income":1588},"2017-2018":{"ec":394.0,"districts":3,"enrollment":3385,"instructors":470,"low_income":1376},"2018-2019":{"ec":341.0,"districts":3,"enrollment":3226,"instructors":459,"low_income":1418},"2019-2020":{"ec":261.0,"districts":3,"enrollment":3171,"instructors":454,"low_income":1418},"2020-2021":{"ec":272.0,"districts":3,"enrollment":2954,"instructors":484,"low_income":1208},"2021-2022":{"ec":0,"districts":3,"enrollment":0,"instructors":0,"low_income":0}},"Lancaster":{"2010-2011":{"ec":699.0,"districts":8,"enrollment":34760,"instructors":3425,"low_income":14173},"2011-2012":{"ec":424.0,"districts":8,"enrollment":34148,"instructors":2715,"low_income":14251},"2012-2013":{"ec":512.0,"districts":8,"enrollment":34319,"instructors":2710,"low_income":15494},"2013-2014":{"ec":412.0,"districts":8,"enrollment":34064,"instructors":3153,"low_income":15841},"2014-2015":{"ec":478.0,"districts":8,"enrollment":33768,"instructors":3119,"low_income":16975},"2015-2016":{"ec":1063.0,"districts":8,"enrollment":33860,"instructors":3180,"low_income":17546},"2016-2017":{"ec":1410.0,"districts":8,"enrollment":34378,"instructors":3296,"low_income":18114},"2017-2018":{"ec":1676.0,"districts":8,"enrollment":34211,"instructors":3333,"low_income":17743},"2018-2019":{"ec":1740.0,"districts":8,"enrollment":34085,"instructors":2792,"low_income":18277},"2019-2020":{"ec":1561.0,"districts":8,"enrollment":34063,"instructors":2837,"low_income":17848},"2020-2021":{"ec":1739.0,"districts":8,"enrollment":32782,"instructors":2829,"low_income":17176},"2021-2022":{"ec":0,"districts":7,"enrollment":0,"instructors":0,"low_income":0}},"Huntingdon":{"2010-2011":{"ec":7.0,"districts":1,"enrollment":2082,"instructors":196,"low_income":936},"2011-2012":{"ec":3.0,"districts":1,"enrollment":2063,"instructors":184,"low_income":951},"2012-2013":{"ec":2.0,"districts":1,"enrollment":2018,"instructors":174,"low_income":952},"2013-2014":{"ec":10.0,"districts":1,"enrollment":1970,"instructors":173,"low_income":948},"2014-2015":{"ec":4.0,"districts":1,"enrollment":1967,"instructors":172,"low_income":963},"2015-2016":{"ec":4.0,"districts":1,"enrollment":1944,"instructors":178,"low_income":978},"2016-2017":{"ec":4.0,"districts":1,"enrollment":1923,"instructors":178,"low_income":948},"2017-2018":{"ec":4.0,"districts":1,"enrollment":1860,"instructors":174,"low_income":892},"2018-2019":{"ec":6.0,"districts":1,"enrollment":1833,"instructors":174,"low_income":880},"2019-2020":{"ec":5.0,"districts":1,"enrollment":1824,"instructors":174,"low_income":874},"2020-2021":{"ec":8.0,"districts":1,"enrollment":1689,"instructors":169,"low_income":800},"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"Elk":{"2010-2011":{"ec":51.0,"districts":3,"enrollment":3898,"instructors":337,"low_income":1456},"2011-2012":{"ec":43.0,"districts":3,"enrollment":3817,"instructors":333,"low_income":1372},"2012-2013":{"ec":50.0,"districts":3,"enrollment":3747,"instructors":327,"low_income":1393},"2013-2014":{"ec":22.0,"districts":3,"enrollment":3642,"instructors":321,"low_income":1415},"2014-2015":{"ec":36.0,"districts":3,"enrollment":3590,"instructors":318,"low_income":1429},"2015-2016":{"ec":36.0,"districts":3,"enrollment":3520,"instructors":315,"low_income":1331},"2016-2017":{"ec":49.0,"districts":3,"enrollment":3424,"instructors":308,"low_income":1298},"2017-2018":{"ec":48.0,"districts":3,"enrollment":3414,"instructors":299,"low_income":1408},"2018-2019":{"ec":56.0,"districts":3,"enrollment":3370,"instructors":288,"low_income":1409},"2019-2020":{"ec":45.0,"districts":3,"enrollment":3359,"instructors":289,"low_income":1505},"2020-2021":{"ec":99.0,"districts":3,"enrollment":3240,"instructors":296,"low_income":1562},"2021-2022":{"ec":0,"districts":3,"enrollment":0,"instructors":0,"low_income":0}},"Juniata":{"2010-2011":{"ec":7.0,"districts":1,"enrollment":3092,"instructors":247,"low_income":1247},"2011-2012":{"ec":1.0,"districts":1,"enrollment":3017,"instructors":223,"low_income":1217},"2012-2013":{"ec":2.0,"districts":1,"enrollment":2963,"instructors":218,"low_income":1147},"2013-2014":{"ec":3.0,"districts":1,"enrollment":2965,"instructors":221,"low_income":1247},"2014-2015":{"ec":11.0,"districts":1,"enrollment":2930,"instructors":223,"low_income":1226},"2015-2016":{"ec":13.0,"districts":1,"enrollment":2869,"instructors":222,"low_income":1240},"2016-2017":{"ec":8.0,"districts":1,"enrollment":2855,"instructors":223,"low_income":1291},"2017-2018":{"ec":13.0,"districts":1,"enrollment":2807,"instructors":225,"low_income":1098},"2018-2019":{"ec":31.0,"districts":1,"enrollment":2720,"instructors":227,"low_income":1328},"2019-2020":{"ec":6.0,"districts":1,"enrollment":2640,"instructors":214,"low_income":1280},"2020-2021":{"ec":25.0,"districts":1,"enrollment":2400,"instructors":211,"low_income":1168},"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"Clinton":{"2010-2011":{"ec":63.0,"districts":1,"enrollment":4394,"instructors":371,"low_income":1996},"2011-2012":{"ec":43.0,"districts":1,"enrollment":4460,"instructors":361,"low_income":2103},"2012-2013":{"ec":53.0,"districts":1,"enrollment":4312,"instructors":345,"low_income":2041},"2013-2014":{"ec":39.0,"districts":1,"enrollment":4223,"instructors":348,"low_income":2125},"2014-2015":{"ec":29.0,"districts":1,"enrollment":4037,"instructors":350,"low_income":1898},"2015-2016":{"ec":28.0,"districts":1,"enrollment":4027,"instructors":356,"low_income":2072},"2016-2017":{"ec":11.0,"districts":1,"enrollment":4083,"instructors":374,"low_income":1846},"2017-2018":{"ec":6.0,"districts":1,"enrollment":4004,"instructors":363,"low_income":1929},"2018-2019":{"ec":4.0,"districts":1,"enrollment":3846,"instructors":319,"low_income":2040},"2019-2020":{"ec":6.0,"districts":1,"enrollment":3752,"instructors":313,"low_income":2094},"2020-2021":{"ec":11.0,"districts":1,"enrollment":3705,"instructors":313,"low_income":2098},"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"Lawrence":{"2010-2011":{"ec":1.0,"districts":1,"enrollment":357,"instructors":41,"low_income":180},"2011-2012":{"ec":1.0,"districts":1,"enrollment":395,"instructors":37,"low_income":204},"2012-2013":{"ec":1.0,"districts":1,"enrollment":364,"instructors":34,"low_income":189},"2013-2014":{"ec":4.0,"districts":1,"enrollment":366,"instructors":32,"low_income":220},"2014-2015":{"ec":6.0,"districts":1,"enrollment":366,"instructors":36,"low_income":227},"2015-2016":{"ec":3.0,"districts":1,"enrollment":435,"instructors":38,"low_income":291},"2016-2017":{"ec":3.0,"districts":1,"enrollment":398,"instructors":41,"low_income":259},"2017-2018":{"ec":1.0,"districts":1,"enrollment":408,"instructors":41,"low_income":280},"2018-2019":{"ec":1.0,"districts":1,"enrollment":367,"instructors":38,"low_income":197},"2019-2020":{"ec":5.0,"districts":1,"enrollment":368,"instructors":39,"low_income":212},"2020-2021":{"ec":6.0,"districts":1,"enrollment":381,"instructors":38,"low_income":206},"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"Northumberland":{"2010-2011":{"ec":40.0,"districts":4,"enrollment":7726,"instructors":649,"low_income":3733},"2011-2012":{"ec":27.0,"districts":4,"enrollment":7481,"instructors":611,"low_income":3919},"2012-2013":{"ec":7.0,"districts":4,"enrollment":7376,"instructors":589,"low_income":3892},"2013-2014":{"ec":43.0,"districts":4,"enrollment":7492,"instructors":623,"low_income":4079},"2014-2015":{"ec":16.0,"districts":4,"enrollment":7339,"instructors":594,"low_income":4304},"2015-2016":{"ec":37.0,"districts":4,"enrollment":7206,"instructors":606,"low_income":4426},"2016-2017":{"ec":37.0,"districts":4,"enrollment":7009,"instructors":603,"low_income":4202},"2017-2018":{"ec":38.0,"districts":4,"enrollment":6920,"instructors":597,"low_income":4169},"2018-2019":{"ec":54.0,"districts":4,"enrollment":6864,"instructors":586,"low_income":4095},"2019-2020":{"ec":34.0,"districts":4,"enrollment":6892,"instructors":582,"low_income":4007},"2020-2021":{"ec":29.0,"districts":4,"enrollment":6659,"instructors":576,"low_income":3749},"2021-2022":{"ec":0,"districts":4,"enrollment":0,"instructors":0,"low_income":0}},"Philadelphia":{"2010-2011":{"ec":1422.0,"districts":8,"enrollment":170588,"instructors":13412,"low_income":135954},"2011-2012":{"ec":1136.0,"districts":8,"enrollment":159989,"instructors":11580,"low_income":124297},"2012-2013":{"ec":402.0,"districts":8,"enrollment":149857,"instructors":11211,"low_income":124367},"2013-2014":{"ec":697.0,"districts":8,"enrollment":144581,"instructors":9767,"low_income":121602},"2014-2015":{"ec":697.0,"districts":8,"enrollment":141547,"instructors":9766,"low_income":122625},"2015-2016":{"ec":1564.0,"districts":8,"enrollment":142482,"instructors":9828,"low_income":107839},"2016-2017":{"ec":3336.0,"districts":8,"enrollment":141739,"instructors":10201,"low_income":101192},"2017-2018":{"ec":3486.0,"districts":8,"enrollment":138676,"instructors":9763,"low_income":125436},"2018-2019":{"ec":3542.0,"districts":8,"enrollment":140050,"instructors":10566,"low_income":97960},"2019-2020":{"ec":3426.0,"districts":8,"enrollment":137897,"instructors":10703,"low_income":91628},"2020-2021":{"ec":3281.0,"districts":8,"enrollment":131573,"instructors":10671,"low_income":92176},"2021-2022":{"ec":0,"districts":8,"enrollment":0,"instructors":0,"low_income":0}},"Mifflin":{"2010-2011":{"ec":3.0,"districts":1,"enrollment":5472,"instructors":462,"low_income":2485},"2011-2012":{"ec":5.0,"districts":1,"enrollment":5416,"instructors":393,"low_income":2576},"2012-2013":{"ec":7.0,"districts":1,"enrollment":5292,"instructors":398,"low_income":2515},"2013-2014":{"ec":9.0,"districts":1,"enrollment":5273,"instructors":399,"low_income":2574},"2014-2015":{"ec":11.0,"districts":1,"enrollment":5180,"instructors":401,"low_income":2597},"2015-2016":{"ec":12.0,"districts":1,"enrollment":5062,"instructors":405,"low_income":2816},"2016-2017":{"ec":7.0,"districts":1,"enrollment":4979,"instructors":413,"low_income":2813},"2017-2018":{"ec":11.0,"districts":1,"enrollment":4939,"instructors":412,"low_income":2837},"2018-2019":{"ec":20.0,"districts":1,"enrollment":4898,"instructors":416,"low_income":2769},"2019-2020":{"ec":14.0,"districts":1,"enrollment":4869,"instructors":416,"low_income":2521},"2020-2021":{"ec":29.0,"districts":1,"enrollment":4687,"instructors":417,"low_income":2376},"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"Clarion":{"2010-2011":{"ec":64.0,"districts":2,"enrollment":882,"instructors":188,"low_income":229},"2011-2012":{"ec":45.0,"districts":2,"enrollment":872,"instructors":55,"low_income":223},"2012-2013":{"ec":62.0,"districts":2,"enrollment":868,"instructors":54,"low_income":210},"2013-2014":{"ec":64.0,"districts":2,"enrollment":856,"instructors":184,"low_income":222},"2014-2015":{"ec":41.0,"districts":2,"enrollment":851,"instructors":177,"low_income":246},"2015-2016":{"ec":49.0,"districts":2,"enrollment":862,"instructors":179,"low_income":262},"2016-2017":{"ec":75.0,"districts":2,"enrollment":861,"instructors":177,"low_income":255},"2017-2018":{"ec":49.0,"districts":2,"enrollment":875,"instructors":180,"low_income":270},"2018-2019":{"ec":77.0,"districts":2,"enrollment":820,"instructors":166,"low_income":270},"2019-2020":{"ec":62.0,"districts":2,"enrollment":801,"instructors":164,"low_income":245},"2020-2021":{"ec":97.0,"districts":2,"enrollment":727,"instructors":168,"low_income":252},"2021-2022":{"ec":0,"districts":2,"enrollment":0,"instructors":0,"low_income":0}},"Tioga":{"2010-2011":{"ec":61.0,"districts":3,"enrollment":5671,"instructors":556,"low_income":2384},"2011-2012":{"ec":43.0,"districts":3,"enrollment":5606,"instructors":519,"low_income":2360},"2012-2013":{"ec":60.0,"districts":3,"enrollment":5543,"instructors":512,"low_income":2319},"2013-2014":{"ec":75.0,"districts":3,"enrollment":5429,"instructors":510,"low_income":2470},"2014-2015":{"ec":45.0,"districts":3,"enrollment":5350,"instructors":486,"low_income":2479},"2015-2016":{"ec":45.0,"districts":3,"enrollment":5375,"instructors":473,"low_income":2535},"2016-2017":{"ec":41.0,"districts":3,"enrollment":5460,"instructors":481,"low_income":2733},"2017-2018":{"ec":46.0,"districts":3,"enrollment":5454,"instructors":475,"low_income":2812},"2018-2019":{"ec":31.0,"districts":3,"enrollment":5559,"instructors":467,"low_income":2954},"2019-2020":{"ec":34.0,"districts":3,"enrollment":5461,"instructors":469,"low_income":2839},"2020-2021":{"ec":35.0,"districts":3,"enrollment":5197,"instructors":468,"low_income":2710},"2021-2022":{"ec":0,"districts":3,"enrollment":0,"instructors":0,"low_income":0}},"Carbon":{"2010-2011":{"ec":8.0,"districts":2,"enrollment":2399,"instructors":203,"low_income":1375},"2011-2012":{"ec":4.0,"districts":2,"enrollment":2388,"instructors":198,"low_income":1473},"2012-2013":{"ec":7.0,"districts":2,"enrollment":2412,"instructors":198,"low_income":1425},"2013-2014":{"ec":8.0,"districts":2,"enrollment":2280,"instructors":188,"low_income":1347},"2014-2015":{"ec":1.0,"districts":2,"enrollment":2329,"instructors":126,"low_income":1321},"2015-2016":{"ec":6.0,"districts":2,"enrollment":2263,"instructors":191,"low_income":1237},"2016-2017":{"ec":8.0,"districts":2,"enrollment":2328,"instructors":188,"low_income":1209},"2017-2018":{"ec":18.0,"districts":2,"enrollment":2317,"instructors":183,"low_income":1948},"2018-2019":{"ec":15.0,"districts":2,"enrollment":2288,"instructors":183,"low_income":1152},"2019-2020":{"ec":33.0,"districts":2,"enrollment":2285,"instructors":177,"low_income":1307},"2020-2021":{"ec":31.0,"districts":2,"enrollment":2280,"instructors":168,"low_income":1343},"2021-2022":{"ec":0,"districts":2,"enrollment":0,"instructors":0,"low_income":0}},"Snyder":{"2010-2011":{"ec":14.0,"districts":1,"enrollment":2717,"instructors":222,"low_income":939},"2011-2012":{"ec":7.0,"districts":1,"enrollment":2739,"instructors":214,"low_income":1028},"2012-2013":{"ec":7.0,"districts":1,"enrollment":2732,"instructors":199,"low_income":974},"2013-2014":{"ec":3.0,"districts":1,"enrollment":2708,"instructors":198,"low_income":1032},"2014-2015":{"ec":4.0,"districts":1,"enrollment":2709,"instructors":197,"low_income":927},"2015-2016":{"ec":8.0,"districts":1,"enrollment":2688,"instructors":195,"low_income":1055},"2016-2017":{"ec":1.0,"districts":1,"enrollment":2649,"instructors":194,"low_income":1097},"2017-2018":{"ec":2.0,"districts":1,"enrollment":2583,"instructors":194,"low_income":929},"2018-2019":{"ec":3.0,"districts":1,"enrollment":2619,"instructors":192,"low_income":922},"2019-2020":{"ec":6.0,"districts":1,"enrollment":2615,"instructors":192,"low_income":1088},"2020-2021":{"ec":6.0,"districts":1,"enrollment":2442,"instructors":188,"low_income":985},"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"Warren":{"2010-2011":{"ec":65.0,"districts":1,"enrollment":4928,"instructors":506,"low_income":2238},"2011-2012":{"ec":12.0,"districts":1,"enrollment":4764,"instructors":451,"low_income":2109},"2012-2013":{"ec":6.0,"districts":1,"enrollment":4661,"instructors":411,"low_income":2125},"2013-2014":{"ec":8.0,"districts":1,"enrollment":4574,"instructors":401,"low_income":2133},"2014-2015":{"ec":97.0,"districts":1,"enrollment":4499,"instructors":384,"low_income":2136},"2015-2016":{"ec":63.0,"districts":1,"enrollment":4425,"instructors":401,"low_income":2196},"2016-2017":{"ec":74.0,"districts":1,"enrollment":4397,"instructors":398,"low_income":2273},"2017-2018":{"ec":110.0,"districts":1,"enrollment":4312,"instructors":386,"low_income":2235},"2018-2019":{"ec":69.0,"districts":1,"enrollment":4218,"instructors":380,"low_income":2247},"2019-2020":{"ec":80.0,"districts":1,"enrollment":4117,"instructors":383,"low_income":2193},"2020-2021":{"ec":107.0,"districts":1,"enrollment":4009,"instructors":381,"low_income":2038},"2021-2022":{"ec":0,"districts":1,"enrollment":0,"instructors":0,"low_income":0}},"Wayne":{"2010-2011":{"ec":25.0,"districts":2,"enrollment":5234,"instructors":478,"low_income":2166},"2011-2012":{"ec":21.0,"districts":2,"enrollment":5149,"instructors":463,"low_income":2270},"2012-2013":{"ec":18.0,"districts":2,"enrollment":5017,"instructors":465,"low_income":2301},"2013-2014":{"ec":21.0,"districts":2,"enrollment":4866,"instructors":460,"low_income":2347},"2014-2015":{"ec":14.0,"districts":2,"enrollment":4698,"instructors":446,"low_income":2193},"2015-2016":{"ec":28.0,"districts":2,"enrollment":4467,"instructors":442,"low_income":2103},"2016-2017":{"ec":44.0,"districts":2,"enrollment":4476,"instructors":441,"low_income":2201},"2017-2018":{"ec":43.0,"districts":2,"enrollment":4425,"instructors":441,"low_income":2209},"2018-2019":{"ec":24.0,"districts":2,"enrollment":4346,"instructors":440,"low_income":2151},"2019-2020":{"ec":38.0,"districts":2,"enrollment":4348,"instructors":439,"low_income":2131},"2020-2021":{"ec":49.0,"districts":2,"enrollment":4176,"instructors":461,"low_income":2042},"2021-2022":{"ec":0,"districts":2,"enrollment":0,"instructors":0,"low_income":0}}};
@@ -589,16 +751,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Color function - red theme
     function getColor(ec) {
-        if (ec == null || ec === 0) return '#fef2f2';
-        if (ec <= 10) return '#f5c4c4';
-        if (ec <= 25) return '#ef9a9a';
-        if (ec <= 50) return '#e57373';
-        if (ec <= 100) return '#ef5350';
-        if (ec <= 200) return '#e53935';
-        if (ec <= 400) return '#c62828';
-        if (ec <= 700) return '#b71c1c';
-        if (ec <= 1000) return '#8b0000';
-        return '#7f0000';
+        if (ec == null || ec === 0) return '#fdf2f2';
+        if (ec <= 10) return '#fadbd8';
+        if (ec <= 25) return '#f1948a';
+        if (ec <= 50) return '#e74c3c';
+        if (ec <= 100) return '#c0392b';
+        if (ec <= 200) return '#a93226';
+        if (ec <= 400) return '#922b21';
+        if (ec <= 700) return '#7b241c';
+        if (ec <= 1000) return '#641e16';
+        return '#4a1a14';
     }
 
     function fmt(n) {
@@ -687,12 +849,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Highlight on hover — read EC at hover time so it reflects the current year
         layer.on('mouseover', function(e) {
             var ec = getCountyEC(name);
-            this.setStyle({ weight: 2, color: '#c62828' });
+            this.setStyle({ weight: 2, color: '#c0392b' });
             this.bringToFront();
             // Show info box
             var info = document.getElementById('hoverInfo');
             if (ec != null) {
-                info.innerHTML = '<strong>' + name + ' County</strong><br>Emergency Certs: ' + fmt(ec) + '<br><br><em>Click to see all district data</em>';
+                info.innerHTML = '<strong>' + name + ' County</strong><br>Emergency Certs: ' + fmt(ec) + '<br><br><em>Click for district-level details</em>';
             } else {
                 info.innerHTML = '<strong>' + name + ' County</strong><br><em>No data available</em>';
             }
@@ -767,10 +929,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Modal
+    // Modal
     var modalOverlay = document.getElementById('modalOverlay');
     var modalClose = document.getElementById('modalClose');
+    var _currentModalCounty = null;
+    var _freeDownloadUsed = false;
+    var _freeDownloadCounty = null;
 
     function showModal(countyName) {
+        _currentModalCounty = countyName;
         var dData = districtData[countyName];
         if (!dData) {
             var keys = Object.keys(districtData);
@@ -787,6 +954,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('modalSubtitle').textContent = 'No district data available for ' + currentYear;
             document.getElementById('modalHead').innerHTML = '';
             document.getElementById('modalBody').innerHTML = '';
+            document.getElementById('modalDownloadArea').innerHTML = '';
             modalOverlay.classList.add('active');
             return;
         }
@@ -794,6 +962,36 @@ document.addEventListener('DOMContentLoaded', function() {
         var districts = dData[currentYear];
         document.getElementById('modalTitle').textContent = countyName + ' County';
         document.getElementById('modalSubtitle').textContent = 'District-Level Data for ' + currentYear + ' (' + districts.length + ' districts)';
+
+        // Download area: 1 free download, then upsell
+        var dlArea = document.getElementById('modalDownloadArea');
+        if (!_freeDownloadUsed) {
+            dlArea.innerHTML = '<span style="font-family:Inter,sans-serif;font-size:12px;color:#7f8c8d;">1 free county download available</span>' +
+                '<button class="download-btn" id="modalDownloadBtn" style="font-size:13px;padding:8px 16px;">&#8595; Download This County (Free)</button>';
+        } else if (_freeDownloadCounty === countyName) {
+            dlArea.innerHTML = '<span style="font-family:Inter,sans-serif;font-size:12px;color:#27ae60;">&#10003; Already downloaded</span>';
+        } else {
+            dlArea.innerHTML = '<span style="font-family:Inter,sans-serif;font-size:12px;color:#7f8c8d;">Free download used</span>' +
+                '<a href="https://semihasekerli.gumroad.com/l/qykzc" target="_blank" class="download-btn" style="font-size:13px;padding:8px 16px;text-decoration:none;">&#128274; Purchase Full Dataset</a>';
+        }
+
+        // Wire up download or purchase button
+        var dlBtn = document.getElementById('modalDownloadBtn');
+        if (dlBtn) {
+            dlBtn.addEventListener('click', function() {
+                downloadCountyCSV(countyName);
+                _freeDownloadUsed = true;
+                _freeDownloadCounty = countyName;
+                dlArea.innerHTML = '<span style="font-family:Inter,sans-serif;font-size:12px;color:#27ae60;">&#10003; Downloaded! For more counties, purchase the full dataset.</span>' +
+                    '<button class="download-btn" id="modalPurchaseBtn2" style="font-size:13px;padding:8px 16px;background:#1c2333;border:1px solid #c0392b;color:#c0392b;">View Packages</button>';
+                var p2 = document.getElementById('modalPurchaseBtn2');
+                if (p2) p2.addEventListener('click', function() { modalOverlay.classList.remove('active'); scrollToPricing(); });
+            });
+        }
+        var purchBtn = document.getElementById('modalPurchaseBtn');
+        if (purchBtn) {
+            purchBtn.addEventListener('click', function() { modalOverlay.classList.remove('active'); scrollToPricing(); });
+        }
 
         var cols = [
             { key: 'd', label: 'District Name' },
@@ -849,6 +1047,132 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Expose showModal globally so popup buttons work
     window._showModal = showModal;
+
+    // Purchase button handlers — scroll to pricing section
+    function scrollToPricing() {
+        document.getElementById('pricingSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // CSV helpers for single free download
+    var csvCols = [
+        { key: 'd', label: 'District Name' },
+        { key: 'ec', label: 'Emergency Certs' },
+        { key: 'edLevel', label: 'Education Level' },
+        { key: 'propTax', label: 'Property Tax' },
+        { key: 'edSpend', label: 'Education Spending' },
+        { key: 'instrSpend', label: 'Instructor Spending' },
+        { key: 'spendPer', label: 'Spending Per Student' },
+        { key: 'enroll', label: 'Enrollment' },
+        { key: 'totalEnroll', label: 'Total Enrollment' },
+        { key: 'instr', label: 'Number of Instructors' },
+        { key: 'lowIncome', label: 'Low Income Enrollment' },
+        { key: 'covid', label: 'COVID-19 Cases' },
+        { key: 'covidDeaths', label: 'COVID-19 Deaths' },
+        { key: 'violent', label: 'Violent Crimes' },
+        { key: 'allCrime', label: 'All Crimes' },
+        { key: 'salary', label: 'Superintendent Salary' },
+        { key: 'yrsDistrict', label: 'Supt. Years in District' },
+        { key: 'yrsTotalExp', label: 'Supt. Total Experience' },
+        { key: 'pctEnroll', label: '% Enrollment' }
+    ];
+
+    function escapeCSV(val) {
+        if (val === undefined || val === null || val === '') return '';
+        return '"' + String(val).replace(/"/g, '""') + '"';
+    }
+
+    function triggerDownload(csv, filename) {
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function downloadCountyCSV(countyName) {
+        var dData = districtData[countyName];
+        if (!dData) {
+            var keys = Object.keys(districtData);
+            for (var i = 0; i < keys.length; i++) {
+                if (keys[i].toLowerCase() === countyName.toLowerCase()) { dData = districtData[keys[i]]; break; }
+            }
+        }
+        var districts = dData && dData[currentYear] ? dData[currentYear] : [];
+        var header = ['County'].concat(csvCols.map(function(c) { return '"' + c.label + '"'; })).join(',');
+        var rows = [header];
+        districts.forEach(function(dist) {
+            var row = [escapeCSV(countyName)].concat(csvCols.map(function(c) { return escapeCSV(dist[c.key]); }));
+            rows.push(row.join(','));
+        });
+        triggerDownload(rows.join('\n'), countyName.replace(/\s+/g, '_') + '_' + currentYear + '.csv');
+    }
+
+    // Hire Me modal close handlers
+    var hireMeOverlay = document.getElementById('hireMeOverlay');
+    hireMeOverlay.addEventListener('click', function(e) {
+        if (e.target === hireMeOverlay) hireMeOverlay.classList.remove('active');
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') hireMeOverlay.classList.remove('active');
+    });
+
+    // Hire Me form handler
+    emailjs.init('zhTNg6vOp-ufEysok');
+
+    document.getElementById('hireSubmitBtn').addEventListener('click', function() {
+        var firstName = document.getElementById('hireFirstName').value.trim();
+        var lastName = document.getElementById('hireLastName').value.trim();
+        var email = document.getElementById('hireEmail').value.trim();
+        var service = document.getElementById('hireService').value;
+        var message = document.getElementById('hireMessage').value.trim();
+        var err = document.getElementById('hireError');
+        var success = document.getElementById('hireSuccess');
+        var btn = document.getElementById('hireSubmitBtn');
+
+        err.style.display = 'none';
+        success.style.display = 'none';
+
+        if (!firstName) { err.textContent = 'Please enter your first name.'; err.style.display = 'block'; return; }
+        if (!lastName) { err.textContent = 'Please enter your last name.'; err.style.display = 'block'; return; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Please enter a valid email address.'; err.style.display = 'block'; return; }
+        if (!service) { err.textContent = 'Please select a service.'; err.style.display = 'block'; return; }
+
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+
+        emailjs.send('service_klf33h6', 'template_d23oim8', {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            purpose: 'HIRE ME: ' + service + (message ? ' | Details: ' + message : '')
+        }).then(function() {
+            btn.disabled = false;
+            btn.innerHTML = 'Send Request &amp; Get a Quote';
+            success.textContent = 'Thank you, ' + firstName + '! Your inquiry has been received. Dr. Sekerli will be in touch with you within 24\u201348 hours.';
+            success.style.display = 'block';
+            document.getElementById('hireFirstName').value = '';
+            document.getElementById('hireLastName').value = '';
+            document.getElementById('hireEmail').value = '';
+            document.getElementById('hireService').selectedIndex = 0;
+            document.getElementById('hireMessage').value = '';
+        }).catch(function() {
+            btn.disabled = false;
+            btn.innerHTML = 'Send Request &amp; Get a Quote';
+            err.textContent = 'Something went wrong. Please try again or email semihasekerlii@gmail.com directly.';
+            err.style.display = 'block';
+        });
+    });
+
+    // Allow Enter key in hire form inputs
+    ['hireFirstName','hireLastName','hireEmail'].forEach(function(id) {
+        document.getElementById(id).addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') document.getElementById('hireSubmitBtn').click();
+        });
+    });
 
     // Initial render
     updateSidebar();
