@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teacher Shortage in Pennsylvania Schools</title>
+<title>Teacher Shortage in Pennsylvania Schools | Dr. Semiha B. Sekerli</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -305,7 +305,7 @@ header .subtitle {
 /* Footer */
 footer {
     text-align: center;
-    padding: 32px 24px;
+    padding: 40px 24px;
     font-family: 'Inter', sans-serif;
     font-size: 13px;
     color: #8b949e;
@@ -334,7 +334,6 @@ footer {
     }
     .sidebar { order: -1; }
     #map { height: 400px; }
-    #pricingSection > div:nth-child(2) { grid-template-columns: 1fr !important; max-width: 400px; margin: 0 auto; }
 }
 @media (max-width: 768px) {
     header h1 { font-size: 28px; }
@@ -360,18 +359,19 @@ footer {
     <div class="author">Dr. Semiha B. Sekerli, Ph.D.<span>Education Researcher &amp; Data Scientist</span></div>
     <h1>Teacher Shortage in Pennsylvania Schools</h1>
     <p class="subtitle">Emergency Certification Data by County (2010&ndash;2022)</p>
-    <p style="font-family:'Inter',sans-serif;font-size:13px;color:#7f8c8d;max-width:700px;margin:12px auto 0;line-height:1.6;">Developed by Dr. Semiha Sekerli as an open-access research tool to support educators, policymakers, and the research community in understanding and addressing teacher shortages across Pennsylvania.</p>
+    <p style="font-family:'Inter',sans-serif;font-size:13px;color:#7f8c8d;max-width:700px;margin:12px auto 0;line-height:1.6;">An open-access research platform providing 12 years of district-level data on emergency certifications, school spending, enrollment, and socioeconomic indicators across all 67 Pennsylvania counties. Developed by Dr. Semiha B. Sekerli to support evidence-based education policy.</p>
     <div style="margin-top:20px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
         <button class="download-btn" onclick="document.getElementById('hireMeOverlay').classList.add('active');" style="padding:12px 28px;font-size:14px;border-radius:8px;">Work With Dr. Sekerli</button>
-        <button class="download-btn" onclick="document.getElementById('pricingSection').scrollIntoView({behavior:'smooth'});" style="padding:12px 28px;font-size:14px;border-radius:8px;">View Research Products</button>
+        <button class="download-btn" onclick="document.getElementById('citeSection').scrollIntoView({behavior:'smooth'});" style="padding:12px 28px;font-size:14px;border-radius:8px;">Cite This Work</button>
     </div>
 </header>
 
 <div class="year-slider-container">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;">
         <div class="year-slider-label" style="margin-bottom:0;">Select Academic Year</div>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <button class="download-btn" onclick="document.getElementById('pricingSection').scrollIntoView({behavior:'smooth'});">&#128274; Get Full District Dataset</button>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span style="font-family:'Inter',sans-serif;font-size:12px;color:#7f8c8d;">Click any county on the map to view district-level data</span>
+            <button class="download-btn" onclick="startDownload('all');" style="font-size:13px;padding:8px 16px;">&#8595; Download All Data</button>
         </div>
     </div>
     <div class="year-labels" id="yearLabels"></div>
@@ -598,120 +598,58 @@ document.getElementById('srcToggle').addEventListener('click', function() {
         arrow.style.transform = 'rotate(0deg)';
     }
 });
+
 </script>
 
-<section id="pricingSection" style="max-width:1200px;margin:32px auto 0;padding:0 24px 32px;">
-    <div style="text-align:center;margin-bottom:32px;">
-        <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:30px;color:#ffffff;margin-bottom:8px;">Research Data Products</h2>
-        <p style="font-family:'Inter',sans-serif;font-size:15px;color:#7f8c8d;max-width:600px;margin:0 auto;">Access the most comprehensive district-level teacher shortage dataset in Pennsylvania. Built from 12 years of verified public records.</p>
-    </div>
-
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px;">
-
-        <!-- Free Tier -->
-        <div style="background:#161b22;border:1px solid #30363d;border-radius:12px;padding:28px 24px;text-align:center;">
-            <div style="font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:#7f8c8d;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Explorer</div>
-            <div style="font-family:'Playfair Display',Georgia,serif;font-size:36px;color:#ffffff;margin-bottom:4px;">Free</div>
-            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#7f8c8d;margin-bottom:20px;">What you see on this page</div>
-            <ul style="list-style:none;padding:0;margin:0 0 24px;font-family:'Inter',sans-serif;font-size:13px;color:#8b949e;line-height:2.2;text-align:left;">
-                <li>&#10003; Interactive county map</li>
-                <li>&#10003; Statewide summary statistics</li>
-                <li>&#10003; Top 5 counties ranking</li>
-                <li>&#10003; Year-by-year county view</li>
-                <li style="color:#30363d;">&#10007; District-level data</li>
-                <li style="color:#30363d;">&#10007; CSV/Excel downloads</li>
-            </ul>
-            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#c0392b;font-weight:600;">Currently Active</div>
+<!-- Cite This Work Section -->
+<section id="citeSection" style="max-width:1200px;margin:32px auto 0;padding:0 24px 24px;">
+    <div style="background:#161b22;border:1px solid #30363d;border-radius:12px;padding:32px;text-align:center;">
+        <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:26px;color:#ffffff;margin-bottom:8px;">Cite This Work</h2>
+        <p style="font-family:'Inter',sans-serif;font-size:14px;color:#7f8c8d;max-width:600px;margin:0 auto 20px;">If you use this data or interactive tool in your research, please cite it as follows:</p>
+        <div style="background:#1c2333;border:1px solid #30363d;border-radius:8px;padding:20px 24px;text-align:left;max-width:800px;margin:0 auto 16px;position:relative;">
+            <p style="font-family:'Inter',sans-serif;font-size:13px;color:#e0e0e0;line-height:1.8;margin:0;">
+                <strong style="color:#c0392b;">APA 7th Edition:</strong><br>
+                Sekerli, S. B. (2025). <em>Teacher shortage in Pennsylvania schools: Emergency certification data by county (2010&ndash;2022)</em> [Interactive data visualization]. https://semihasekerli.github.io/pa-teacher-shortage/
+            </p>
+            <button onclick="navigator.clipboard.writeText('Sekerli, S. B. (2025). Teacher shortage in Pennsylvania schools: Emergency certification data by county (2010-2022) [Interactive data visualization]. https://semihasekerli.github.io/pa-teacher-shortage/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000);" style="position:absolute;top:12px;right:12px;background:#c0392b;color:#fff;border:none;border-radius:4px;padding:4px 12px;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
         </div>
-
-        <!-- Single County -->
-        <div style="background:#161b22;border:2px solid #c0392b;border-radius:12px;padding:28px 24px;text-align:center;position:relative;">
-            <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#c0392b;color:#fff;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;">Most Popular</div>
-            <div style="font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:#c0392b;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Researcher</div>
-            <div style="font-family:'Playfair Display',Georgia,serif;font-size:36px;color:#ffffff;margin-bottom:4px;">$299</div>
-            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#7f8c8d;margin-bottom:20px;">Full state dataset</div>
-            <ul style="list-style:none;padding:0;margin:0 0 24px;font-family:'Inter',sans-serif;font-size:13px;color:#e0e0e0;line-height:2.2;text-align:left;">
-                <li>&#10003; Everything in Explorer</li>
-                <li>&#10003; <strong>All 500+ districts</strong></li>
-                <li>&#10003; <strong>All 67 counties</strong></li>
-                <li>&#10003; Full 2010&ndash;2022 data</li>
-                <li>&#10003; CSV &amp; Excel formats</li>
-                <li>&#10003; Variable codebook</li>
-            </ul>
-            <a href="https://semihasekerli.gumroad.com/l/qykzc" target="_blank" class="download-btn" style="width:100%;justify-content:center;padding:12px;display:inline-flex;text-decoration:none;" id="purchaseResearcher">Purchase Dataset</a>
-        </div>
-
-        <!-- Research Package -->
-        <div style="background:#161b22;border:1px solid #30363d;border-radius:12px;padding:28px 24px;text-align:center;position:relative;z-index:1;">
-            <div style="font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:#7f8c8d;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Institution</div>
-            <div style="font-family:'Playfair Display',Georgia,serif;font-size:36px;color:#ffffff;margin-bottom:4px;">$1,299</div>
-            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#7f8c8d;margin-bottom:20px;">Research package</div>
-            <ul style="list-style:none;padding:0;margin:0 0 24px;font-family:'Inter',sans-serif;font-size:13px;color:#e0e0e0;line-height:2.2;text-align:left;">
-                <li>&#10003; Everything in Researcher</li>
-                <li>&#10003; <strong>Methodology document</strong></li>
-                <li>&#10003; <strong>Pre-built trend tables</strong></li>
-                <li>&#10003; <strong>Summary statistics</strong></li>
-                <li>&#10003; Institutional license</li>
-                <li>&#10003; Priority email support</li>
-            </ul>
-            <a href="https://semihasekerli.gumroad.com/l/dtaldz" target="_blank" class="download-btn" style="width:100%;justify-content:center;padding:12px;display:inline-flex;text-decoration:none;cursor:pointer;pointer-events:auto;position:relative;z-index:10;" id="purchaseInstitution">Purchase Package</a>
+        <div style="background:#1c2333;border:1px solid #30363d;border-radius:8px;padding:20px 24px;text-align:left;max-width:800px;margin:0 auto 16px;position:relative;">
+            <p style="font-family:'Inter',sans-serif;font-size:13px;color:#e0e0e0;line-height:1.8;margin:0;">
+                <strong style="color:#c0392b;">BibTeX:</strong><br>
+                <code style="font-size:12px;color:#8b949e;">@misc{sekerli2025teachershortage,<br>
+                &nbsp;&nbsp;author = {Sekerli, Semiha B.},<br>
+                &nbsp;&nbsp;title = {Teacher Shortage in Pennsylvania Schools: Emergency Certification Data by County (2010--2022)},<br>
+                &nbsp;&nbsp;year = {2025},<br>
+                &nbsp;&nbsp;url = {https://semihasekerli.github.io/pa-teacher-shortage/}<br>
+                }</code>
+            </p>
+            <button onclick="navigator.clipboard.writeText('@misc{sekerli2025teachershortage,\n  author = {Sekerli, Semiha B.},\n  title = {Teacher Shortage in Pennsylvania Schools: Emergency Certification Data by County (2010--2022)},\n  year = {2025},\n  url = {https://semihasekerli.github.io/pa-teacher-shortage/}\n}');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000);" style="position:absolute;top:12px;right:12px;background:#c0392b;color:#fff;border:none;border-radius:4px;padding:4px 12px;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
         </div>
     </div>
-
 </section>
 
-<!-- Hire Me Modal Popup -->
-<div class="modal-overlay" id="hireMeOverlay">
-    <div class="modal-content" style="max-width:540px;">
-        <button class="modal-close" onclick="document.getElementById('hireMeOverlay').classList.remove('active');">&times;</button>
-        <div style="text-align:center;margin-bottom:24px;">
-            <div style="font-size:42px;margin-bottom:10px;">&#128188;</div>
-            <h3 style="font-family:'Playfair Display',Georgia,serif;font-size:24px;color:#ffffff;margin-bottom:8px;">Work With Dr. Sekerli</h3>
-            <p style="font-family:'Inter',sans-serif;font-size:14px;color:#7f8c8d;max-width:440px;margin:0 auto;line-height:1.6;">Whether you need help with your dissertation, data analysis, research design, or web development &mdash; I can help. Fill out the form below and I&rsquo;ll send you a personalized quote.</p>
+<!-- About the Researcher Section -->
+<section id="aboutResearcher" style="max-width:1200px;margin:16px auto 0;padding:0 24px 24px;">
+    <div style="background:#161b22;border:1px solid #30363d;border-radius:12px;padding:32px;">
+        <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:26px;color:#ffffff;margin-bottom:20px;text-align:center;">About the Researcher</h2>
+        <div style="max-width:800px;margin:0 auto;">
+            <p style="font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;line-height:1.8;margin-bottom:16px;">
+                <strong style="color:#c0392b;">Dr. Semiha B. Sekerli, Ph.D.</strong> is an education researcher and data scientist specializing in equity and social justice in education. Her research focuses on systemic inequities in the education system, using data-driven approaches to illuminate disparities and inform meaningful reform.
+            </p>
+            <p style="font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;line-height:1.8;margin-bottom:16px;">
+                This interactive research platform was developed to make 12 years of verified public data freely available to educators, policymakers, journalists, and fellow researchers. Dr. Sekerli believes that open access to education data is essential for evidence-based policy and meaningful reform.
+            </p>
+            <p style="font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;line-height:1.8;margin-bottom:16px;">
+                Dr. Sekerli is actively maintaining and updating this website to keep the data current and accurate. Please feel free to <a href="mailto:semihasekerlii@gmail.com" style="color:#c0392b;">contact her</a> for any questions, details, or collaboration opportunities.
+            </p>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:20px;">
+                <a href="https://semihasekerli.com/" target="_blank" class="download-btn" style="text-decoration:none;padding:10px 20px;font-size:13px;border-radius:6px;">View Full Portfolio</a>
+                <a href="mailto:semihasekerlii@gmail.com" class="download-btn" style="text-decoration:none;padding:10px 20px;font-size:13px;border-radius:6px;">Contact for Collaboration</a>
+            </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-            <div style="display:flex;gap:12px;">
-                <div style="flex:1;">
-                    <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">First Name</label>
-                    <input id="hireFirstName" type="text" placeholder="e.g. Jane" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
-                </div>
-                <div style="flex:1;">
-                    <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Last Name</label>
-                    <input id="hireLastName" type="text" placeholder="e.g. Smith" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
-                </div>
-            </div>
-            <div>
-                <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Email Address</label>
-                <input id="hireEmail" type="email" placeholder="e.g. jsmith@university.edu" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
-            </div>
-            <div>
-                <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">What Do You Need Help With?</label>
-                <select id="hireService" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;cursor:pointer;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
-                    <option value="" disabled selected>Select a service...</option>
-                    <option value="Dissertation Methodology Support">Dissertation Methodology Support</option>
-                    <option value="Dissertation Data Analysis Support">Dissertation Data Analysis Support</option>
-                    <option value="Professional Data Analysis Support">Professional Data Analysis Support</option>
-                    <option value="Website Builder / Web Developer">Website Builder / Web Developer</option>
-                    <option value="App Developer">App Developer</option>
-                    <option value="Senior Researcher">Senior Researcher</option>
-                    <option value="Research Support">Research Support</option>
-                    <option value="Part-Time Researcher">Part-Time Researcher</option>
-                    <option value="Project Manager">Project Manager</option>
-                    <option value="Custom Data Report">Custom Data Report</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            <div>
-                <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Brief Description (Optional)</label>
-                <textarea id="hireMessage" rows="3" placeholder="Tell me a bit about your project or what you need help with..." style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;resize:vertical;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'"></textarea>
-            </div>
-            <div id="hireError" style="display:none;font-family:'Inter',sans-serif;font-size:12px;color:#c0392b;"></div>
-            <div id="hireSuccess" style="display:none;font-family:'Inter',sans-serif;font-size:13px;color:#27ae60;background:#162016;border:1px solid #27ae60;border-radius:6px;padding:12px;text-align:center;"></div>
-            <button id="hireSubmitBtn" class="download-btn" style="width:100%;justify-content:center;padding:14px;font-size:15px;">Send Request &amp; Get a Quote</button>
-        </div>
-        <p style="font-family:'Inter',sans-serif;font-size:11px;color:#7f8c8d;text-align:center;margin-top:16px;">Your information is sent directly to Dr. Sekerli and will not be shared with third parties.</p>
     </div>
-</div>
+</section>
+
 
 <!-- Download Gate Modal -->
 <div class="modal-overlay" id="downloadGateOverlay" style="z-index:10001;">
@@ -719,9 +657,9 @@ document.getElementById('srcToggle').addEventListener('click', function() {
         <button class="modal-close" onclick="document.getElementById('downloadGateOverlay').classList.remove('active');">&times;</button>
         <div style="text-align:center;margin-bottom:20px;">
             <div style="font-size:36px;margin-bottom:10px;">&#128202;</div>
-            <div class="modal-title" style="margin-bottom:4px;">Free County Download</div>
+            <div class="modal-title" style="margin-bottom:4px;">Download Data</div>
             <p style="font-family:'Inter',sans-serif;font-size:13px;color:#7f8c8d;line-height:1.6;">
-                This dataset is made available for research and educational purposes. Please provide your information to proceed with your free download.
+                This dataset is made available as an open-access resource. Please provide your information so we can understand how this data is being used.
             </p>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
@@ -755,12 +693,80 @@ document.getElementById('srcToggle').addEventListener('click', function() {
             <button id="gateSubmitBtn" class="download-btn" style="width:100%;justify-content:center;padding:12px;font-size:14px;">Continue &amp; Download</button>
         </div>
         <p style="font-family:'Inter',sans-serif;font-size:11px;color:#7f8c8d;text-align:center;margin-top:14px;line-height:1.5;">
-            Your information will be sent to the researcher for record-keeping purposes only. It will not be shared with third parties.
+            Your information is collected for research impact tracking only and will not be shared with third parties.
         </p>
     </div>
 </div>
 
-<footer>Dr. Semiha B. Sekerli, PhD &mdash; Dissertation Research</footer>
+<!-- Hire Me Modal Popup -->
+<div class="modal-overlay" id="hireMeOverlay">
+    <div class="modal-content" style="max-width:540px;">
+        <button class="modal-close" onclick="document.getElementById('hireMeOverlay').classList.remove('active');">&times;</button>
+        <div style="text-align:center;margin-bottom:24px;">
+            <div style="font-size:42px;margin-bottom:10px;">&#129309;</div>
+            <h3 style="font-family:'Playfair Display',Georgia,serif;font-size:24px;color:#ffffff;margin-bottom:8px;">Work With Dr. Sekerli</h3>
+            <p style="font-family:'Inter',sans-serif;font-size:14px;color:#7f8c8d;max-width:440px;margin:0 auto;line-height:1.6;">Interested in research collaboration, data partnerships, speaking engagements, or media inquiries? Fill out the form below and I&rsquo;ll be in touch.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;gap:12px;">
+                <div style="flex:1;">
+                    <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">First Name</label>
+                    <input id="hireFirstName" type="text" placeholder="e.g. Jane" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+                </div>
+                <div style="flex:1;">
+                    <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Last Name</label>
+                    <input id="hireLastName" type="text" placeholder="e.g. Smith" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+                </div>
+            </div>
+            <div>
+                <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Email Address</label>
+                <input id="hireEmail" type="email" placeholder="e.g. jsmith@university.edu" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+            </div>
+            <div>
+                <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">What Do You Need Help With?</label>
+                <select id="hireService" style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;cursor:pointer;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'">
+                    <option value="" disabled selected>What are you interested in?</option>
+                    <option value="Research Collaboration">Research Collaboration</option>
+                    <option value="Co-Authorship Inquiry">Co-Authorship Inquiry</option>
+                    <option value="Data Partnership">Data Partnership</option>
+                    <option value="Speaking / Conference Invitation">Speaking / Conference Invitation</option>
+                    <option value="Media / Press Inquiry">Media / Press Inquiry</option>
+                    <option value="Policy Consultation">Policy Consultation</option>
+                    <option value="Dissertation / Student Mentorship">Dissertation / Student Mentorship</option>
+                    <option value="Data Analysis Consultation">Data Analysis Consultation</option>
+                    <option value="General Inquiry">General Inquiry</option>
+                    <option value="Custom Data Report">Custom Data Report</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div>
+                <label style="display:block;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Brief Description (Optional)</label>
+                <textarea id="hireMessage" rows="3" placeholder="Tell me a bit about your project or what you need help with..." style="width:100%;padding:10px 12px;border:1px solid #30363d;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;background:#1c2333;outline:none;resize:vertical;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#30363d'"></textarea>
+            </div>
+            <div id="hireError" style="display:none;font-family:'Inter',sans-serif;font-size:12px;color:#c0392b;"></div>
+            <div id="hireSuccess" style="display:none;font-family:'Inter',sans-serif;font-size:13px;color:#27ae60;background:#162016;border:1px solid #27ae60;border-radius:6px;padding:12px;text-align:center;"></div>
+            <button id="hireSubmitBtn" class="download-btn" style="width:100%;justify-content:center;padding:14px;font-size:15px;">Send Inquiry</button>
+        </div>
+        <p style="font-family:'Inter',sans-serif;font-size:11px;color:#7f8c8d;text-align:center;margin-top:16px;">Your information is sent directly to Dr. Sekerli and will not be shared with third parties.</p>
+    </div>
+</div>
+
+
+<footer>
+    <div style="margin-bottom:12px;">
+        <strong style="color:#ffffff;font-size:14px;">Dr. Semiha B. Sekerli, Ph.D.</strong><br>
+        <span style="color:#c0392b;font-size:12px;letter-spacing:1px;text-transform:uppercase;">Education Researcher &amp; Data Scientist</span>
+    </div>
+    <div style="margin-bottom:12px;line-height:1.8;">
+        Open-access research platform &mdash; All data freely available for academic use.<br>
+        Please <a href="#citeSection" style="color:#c0392b;">cite this work</a> if used in publications or reports.
+    </div>
+    <div style="margin-bottom:8px;">
+        <a href="https://semihasekerli.com/" target="_blank" style="color:#8b949e;margin:0 8px;">Portfolio</a> &middot;
+        <a href="mailto:semihasekerlii@gmail.com" style="color:#8b949e;margin:0 8px;">Email</a>
+    </div>
+    <div style="color:#4a5568;font-size:11px;">&copy; 2025 Dr. Semiha B. Sekerli. Data sourced from public records.</div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -980,8 +986,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var modalOverlay = document.getElementById('modalOverlay');
     var modalClose = document.getElementById('modalClose');
     var _currentModalCounty = null;
-    var _freeDownloadUsed = false;
-    var _freeDownloadCounty = null;
 
     function showModal(countyName) {
         _currentModalCounty = countyName;
@@ -1010,30 +1014,16 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('modalTitle').textContent = countyName + ' County';
         document.getElementById('modalSubtitle').textContent = 'District-Level Data for ' + currentYear + ' (' + districts.length + ' districts)';
 
-        // Download area: 1 free download, then upsell
+        // Download area: open access but requires info
         var dlArea = document.getElementById('modalDownloadArea');
-        if (!_freeDownloadUsed) {
-            dlArea.innerHTML = '<span style="font-family:Inter,sans-serif;font-size:12px;color:#7f8c8d;">1 free county download available</span>' +
-                '<button class="download-btn" id="modalDownloadBtn" style="font-size:13px;padding:8px 16px;">&#8595; Download This County (Free)</button>';
-        } else if (_freeDownloadCounty === countyName) {
-            dlArea.innerHTML = '<span style="font-family:Inter,sans-serif;font-size:12px;color:#27ae60;">&#10003; Already downloaded</span>';
-        } else {
-            dlArea.innerHTML = '<span style="font-family:Inter,sans-serif;font-size:12px;color:#7f8c8d;">Free download used</span>' +
-                '<a href="https://semihasekerli.gumroad.com/l/qykzc" target="_blank" class="download-btn" style="font-size:13px;padding:8px 16px;text-decoration:none;">&#128274; Purchase Full Dataset</a>';
-        }
+        dlArea.innerHTML = '<span style="font-family:Inter,sans-serif;font-size:12px;color:#7f8c8d;">Open Access &mdash; Please cite this work if used in research</span>' +
+            '<button class="download-btn" id="modalDownloadBtn" style="font-size:13px;padding:8px 16px;">&#8595; Download CSV</button>';
 
-        // Wire up download or purchase button
         var dlBtn = document.getElementById('modalDownloadBtn');
         if (dlBtn) {
             dlBtn.addEventListener('click', function() {
-                // Show the download gate form instead of downloading directly
-                _pendingDownloadCounty = countyName;
-                document.getElementById('downloadGateOverlay').classList.add('active');
+                startDownload(countyName);
             });
-        }
-        var purchBtn = document.getElementById('modalPurchaseBtn');
-        if (purchBtn) {
-            purchBtn.addEventListener('click', function() { modalOverlay.classList.remove('active'); scrollToPricing(); });
         }
 
         var cols = [
@@ -1091,12 +1081,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Expose showModal globally so popup buttons work
     window._showModal = showModal;
 
-    // Purchase button handlers — scroll to pricing section
-    function scrollToPricing() {
-        document.getElementById('pricingSection').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // CSV helpers for single free download
+    // CSV download helpers
     var csvCols = [
         { key: 'd', label: 'District Name' },
         { key: 'ec', label: 'Emergency Certs' },
@@ -1145,8 +1130,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         var districts = dData && dData[currentYear] ? dData[currentYear] : [];
+        var citation = '"Citation: Sekerli, S. B. (2025). Teacher shortage in Pennsylvania schools: Emergency certification data by county (2010-2022). https://semihasekerli.github.io/pa-teacher-shortage/"';
         var header = ['County'].concat(csvCols.map(function(c) { return '"' + c.label + '"'; })).join(',');
-        var rows = [header];
+        var rows = [citation, '', header];
         districts.forEach(function(dist) {
             var row = [escapeCSV(countyName)].concat(csvCols.map(function(c) { return escapeCSV(dist[c.key]); }));
             rows.push(row.join(','));
@@ -1154,12 +1140,39 @@ document.addEventListener('DOMContentLoaded', function() {
         triggerDownload(rows.join('\n'), countyName.replace(/\s+/g, '_') + '_' + currentYear + '.csv');
     }
 
-    // Download gate form handler
-    var _pendingDownloadCounty = null;
+    // Download All CSV function
+    function downloadAllCSV() {
+        var allRows = [];
+        var header = ['County'].concat(csvCols.map(function(c) { return '"' + c.label + '"'; })).join(',');
+        var citation = '"Citation: Sekerli, S. B. (2025). Teacher shortage in Pennsylvania schools: Emergency certification data by county (2010-2022). https://semihasekerli.github.io/pa-teacher-shortage/"';
+        allRows.push(citation);
+        allRows.push('');
+        allRows.push('"Year",' + header);
+        var countyNames = Object.keys(districtData);
+        years.forEach(function(year) {
+            countyNames.forEach(function(county) {
+                if (districtData[county] && districtData[county][year]) {
+                    districtData[county][year].forEach(function(dist) {
+                        var row = [escapeCSV(year), escapeCSV(county)].concat(csvCols.map(function(c) { return escapeCSV(dist[c.key]); }));
+                        allRows.push(row.join(','));
+                    });
+                }
+            });
+        });
+        triggerDownload(allRows.join('\n'), 'PA_Teacher_Shortage_All_Data.csv');
+    }
+
+    // Download gate logic
+    var _pendingDownloadType = null;
     var downloadGateOverlay = document.getElementById('downloadGateOverlay');
 
+    window.startDownload = function(type) {
+        _pendingDownloadType = type;
+        document.getElementById('downloadGateOverlay').classList.add('active');
+    };
+
     downloadGateOverlay.addEventListener('click', function(e) {
-        if (e.target === downloadGateOverlay) { downloadGateOverlay.classList.remove('active'); _pendingDownloadCounty = null; }
+        if (e.target === downloadGateOverlay) { downloadGateOverlay.classList.remove('active'); _pendingDownloadType = null; }
     });
 
     document.getElementById('gateSubmitBtn').addEventListener('click', function() {
@@ -1179,32 +1192,24 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.disabled = true;
         btn.textContent = 'Sending...';
 
+        var downloadLabel = _pendingDownloadType === 'all' ? 'ALL DATA' : _pendingDownloadType + ' County';
+
         emailjs.send('service_klf33h6', 'template_d23oim8', {
             first_name: firstName,
             last_name: lastName,
             email: email,
-            purpose: 'FREE DOWNLOAD: ' + (_pendingDownloadCounty || 'Unknown') + ' County | Purpose: ' + purpose
+            purpose: 'DOWNLOAD: ' + downloadLabel + ' | Purpose: ' + purpose
         }).then(function() {
             btn.disabled = false;
             btn.innerHTML = 'Continue &amp; Download';
             downloadGateOverlay.classList.remove('active');
 
-            // Now trigger the actual download
-            if (_pendingDownloadCounty) {
-                downloadCountyCSV(_pendingDownloadCounty);
-                _freeDownloadUsed = true;
-                _freeDownloadCounty = _pendingDownloadCounty;
-
-                // Update the modal download area
-                var dlArea = document.getElementById('modalDownloadArea');
-                if (dlArea) {
-                    dlArea.innerHTML = '<span style="font-family:Inter,sans-serif;font-size:12px;color:#27ae60;">&#10003; Downloaded! For more counties, purchase the full dataset.</span>' +
-                        '<button class="download-btn" id="modalPurchaseBtn2" style="font-size:13px;padding:8px 16px;background:#1c2333;border:1px solid #c0392b;color:#c0392b;">View Packages</button>';
-                    var p2 = document.getElementById('modalPurchaseBtn2');
-                    if (p2) p2.addEventListener('click', function() { modalOverlay.classList.remove('active'); scrollToPricing(); });
-                }
-                _pendingDownloadCounty = null;
+            if (_pendingDownloadType === 'all') {
+                downloadAllCSV();
+            } else if (_pendingDownloadType) {
+                downloadCountyCSV(_pendingDownloadType);
             }
+            _pendingDownloadType = null;
         }).catch(function() {
             btn.disabled = false;
             btn.innerHTML = 'Continue &amp; Download';
@@ -1219,7 +1224,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Hire Me modal close handlers
+    // Collaboration modal close handlers
     var hireMeOverlay = document.getElementById('hireMeOverlay');
     hireMeOverlay.addEventListener('click', function(e) {
         if (e.target === hireMeOverlay) hireMeOverlay.classList.remove('active');
@@ -1256,11 +1261,11 @@ document.addEventListener('DOMContentLoaded', function() {
             first_name: firstName,
             last_name: lastName,
             email: email,
-            purpose: 'HIRE ME: ' + service + (message ? ' | Details: ' + message : '')
+            purpose: 'COLLABORATION: ' + service + (message ? ' | Details: ' + message : '')
         }).then(function() {
             btn.disabled = false;
-            btn.innerHTML = 'Send Request &amp; Get a Quote';
-            success.textContent = 'Thank you, ' + firstName + '! Your inquiry has been received. Dr. Sekerli will be in touch with you within 24\u201348 hours.';
+            btn.innerHTML = 'Send Inquiry';
+            success.textContent = 'Thank you, ' + firstName + '! Your inquiry has been received. Dr. Sekerli will respond within 24\u201348 hours.';
             success.style.display = 'block';
             document.getElementById('hireFirstName').value = '';
             document.getElementById('hireLastName').value = '';
@@ -1269,7 +1274,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('hireMessage').value = '';
         }).catch(function() {
             btn.disabled = false;
-            btn.innerHTML = 'Send Request &amp; Get a Quote';
+            btn.innerHTML = 'Send Inquiry';
             err.textContent = 'Something went wrong. Please try again or email semihasekerlii@gmail.com directly.';
             err.style.display = 'block';
         });
