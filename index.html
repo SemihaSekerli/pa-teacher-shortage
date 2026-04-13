@@ -1350,6 +1350,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 (function(){
+var CHICO_API='https://chico-api.semihasekerlii.workers.dev/';
 var toggle=document.getElementById('chatToggle');
 var win=document.getElementById('chatWindow');
 var closeBtn=document.getElementById('chatClose');
@@ -1357,9 +1358,9 @@ var input=document.getElementById('chatInput');
 var sendBtn=document.getElementById('chatSend');
 var msgs=document.getElementById('chatMessages');
 
-// Conversation state
-var state='WAIT_TOPIC';
-var userData={topic:'',hypothesis:'',dvType:'',dvCount:'',ivType:'',ivCount:'',covariates:'',name:'',email:''};
+// Conversation history for AI
+var chatHistory=[];
+var isWaitingForAI=false;
 
 // Knock sound using Web Audio API (no external files needed)
 function playKnock(){
@@ -1396,7 +1397,11 @@ toggle.addEventListener('click',function(){
     document.getElementById('chicoBubble').classList.remove('show');
     win.classList.toggle('open');
     toggle.classList.toggle('open');
-    if(win.classList.contains('open')){input.focus();if(!msgs.children.length)botSay("&#128008;&#8205;&#11035; <b>Meow! I'm Chico!</b>\n\nI'm Dr. Sekerli's cat who turned into an AI research assistant! I can suggest variables for your study, recommend the right statistical test, and even find published articles on your topic!\n\n<b>So tell me \u2014 what is your research about?</b>");}
+    if(win.classList.contains('open')){input.focus();if(!msgs.children.length){
+        // Get initial greeting from AI
+        chatHistory=[];
+        callChicoAI("hi");
+    }}
 });
 closeBtn.addEventListener('click',function(){win.classList.remove('open');toggle.classList.remove('open');});
 sendBtn.addEventListener('click',send);
@@ -1405,458 +1410,62 @@ input.addEventListener('keydown',function(e){if(e.key==='Enter')send();});
 function botSay(text){var d=document.createElement('div');d.className='chat-msg bot';d.innerHTML=text;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
 function userSay(text){var d=document.createElement('div');d.className='chat-msg user';d.textContent=text;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
 
+function callChicoAI(text){
+    if(isWaitingForAI)return;
+    isWaitingForAI=true;
+    chatHistory.push({role:'user',content:text});
+    var typing=document.createElement('div');
+    typing.className='chat-msg bot';
+    typing.style.opacity='0.6';
+    typing.innerHTML='&#128008;&#8205;&#11035; <i>Chico is thinking...</i>';
+    msgs.appendChild(typing);
+    msgs.scrollTop=msgs.scrollHeight;
+    fetch(CHICO_API,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({messages:chatHistory})
+    }).then(function(r){return r.json();}).then(function(data){
+        if(typing.parentNode)typing.parentNode.removeChild(typing);
+        isWaitingForAI=false;
+        if(data.content&&data.content[0]&&data.content[0].text){
+            var reply=data.content[0].text;
+            chatHistory.push({role:'assistant',content:reply});
+            // Convert markdown bold to HTML
+            reply=reply.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+            // Convert markdown bullet points
+            reply=reply.replace(/^- /gm,'&#8226; ');
+            // Convert newlines
+            reply=reply.replace(/\n/g,'<br>');
+            botSay(reply);
+            // Check if AI wants to open county data
+            var countyCmd=reply.match(/OPEN_COUNTY:(\w+)/);
+            if(countyCmd&&window._showModal){
+                window._showModal(countyCmd[1]);
+                reply=reply.replace(/OPEN_COUNTY:\w+/g,'');
+            }
+        } else if(data.error){
+            botSay("&#128008;&#8205;&#11035; Oops! Something went wrong. Please try again.");
+            console.log('Chico error:',data.error);
+        } else {
+            botSay("&#128008;&#8205;&#11035; Hmm, I didn't get a response. Please try again.");
+        }
+    }).catch(function(err){
+        if(typing.parentNode)typing.parentNode.removeChild(typing);
+        isWaitingForAI=false;
+        botSay("&#128008;&#8205;&#11035; I couldn't connect to my brain right now. Please try again in a moment.");
+        console.log('Chico fetch error:',err);
+    });
+}
+
 function send(){
     var text=input.value.trim();
-    if(!text)return;
+    if(!text||isWaitingForAI)return;
     userSay(text);
     input.value='';
-    setTimeout(function(){handleState(text);},400);
+    callChicoAI(text);
 }
 
-// ---- VARIABLE KNOWLEDGE BASE ----
-var VARS=[
-    {name:"Emergency Certifications (EC)",type:"quantitative",level:"district",desc:"Number of emergency teaching certifications issued. Primary indicator of teacher shortage.",keywords:["teacher","shortage","emergency","certification","staffing","vacancy","hiring","retention","turnover","qualified"],role:"dependent"},
-    {name:"Education Spending",type:"quantitative",level:"district",desc:"Total expenditure on education by the school district.",keywords:["spending","budget","funding","expenditure","money","finance","cost","resource","investment","fiscal"],role:"independent"},
-    {name:"Instructor Spending",type:"quantitative",level:"district",desc:"Expenditure allocated to instructional staff (salaries, benefits).",keywords:["instructor","teacher","salary","pay","compensation","spending","staff","wages","benefits"],role:"independent"},
-    {name:"Spending Per Student",type:"quantitative",level:"district",desc:"Per-pupil investment (education spending / enrollment).",keywords:["per pupil","per student","spending","investment","funding","equity","resource"],role:"independent"},
-    {name:"Enrollment",type:"quantitative",level:"district",desc:"Number of students enrolled in the district.",keywords:["enrollment","students","size","population","attendance"],role:"control"},
-    {name:"Total Enrollment",type:"quantitative",level:"district",desc:"Total student enrollment including all grade levels.",keywords:["enrollment","total","students","size","population"],role:"control"},
-    {name:"Number of Instructors",type:"quantitative",level:"district",desc:"Total instructional staff (teachers) employed.",keywords:["instructor","teacher","staff","workforce","faculty","personnel"],role:"independent"},
-    {name:"Low Income Enrollment",type:"quantitative",level:"district",desc:"Students classified as economically disadvantaged.",keywords:["poverty","low income","disadvantaged","free lunch","economic","socioeconomic","poor","inequality","equity"],role:"independent"},
-    {name:"% Low Income Enrollment",type:"quantitative",level:"district",desc:"Percentage of enrollment from low-income households.",keywords:["poverty","percentage","rate","proportion","low income","socioeconomic","inequality","equity"],role:"independent"},
-    {name:"Education Level (Superintendent)",type:"categorical",level:"district",desc:"Highest education level of the superintendent.",keywords:["superintendent degree","superintendent education","superintendent qualification","superintendent leadership","superintendent doctoral","superintendent masters"],role:"independent"},
-    {name:"Superintendent Salary",type:"quantitative",level:"district",desc:"Annual salary of the superintendent.",keywords:["superintendent salary","superintendent pay","superintendent compensation","superintendent wages"],role:"independent"},
-    {name:"Supt. Years in District",type:"quantitative",level:"district",desc:"Years superintendent served in current district.",keywords:["superintendent tenure","superintendent years","superintendent stability","superintendent turnover"],role:"independent"},
-    {name:"Supt. Total Experience",type:"quantitative",level:"district",desc:"Total years of professional experience.",keywords:["superintendent experience","superintendent career","superintendent veteran"],role:"independent"},
-    {name:"Property Tax",type:"quantitative",level:"county",desc:"County-level property tax rate (mills).",keywords:["tax","property","wealth","income","socioeconomic","community","funding","revenue"],role:"independent"},
-    {name:"Violent Crimes",type:"quantitative",level:"county",desc:"Total violent crimes reported in the county.",keywords:["crime","violence","safety","community","urban","rural","danger"],role:"independent"},
-    {name:"All Crimes",type:"quantitative",level:"county",desc:"Total crimes (violent and non-violent) in the county.",keywords:["crime","safety","community","urban","rural"],role:"independent"},
-    {name:"COVID-19 Cases",type:"quantitative",level:"county",desc:"Confirmed COVID-19 cases (2019-2022 only).",keywords:["covid","pandemic","health","disease","coronavirus"],role:"independent"},
-    {name:"COVID-19 Deaths",type:"quantitative",level:"county",desc:"Confirmed COVID-19 deaths (2019-2022 only).",keywords:["covid","pandemic","death","mortality","health"],role:"independent"}
-];
 
-function exploreVariables(topic){
-    var tl=topic.toLowerCase(),words=tl.split(/\s+/),scored=[];
-    VARS.forEach(function(v){var score=0;v.keywords.forEach(function(kw){if(tl.indexOf(kw)!==-1)score+=3;words.forEach(function(w){if(w.indexOf(kw)!==-1||kw.indexOf(w)!==-1)score+=1;});});if(score>0)scored.push({v:v,s:score});});
-    scored.sort(function(a,b){return b.s-a.s;});
-    if(!scored.length)return "I couldn't find directly matching variables in our dataset for that topic, but no worries \u2014 I can still help with your analysis!\n";
-    var r="<b>&#128202; In our PA Teacher Shortage dataset, we have some variables that could be relevant to your study:</b>\n\n";
-    scored.forEach(function(item){
-        r+="  &#8226; <b>"+item.v.name+"</b> ("+item.v.type+", "+item.v.level+"-level)\n    "+item.v.desc+"\n\n";
-    });
-    r+="You can explore all the data on this website \u2014 click any county on the map above to see district-level details.";
-    return r;
-}
-
-// ---- DECISION TREE (works for ANY variables) ----
-function getDecisionTreeResult(dvType,dvCount,ivType,ivCount,covariates){
-    var recs=[];
-    var numDV=(dvCount==='1')?1:2;
-    var numIV=(ivCount==='1')?1:2;
-    var hasCov=(covariates==='yes');
-    // Degree of Relationship
-    if(dvType==='quantitative'&&ivType==='quantitative'){
-        if(numDV===1&&numIV===1) recs.push({test:"Bivariate Correlation and/or Bivariate Regression",goal:"Determine the relationship between two quantitative variables.",when:"1 quantitative DV, 1 quantitative IV"});
-        if(numDV===1&&numIV>=2) recs.push({test:"Multiple Regression",goal:"Create a linear combination of IVs that best predicts the DV.",when:"1 quantitative DV, 2+ quantitative IVs"});
-        if(numDV>=2&&numIV>=2) recs.push({test:"Path Analysis",goal:"Estimate all direct and indirect relationships in a hypothesized model.",when:"2+ quantitative DVs, 2+ quantitative IVs"});
-    }
-    // Group Differences
-    if(dvType==='quantitative'&&ivType==='categorical'){
-        if(numDV===1&&numIV===1&&!hasCov){recs.push({test:"t-Test",goal:"Determine if the mean difference between two groups is statistically significant.",when:"1 quantitative DV, 1 categorical IV (2 groups), no covariates"});recs.push({test:"One-way ANOVA",goal:"Determine if there are significant mean differences among 3+ groups.",when:"1 quantitative DV, 1 categorical IV (2+ groups), no covariates"});}
-        if(numDV===1&&numIV===1&&hasCov) recs.push({test:"One-way ANCOVA",goal:"Compare group means while controlling for one or more covariates.",when:"1 quantitative DV, 1 categorical IV, with covariates"});
-        if(numDV===1&&numIV>=2&&!hasCov) recs.push({test:"Factorial ANOVA",goal:"Test the effects of multiple categorical IVs on the DV, including interaction effects.",when:"1 quantitative DV, 2+ categorical IVs, no covariates"});
-        if(numDV===1&&numIV>=2&&hasCov) recs.push({test:"Factorial ANCOVA",goal:"Test effects of multiple categorical IVs while controlling for covariates.",when:"1 quantitative DV, 2+ categorical IVs, with covariates"});
-        if(numDV>=2&&numIV===1&&!hasCov) recs.push({test:"One-way MANOVA",goal:"Create a linear combination of DVs to maximize mean group differences.",when:"2+ quantitative DVs, 1 categorical IV, no covariates"});
-        if(numDV>=2&&numIV===1&&hasCov) recs.push({test:"One-way MANCOVA",goal:"Compare groups on multiple DVs while controlling for covariates.",when:"2+ quantitative DVs, 1 categorical IV, with covariates"});
-        if(numDV>=2&&numIV>=2&&!hasCov) recs.push({test:"Factorial MANOVA",goal:"Test effects of multiple categorical IVs on multiple DVs.",when:"2+ quantitative DVs, 2+ categorical IVs, no covariates"});
-        if(numDV>=2&&numIV>=2&&hasCov) recs.push({test:"Factorial MANCOVA",goal:"Factorial MANOVA while controlling for covariates.",when:"2+ quantitative DVs, 2+ categorical IVs, with covariates"});
-    }
-    // Prediction of Group Membership
-    if(dvType==='categorical'&&ivType==='quantitative'){
-        recs.push({test:"Discriminant Analysis",goal:"Create linear combinations of quantitative IVs that best predict group membership.",when:"1 categorical DV, 2+ quantitative IVs"});
-        recs.push({test:"Logistic Regression",goal:"Predict the log odds of being in one group using a combination of IVs.",when:"1 categorical DV (2 categories), 2+ IVs"});
-    }
-    if(dvType==='categorical'&&ivType==='categorical'){
-        recs.push({test:"Logistic Regression",goal:"Predict group membership from categorical predictors.",when:"1 categorical DV, categorical IVs"});
-    }
-    if(dvType==='categorical'&&ivType==='mixed'){
-        recs.push({test:"Logistic Regression",goal:"Predict group membership from a mix of quantitative and categorical IVs.",when:"1 categorical DV, 2+ mixed IVs"});
-    }
-    // Mixed IVs with quantitative DV
-    if(dvType==='quantitative'&&ivType==='mixed'){
-        if(numDV===1&&!hasCov) recs.push({test:"Multiple Regression (with dummy coding for categorical IVs)",goal:"Predict a quantitative DV from a mix of quantitative and categorical IVs.",when:"1 quantitative DV, mixed IVs"});
-        if(numDV===1&&hasCov) recs.push({test:"ANCOVA",goal:"Compare groups while controlling for quantitative covariates.",when:"1 quantitative DV, categorical + quantitative IVs"});
-    }
-    // Structure (special case - no DV/IV distinction)
-    if(!recs.length) recs.push({test:"Multiple Regression",goal:"The most versatile option \u2014 predicts a quantitative DV from multiple IVs.",when:"1 quantitative DV, 2+ IVs"});
-    return recs;
-}
-
-function formatRecs(recs){
-    var r="<b>&#128208; RECOMMENDED STATISTICAL TEST(S):</b>\n\n";
-    recs.forEach(function(rec,i){
-        r+="<b>"+(i+1)+". "+rec.test+"</b>\n";
-        r+="   Goal: "+rec.goal+"\n";
-        r+="   Use when: "+rec.when+"\n\n";
-    });
-    r+="<i>Always check assumptions (normality, homogeneity, linearity) before running your test.</i>";
-    return r;
-}
-
-// ---- LITERATURE FINDER ----
-function findLiterature(topic,callback){
-    var url="https://api.openalex.org/works?search="+encodeURIComponent(topic)+"&per_page=5&sort=relevance_score:desc&filter=type:article&mailto=semihasekerlii@gmail.com";
-    var xhr=new XMLHttpRequest();
-    xhr.open("GET",url,true);
-    xhr.timeout=10000;
-    xhr.onload=function(){
-        try{
-            var data=JSON.parse(xhr.responseText);
-            if(!data.results||!data.results.length){callback("No articles found. Try different keywords.");return;}
-            var r="<b>&#128218; Here are recently published articles on your topic:</b>\n\n";
-            data.results.forEach(function(work,i){
-                var title=work.title||"No title";
-                var year=work.publication_year||"N/A";
-                var cited=work.cited_by_count||0;
-                var doi=work.doi||"";
-                var authors=[];
-                (work.authorships||[]).slice(0,3).forEach(function(a){var n=a.author?a.author.display_name:"";if(n)authors.push(n);});
-                if((work.authorships||[]).length>3)authors.push("et al.");
-                var journal="Unknown Journal";
-                if(work.primary_location&&work.primary_location.source)journal=work.primary_location.source.display_name||"Unknown Journal";
-                r+="<b>"+(i+1)+". "+title+"</b>\n";
-                r+="   "+authors.join(", ")+"\n";
-                r+="   "+year+" | "+journal+" | Cited: "+cited+"\n";
-                if(doi)r+='   <a href="'+doi+'" target="_blank">Read Article</a>\n';
-                r+="\n";
-            });
-            var sciteUrl="https://scite.ai/search?q="+encodeURIComponent(topic);
-            r+='Explore more: <a href="'+sciteUrl+'" target="_blank">scite.ai</a>';
-            callback(r);
-        }catch(e){callback("Error loading articles.");}
-    };
-    xhr.onerror=function(){callback("Could not reach the article database.");};
-    xhr.ontimeout=function(){callback("Search timed out. Please try again.");};
-    xhr.send();
-}
-
-// ---- PA COUNTY LIST ----
-var PA_COUNTIES=["Adams","Allegheny","Armstrong","Beaver","Bedford","Berks","Blair","Bradford","Bucks","Butler","Cambria","Cameron","Carbon","Centre","Chester","Clarion","Clearfield","Clinton","Columbia","Crawford","Cumberland","Dauphin","Delaware","Elk","Erie","Fayette","Forest","Franklin","Fulton","Greene","Huntingdon","Indiana","Jefferson","Juniata","Lackawanna","Lancaster","Lawrence","Lebanon","Lehigh","Luzerne","Lycoming","McKean","Mercer","Mifflin","Monroe","Montgomery","Montour","Northampton","Northumberland","Perry","Philadelphia","Pike","Potter","Schuylkill","Snyder","Somerset","Sullivan","Susquehanna","Tioga","Union","Venango","Warren","Washington","Wayne","Westmoreland","Wyoming","York"];
-
-function detectCounty(text){
-    var tl=text.toLowerCase();
-    for(var i=0;i<PA_COUNTIES.length;i++){
-        if(tl.indexOf(PA_COUNTIES[i].toLowerCase())!==-1) return PA_COUNTIES[i];
-    }
-    return null;
-}
-
-// ---- CONVERSATION STATE MACHINE ----
-function handleState(text){
-    var tl=text.toLowerCase().trim();
-    var yes=["yes","yeah","sure","ok","okay","yep","please","y","absolutely","of course","definitely"];
-    var no=["no","nah","nope","n","not now","no thanks","no thank you","skip"];
-    var isYes=yes.some(function(w){return tl===w||tl.indexOf(w)!==-1;});
-    var isNo=no.some(function(w){return tl===w||tl.indexOf(w)!==-1;});
-
-    if(state==='WAIT_TOPIC'){
-        // Check for greetings or non-topic responses
-        var greetings=["hello","hi","hey","howdy","hola","sup","what's up","whats up","yo","good morning","good afternoon","good evening","greetings","how are you"];
-        if(greetings.some(function(g){return tl===g||tl.indexOf(g)!==-1;}) && tl.length<30){
-            botSay("&#128008;&#8205;&#11035; Hey there! Nice to meet you!\n\n<b>What is your research about?</b>\nTell me your topic and I'll help you from there!");
-            return;
-        }
-        userData.topic=text;
-        userData.detectedCounty=detectCounty(text);
-        var varResult=exploreVariables(text);
-        if(userData.detectedCounty){
-            varResult+="\n\n&#128205; I noticed you mentioned <b>"+userData.detectedCounty+" County</b>! We have data for that county.\n\n<b>Would you like me to pull up the data for "+userData.detectedCounty+" County?</b> You can view and download it.";
-            botSay(varResult);
-            state='WAIT_COUNTY_CONFIRM';
-        } else {
-            varResult+="\n\n&#128205; <b>Does your research involve Pennsylvania specifically?</b>\nWe have district-level data for all 67 PA counties. If you'd like data for a specific county, type the <b>county name</b>.\n\nIf not, type <b>no</b> and we'll continue!";
-            botSay(varResult);
-            state='WAIT_PA_CHECK';
-        }
-    }
-    else if(state==='WAIT_PA_CHECK'){
-        if(isNo){
-            botSay("No problem! We can still help with your analysis.\n\n&#128008;&#8205;&#11035; <b>What research question are you trying to answer?</b>\nFor example: \"Does income inequality affect student achievement?\" or \"How does poverty relate to teacher shortages?\"");
-            state='WAIT_HYPOTHESIS';
-        } else {
-            // Check if they typed a county name
-            var typedCounty=detectCounty(text);
-            if(typedCounty){
-                userData.detectedCounty=typedCounty;
-                botSay("&#128205; Great! I'm opening the data for <b>"+typedCounty+" County</b> right now!\n\nYou can view the district-level details and download the CSV from the popup.\n\nWant data for <b>another county</b>? Type the name. Or type <b>done</b> to continue.");
-                if(window._showModal) window._showModal(typedCounty);
-                state='WAIT_MORE_COUNTIES';
-            } else if(tl==='yes'||tl==='yeah'||tl==='yep'){
-                botSay("&#128008;&#8205;&#11035; Which county? Type the <b>county name</b> and I'll pull up the data for you!\n\nFor example: Philadelphia, Allegheny, Lancaster, etc.");
-                state='WAIT_PA_CHECK';
-            } else {
-                botSay("&#128008;&#8205;&#11035; I couldn't find that county. Here are some examples: Philadelphia, Allegheny, Lancaster, Chester, Erie, Dauphin...\n\nType a <b>county name</b> or <b>no</b> to skip.");
-                state='WAIT_PA_CHECK';
-            }
-        }
-    }
-    else if(state==='WAIT_MORE_COUNTIES'){
-        if(tl==='done'||tl==='no'||tl==='continue'||tl==='skip'||tl==='next'){
-            botSay("&#128008;&#8205;&#11035; Now I'd love to learn more about your approach!\n\n<b>What research question are you trying to answer?</b>\nFor example: \"Does income inequality affect student achievement?\" or \"How does poverty relate to teacher shortages?\"");
-            state='WAIT_HYPOTHESIS';
-        } else {
-            var anotherCounty=detectCounty(text);
-            if(anotherCounty){
-                botSay("&#128205; Opening <b>"+anotherCounty+" County</b> data!\n\nWant <b>another county</b>? Type the name. Or type <b>done</b> to continue.");
-                if(window._showModal) window._showModal(anotherCounty);
-            } else {
-                botSay("&#128008;&#8205;&#11035; I couldn't find that county. Try again or type <b>done</b> to continue.");
-            }
-        }
-    }
-    else if(state==='WAIT_COUNTY_CONFIRM'){
-        if(isYes){
-            botSay("&#128205; Here you go! Opening <b>"+userData.detectedCounty+" County</b> data!\n\nYou can view and download the CSV from the popup.\n\nWant data for <b>another county</b>? Type the name. Or type <b>done</b> to continue.");
-            if(window._showModal) window._showModal(userData.detectedCounty);
-            state='WAIT_MORE_COUNTIES';
-        } else {
-            botSay("&#128205; <b>Would you like data for a different PA county?</b>\nType the <b>county name</b>, or type <b>no</b> to skip.");
-            state='WAIT_PA_CHECK';
-        }
-    }
-    else if(state==='WAIT_HYPOTHESIS'){
-        userData.hypothesis=text;
-        // Try to auto-detect DV and IV from hypothesis
-        var hyp=text;
-        var detectedDV='',detectedIV='';
-        // Patterns: "X affects Y", "X influences Y", "X predicts Y", "X impacts Y", "X leads to Y", "X is related to Y"
-        var patterns=[
-            /(.+?)\s+(?:negatively |positively )?(?:affects?|influences?|impacts?|predicts?|determines?|leads?\s+to|causes?|reduces?|increases?|decreases?|improves?|worsens?|hinders?|promotes?)\s+(.+)/i,
-            /(.+?)\s+(?:is |are )?(?:negatively |positively )?(?:related to|associated with|correlated with|linked to|connected to)\s+(.+)/i,
-            /(?:the )?(?:effect|impact|influence|role) of\s+(.+?)\s+on\s+(.+)/i,
-            /(?:how|whether)\s+(.+?)\s+(?:affects?|influences?|impacts?|predicts?)\s+(.+)/i,
-            /(?:there is a |there exists a )?(?:relationship|correlation|association|connection) between\s+(.+?)\s+and\s+(.+)/i
-        ];
-        for(var p=0;p<patterns.length;p++){
-            var match=hyp.match(patterns[p]);
-            if(match){
-                detectedIV=match[1].replace(/^(how\s+does?\s+|how\s+do\s+|does?\s+|do\s+|can\s+|is\s+|are\s+|what\s+|whether\s+|if\s+|higher\s+|lower\s+|greater\s+|more\s+|less\s+|increased\s+|decreased\s+|the\s+|a\s+|an\s+)+/i,'').replace(/\s*(levels?|rates?|amounts?|degrees?)\s+of\s+/i,'').replace(/[.,!?]+$/,'').trim();
-                detectedDV=match[2].replace(/^(both\s+|the\s+|a\s+|an\s+|their\s+)+/i,'').replace(/[.,!?]+$/,'').trim();
-                break;
-            }
-        }
-        if(detectedDV&&detectedIV){
-            userData.dvName=detectedDV;
-            userData.ivName=detectedIV;
-            var msg="&#128079; Great research question!\n\nBased on what you wrote, here's what I detected:\n\n";
-            msg+="&#8226; <b>Independent Variable (predictor):</b> "+detectedIV+"\n";
-            msg+="&#8226; <b>Dependent Variable (outcome):</b> "+detectedDV+"\n\n";
-            msg+="<b>Does this look right?</b> Type <b>yes</b> to continue, or <b>no</b> if you'd like to specify them yourself.";
-            botSay(msg);
-            state='CONFIRM_VARS';
-        } else {
-            botSay("&#128079; Great research question!\n\nI wasn't able to automatically detect your variables from that. No worries \u2014 let me ask!\n\n<b>What is your dependent variable?</b>\n(That's the outcome you're trying to measure or predict \u2014 for example: test scores, teacher shortage count, graduation rate)");
-            state='WAIT_DV_NAME';
-        }
-    }
-    else if(state==='CONFIRM_VARS'){
-        if(isYes){
-            botSay("&#9989; Perfect!\n\n<b>PHASE 1: Let's determine your statistical test.</b>\n\n<b>Is your dependent variable ("+userData.dvName+") quantitative or categorical?</b>\n\n&#8226; <b>Quantitative</b> = numbers (counts, scores, dollars)\n&#8226; <b>Categorical</b> = groups (high/low, pass/fail)");
-            state='P1_DV_TYPE';
-        } else {
-            userData.dvName='';
-            userData.ivName='';
-            botSay("No problem! Let me ask step by step.\n\n<b>What is your dependent variable?</b>\n(The outcome you're measuring)");
-            state='WAIT_DV_NAME';
-        }
-    }
-    else if(state==='WAIT_DV_NAME'){
-        userData.dvName=text;
-        botSay("Got it! <b>\""+text+"\"</b>\n\n<b>What are your independent variables?</b>\n(The predictors or factors)");
-        state='WAIT_IV_NAME_MANUAL';
-    }
-    else if(state==='WAIT_IV_NAME_MANUAL'){
-        userData.ivName=text;
-        botSay("Got it!\n&#8226; DV: <b>"+userData.dvName+"</b>\n&#8226; IV: <b>"+userData.ivName+"</b>\n\n<b>PHASE 1: Let's determine your statistical test.</b>\n\n<b>Is your dependent variable quantitative or categorical?</b>\n\n&#8226; <b>Quantitative</b> = numbers\n&#8226; <b>Categorical</b> = groups");
-        state='P1_DV_TYPE';
-    }
-    // ========== PHASE 1: STATISTICAL TEST (Figure 2.1) ==========
-    else if(state==='P1_DV_TYPE'){
-        if(tl.indexOf('quant')!==-1) userData.dvType='quantitative';
-        else if(tl.indexOf('categ')!==-1) userData.dvType='categorical';
-        else{botSay("Type <b>quantitative</b> or <b>categorical</b>");return;}
-        botSay("&#9989; "+userData.dvType.charAt(0).toUpperCase()+userData.dvType.slice(1)+"!\n\n<b>How many dependent variables do you have?</b>\n\nType <b>1</b> or <b>2+</b>");
-        state='P1_DV_COUNT';
-    }
-    else if(state==='P1_DV_COUNT'){
-        if(tl.indexOf('1')!==-1&&tl.indexOf('2')===-1) userData.dvCount='1';
-        else if(tl.indexOf('2')!==-1||tl.indexOf('more')!==-1||tl.indexOf('multiple')!==-1||tl.indexOf('several')!==-1) userData.dvCount='2+';
-        else{botSay("Type <b>1</b> or <b>2+</b>");return;}
-        if(userData.dvType==='categorical'){
-            botSay("&#9989; Now about your independent variable ("+userData.ivName+").\n\n<b>Is it quantitative or mixed?</b>\n\n&#8226; <b>Quantitative</b> = numbers\n&#8226; <b>Mixed</b> = numbers + categories");
-        } else {
-            botSay("&#9989; Now about your independent variable ("+userData.ivName+").\n\n<b>Is it quantitative, categorical, or mixed?</b>\n\n&#8226; <b>Quantitative</b> = numbers\n&#8226; <b>Categorical</b> = groups\n&#8226; <b>Mixed</b> = numbers + categories");
-        }
-        state='P1_IV_TYPE';
-    }
-    else if(state==='P1_IV_TYPE'){
-        if(tl.indexOf('mix')!==-1) userData.ivType='mixed';
-        else if(tl.indexOf('quant')!==-1) userData.ivType='quantitative';
-        else if(tl.indexOf('categ')!==-1){
-            if(userData.dvType==='categorical'){
-                botSay("&#128008;&#8205;&#11035; When your DV is categorical, your IV should be <b>quantitative</b> or <b>mixed</b>.\nIf both are categorical, use a <b>Chi-Square test</b>.\n\nType <b>quantitative</b> or <b>mixed</b>");return;
-            }
-            userData.ivType='categorical';
-        }
-        else{botSay("Type <b>quantitative</b>"+(userData.dvType==='categorical'?" or <b>mixed</b>":", <b>categorical</b>, or <b>mixed</b>"));return;}
-        botSay("&#9989; <b>How many independent variables do you have?</b>\n\nType <b>1</b> or <b>2+</b>");
-        state='P1_IV_COUNT';
-    }
-    else if(state==='P1_IV_COUNT'){
-        if(tl.indexOf('1')!==-1&&tl.indexOf('2')===-1) userData.ivCount='1';
-        else if(tl.indexOf('2')!==-1||tl.indexOf('more')!==-1||tl.indexOf('multiple')!==-1||tl.indexOf('several')!==-1) userData.ivCount='2+';
-        else{botSay("Type <b>1</b> or <b>2+</b>");return;}
-        botSay("&#9989; Last question for Phase 1!\n\n<b>Are you controlling for any covariates?</b>\n(Variables you want to hold constant)\n\nType <b>yes</b> or <b>no</b>");
-        state='P1_COVARIATES';
-    }
-    else if(state==='P1_COVARIATES'){
-        if(isYes) userData.covariates='yes';
-        else if(isNo) userData.covariates='no';
-        else{botSay("Type <b>yes</b> or <b>no</b>");return;}
-        // PHASE 1 RECOMMENDATION (Figure 2.1)
-        var recs=getDecisionTreeResult(userData.dvType,userData.dvCount,userData.ivType,userData.ivCount,userData.covariates);
-        var summary="&#128202; <b>PHASE 1: Table of Statistical Tests</b>\n\nBased on your variables:\n";
-        summary+="  &#8226; DV: "+userData.dvName+" ("+userData.dvType+", "+userData.dvCount+")\n";
-        summary+="  &#8226; IV: "+userData.ivName+" ("+userData.ivType+", "+userData.ivCount+")\n";
-        summary+="  &#8226; Covariates: "+userData.covariates+"\n\n";
-        summary+=formatRecs(recs);
-        summary+="\n\n&#128008;&#8205;&#11035; Now that we've determined your statistical test, let's use the <b>Decision-Making Tree</b> to find your best technique!\n\n<b>Which best describes your research goal?</b>\n\n<b>a)</b> Examining the <b>relationship</b> between variables\n     (Does X predict Y? Is X correlated with Y?)\n\n<b>b)</b> Comparing <b>group differences</b>\n     (Do groups differ on the outcome?)\n\n<b>c)</b> <b>Predicting group membership</b>\n     (Can we classify into groups?)\n\n<b>d)</b> Exploring the <b>structure</b> of variables\n     (What underlying factors exist?)\n\nType <b>a</b>, <b>b</b>, <b>c</b>, or <b>d</b>";
-        botSay(summary);
-        state='P2_RESEARCH_GOAL';
-    }
-    // ========== PHASE 2: MULTIVARIATE TECHNIQUE (Figure 2.2) ==========
-    else if(state==='P2_RESEARCH_GOAL'){
-        var goal='';
-        if(tl==='a'||tl.indexOf('relationship')!==-1||tl.indexOf('correlat')!==-1) goal='relationship';
-        else if(tl==='b'||tl.indexOf('group')!==-1||tl.indexOf('differ')!==-1||tl.indexOf('compar')!==-1) goal='group_differences';
-        else if(tl==='c'||tl.indexOf('member')!==-1||tl.indexOf('classif')!==-1||tl.indexOf('predict')!==-1) goal='prediction';
-        else if(tl==='d'||tl.indexOf('structure')!==-1||tl.indexOf('factor')!==-1) goal='structure';
-        else{botSay("Please type <b>a</b>, <b>b</b>, <b>c</b>, or <b>d</b>");return;}
-        userData.researchGoal=goal;
-        var recs2=[];var goalText='';
-        if(goal==='relationship'){
-            goalText="Degree of Relationship";
-            if(userData.dvCount==='1'&&userData.ivCount==='1') recs2.push({test:"Bivariate Correlation and/or Regression",goal:"Determine the relationship between two variables and predict the DV.",when:"1 quantitative DV, 1 quantitative IV"});
-            if(userData.dvCount==='1'&&userData.ivCount==='2+') recs2.push({test:"Multiple Regression",goal:"Create a linear combination of IVs that best predicts the DV.",when:"1 quantitative DV, 2+ quantitative IVs"});
-            if(userData.dvCount==='2+'&&userData.ivCount==='2+') recs2.push({test:"Path Analysis",goal:"Estimate all direct and indirect relationships in a hypothesized model.",when:"2+ quantitative DVs, 2+ quantitative IVs"});
-            if(!recs2.length) recs2.push({test:"Multiple Regression",goal:"Create a linear combination of IVs that best predicts the DV.",when:"1 quantitative DV, 2+ IVs"});
-        } else if(goal==='group_differences'){
-            goalText="Group Differences";
-            var hasCov=userData.covariates==='yes';
-            if(userData.dvCount==='1'&&userData.ivCount==='1'&&!hasCov){
-                recs2.push({test:"t-Test",goal:"Determine significant mean group differences.",when:"1 quantitative DV, 1 categorical IV (2 groups), no covariates"});
-                recs2.push({test:"One-way ANOVA",goal:"Determine significant mean differences among 3+ groups.",when:"1 quantitative DV, 1 categorical IV (2+ groups), no covariates"});
-            }
-            if(userData.dvCount==='1'&&userData.ivCount==='1'&&hasCov) recs2.push({test:"One-way ANCOVA",goal:"Compare group means while controlling for covariates.",when:"1 quantitative DV, 1 categorical IV, with covariates"});
-            if(userData.dvCount==='1'&&userData.ivCount==='2+'&&!hasCov) recs2.push({test:"Factorial ANOVA",goal:"Test effects of multiple categorical IVs including interactions.",when:"1 quantitative DV, 2+ categorical IVs, no covariates"});
-            if(userData.dvCount==='1'&&userData.ivCount==='2+'&&hasCov) recs2.push({test:"Factorial ANCOVA",goal:"Test effects of multiple IVs while controlling for covariates.",when:"1 quantitative DV, 2+ categorical IVs, with covariates"});
-            if(userData.dvCount==='2+'&&userData.ivCount==='1'&&!hasCov) recs2.push({test:"One-way MANOVA",goal:"Create linear combo of DVs to maximize mean group differences.",when:"2+ quantitative DVs, 1 categorical IV, no covariates"});
-            if(userData.dvCount==='2+'&&userData.ivCount==='1'&&hasCov) recs2.push({test:"One-way MANCOVA",goal:"MANOVA while controlling for covariates.",when:"2+ quantitative DVs, 1 categorical IV, with covariates"});
-            if(userData.dvCount==='2+'&&userData.ivCount==='2+'&&!hasCov) recs2.push({test:"Factorial MANOVA",goal:"Test effects of multiple IVs on multiple DVs.",when:"2+ quantitative DVs, 2+ categorical IVs, no covariates"});
-            if(userData.dvCount==='2+'&&userData.ivCount==='2+'&&hasCov) recs2.push({test:"Factorial MANCOVA",goal:"Factorial MANOVA while controlling for covariates.",when:"2+ quantitative DVs, 2+ categorical IVs, with covariates"});
-        } else if(goal==='prediction'){
-            goalText="Prediction of Group Membership";
-            recs2.push({test:"Logistic Regression",goal:"Create linear combo of IVs of the log of odds of being in one group.",when:"1 categorical DV (2 categories), 2+ mixed IVs"});
-            recs2.push({test:"Discriminant Analysis",goal:"Create linear combos that best predict group membership.",when:"1 categorical DV (2+ categories), 2+ quantitative IVs"});
-        } else if(goal==='structure'){
-            goalText="Structure";
-            recs2.push({test:"Factor Analysis (Theoretical)",goal:"Create linear combos of variables to represent underlying constructs.",when:"3+ quantitative variables"});
-            recs2.push({test:"Principal Components Analysis (Empirical)",goal:"Create linear combos to represent most variance in the data.",when:"3+ quantitative variables"});
-        }
-        var summary2="&#128208; <b>PHASE 2: Decision-Making Tree for Statistical Tests</b>\n\nResearch Goal: <b>"+goalText+"</b>\n\n";
-        recs2.forEach(function(rec,i){
-            summary2+="<b>"+(i+1)+". "+rec.test+"</b>\n";
-            summary2+="   Goal: "+rec.goal+"\n";
-            summary2+="   Use when: "+rec.when+"\n\n";
-        });
-        summary2+="<i>Always check assumptions (normality, homogeneity, linearity) before running tests.</i>";
-        summary2+="\n\n&#128218; <b>Would you like me to find recently published articles about your research topic?</b>";
-        botSay(summary2);
-        state='WAIT_ARTICLES';
-    }
-    else if(state==='WAIT_ARTICLES'){
-        if(isYes){
-            botSay("&#128269; Searching for articles on <b>\""+userData.topic+"\"</b>...\nThis might take a few seconds!");
-            findLiterature(userData.topic,function(result){
-                botSay(result+"\n\n&#128231; <b>I can send Dr. Sekerli a detailed email with all the information you shared about your research and ask for her help. Would you like me to?</b>");
-                state='WAIT_EMAIL';
-            });
-        } else {
-            botSay("No problem!\n\n&#128231; <b>I can send Dr. Sekerli a detailed email with all your research details and ask for her help. Would you like me to?</b>");
-            state='WAIT_EMAIL';
-        }
-    }
-    else if(state==='WAIT_EMAIL'){
-        if(isYes){
-            botSay("&#129302; Awesome! Please provide your <b>full name</b> and <b>email address</b> so Dr. Sekerli can reach you.\n\nJust type it like this: <b>Your Name, your@email.com</b>");
-            state='WAIT_EMAIL_INFO';
-        } else {
-            botSay("No problem!\n\n<b>Is there anything else I can help you with?</b>");
-            state='WAIT_ANYTHING_ELSE';
-        }
-    }
-    else if(state==='WAIT_EMAIL_INFO'){
-        // Parse name and email
-        var parts=text.split(',');
-        var name='',email='';
-        if(parts.length>=2){name=parts[0].trim();email=parts[1].trim();}
-        else{
-            // Try to find email in the text
-            var emailMatch=text.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
-            if(emailMatch){email=emailMatch[0];name=text.replace(email,'').replace(/[,]/g,'').trim();}
-        }
-        if(!email||email.indexOf('@')===-1){botSay("I couldn't detect your email. Please type it as: <b>Your Name, your@email.com</b>");return;}
-        if(!name) name="Research Inquiry";
-        userData.name=name;
-        userData.email=email;
-        // Send via EmailJS
-        botSay("Sending your research details to Dr. Sekerli...");
-        var body="RESEARCH ASSISTANT REFERRAL\n\n";
-        body+="Name: "+name+"\nEmail: "+email+"\n\n";
-        body+="Research Topic: "+userData.topic+"\n";
-        body+="Research Question: "+userData.hypothesis+"\n\n";
-        body+="DV: "+userData.dvName+" ("+userData.dvType+", "+userData.dvCount+")\n";
-        body+="IV: "+userData.ivName+" ("+userData.ivType+", "+userData.ivCount+")\n";
-        body+="Covariates: "+userData.covariates+"\n\n";
-        var recs=getDecisionTreeResult(userData.dvType,userData.dvCount,userData.ivType,userData.ivCount,userData.covariates);
-        body+="Recommended Tests: "+recs.map(function(r){return r.test;}).join(", ")+"\n";
-        emailjs.send('service_klf33h6','template_d23oim8',{
-            first_name:name.split(' ')[0]||name,
-            last_name:name.split(' ').slice(1).join(' ')||'',
-            email:email,
-            purpose:body
-        }).then(function(){
-            botSay("Your research details have been sent to Dr. Sekerli! She will review your information and reach out to you at <b>"+email+"</b> within 24\u201348 hours.\n\n<b>Is there anything else I can help you with?</b>");
-            state='WAIT_ANYTHING_ELSE';
-        }).catch(function(){
-            botSay("There was an error sending the email. You can reach Dr. Sekerli through the contact form on this website.\n\nThank you for using Chico!");
-            state='DONE';
-        });
-    }
-    else if(state==='WAIT_ANYTHING_ELSE'){
-        if(isYes){
-            userData={topic:'',hypothesis:'',dvType:'',dvCount:'',ivType:'',ivCount:'',covariates:'',dvName:'',ivName:'',name:'',email:''};
-            botSay("&#128008;&#8205;&#11035; Awesome! Let's start fresh.\n\n<b>What is your research about?</b>");
-            state='WAIT_TOPIC';
-        } else {
-            botSay("&#128008;&#8205;&#11035; I know, I know... I'm one smart cat! &#128526;\n\nThank you and have a great one! <b>Good luck with your research! &#128170;</b>\n\nData: <a href=\"https://semihasekerli.github.io/pa-teacher-shortage/\" target=\"_blank\">PA Teacher Shortage Dataset</a>\nCitation: Sekerli, S. B. (2025). Teacher shortage in Pennsylvania schools.");
-            state='DONE';
-        }
-    }
-    else if(state==='DONE'){
-        botSay("Thank you! If you have another research question, please refresh the page to start a new conversation.");
-    }
-}
 })();
 </script>
 </body>
