@@ -1410,6 +1410,151 @@ input.addEventListener('keydown',function(e){if(e.key==='Enter')send();});
 function botSay(text){var d=document.createElement('div');d.className='chat-msg bot';d.innerHTML=text;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
 function userSay(text){var d=document.createElement('div');d.className='chat-msg user';d.textContent=text;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
 
+// Tool execution functions
+function executeTool(toolName,toolInput){
+    if(toolName==='open_county_data'){
+        if(window._showModal)window._showModal(toolInput.county_name);
+        return 'Opened data popup for '+toolInput.county_name+' County. User can now view district-level details and download CSV.';
+    }
+    if(toolName==='download_county_csv'){
+        if(window.downloadCountyCSV)window.downloadCountyCSV(toolInput.county_name);
+        else if(window._showModal)window._showModal(toolInput.county_name);
+        return 'CSV download triggered for '+toolInput.county_name+' County.';
+    }
+    if(toolName==='send_email'){
+        try{
+            emailjs.send('service_klf33h6','template_d23oim8',{
+                first_name:toolInput.user_name.split(' ')[0]||toolInput.user_name,
+                last_name:toolInput.user_name.split(' ').slice(1).join(' ')||'',
+                email:toolInput.user_email,
+                purpose:'CHICO REFERRAL: '+toolInput.research_details
+            });
+            return 'Email sent successfully to Dr. Sekerli with research details for '+toolInput.user_name+' ('+toolInput.user_email+').';
+        }catch(e){return 'Email sending failed. Error: '+e.message;}
+    }
+    if(toolName==='search_articles'){
+        return 'SEARCH_PENDING:'+toolInput.topic+'|'+(toolInput.max_results||5);
+    }
+    return 'Tool not found.';
+}
+
+function searchOpenAlex(topic,maxResults,callback){
+    var url='https://api.openalex.org/works?search='+encodeURIComponent(topic)+'&per_page='+(maxResults||5)+'&sort=relevance_score:desc&filter=type:article&mailto=semihasekerlii@gmail.com';
+    var xhr=new XMLHttpRequest();
+    xhr.open('GET',url,true);
+    xhr.timeout=10000;
+    xhr.onload=function(){
+        try{
+            var data=JSON.parse(xhr.responseText);
+            if(!data.results||!data.results.length){callback('No articles found for: '+topic);return;}
+            var r='Found '+data.results.length+' articles:\n';
+            data.results.forEach(function(work,i){
+                var title=work.title||'No title';
+                var year=work.publication_year||'N/A';
+                var cited=work.cited_by_count||0;
+                var doi=work.doi||'';
+                var authors=[];
+                (work.authorships||[]).slice(0,3).forEach(function(a){var n=a.author?a.author.display_name:'';if(n)authors.push(n);});
+                if((work.authorships||[]).length>3)authors.push('et al.');
+                var journal='Unknown';
+                if(work.primary_location&&work.primary_location.source)journal=work.primary_location.source.display_name||'Unknown';
+                r+=(i+1)+'. '+title+' - '+authors.join(', ')+' ('+year+') - '+journal+' - Cited: '+cited;
+                if(doi)r+=' - '+doi;
+                r+='\n';
+            });
+            r+='Total results: '+(data.meta?data.meta.count:'N/A');
+            callback(r);
+        }catch(e){callback('Error parsing results.');}
+    };
+    xhr.onerror=function(){callback('Could not reach article database.');};
+    xhr.send();
+}
+
+function processAIResponse(data,typingEl){
+    if(!data.content||!data.content.length){
+        if(typingEl&&typingEl.parentNode)typingEl.parentNode.removeChild(typingEl);
+        isWaitingForAI=false;
+        botSay("&#128008;&#8205;&#11035; Hmm, something went wrong. Try again.");
+        return;
+    }
+    // Check if response has tool use
+    var hasToolUse=false;
+    var textParts=[];
+    var toolUses=[];
+    data.content.forEach(function(block){
+        if(block.type==='text')textParts.push(block.text);
+        if(block.type==='tool_use'){hasToolUse=true;toolUses.push(block);}
+    });
+    // Show any text first
+    if(textParts.length){
+        var reply=textParts.join('\n');
+        reply=reply.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+        reply=reply.replace(/^- /gm,'&#8226; ');
+        reply=reply.replace(/\n/g,'<br>');
+        if(typingEl&&typingEl.parentNode)typingEl.parentNode.removeChild(typingEl);
+        botSay(reply);
+        typingEl=null;
+    }
+    if(!hasToolUse){
+        if(typingEl&&typingEl.parentNode)typingEl.parentNode.removeChild(typingEl);
+        isWaitingForAI=false;
+        chatHistory.push({role:'assistant',content:data.content});
+        return;
+    }
+    // Execute tools and send results back
+    chatHistory.push({role:'assistant',content:data.content});
+    var toolsProcessed=0;
+    var totalTools=toolUses.length;
+    toolUses.forEach(function(toolUse){
+        var result=executeTool(toolUse.name,toolUse.input);
+        if(result.indexOf('SEARCH_PENDING:')===0){
+            // Async article search
+            var parts=result.replace('SEARCH_PENDING:','').split('|');
+            var searchTopic=parts[0];
+            var maxR=parseInt(parts[1])||5;
+            if(!typingEl){
+                typingEl=document.createElement('div');
+                typingEl.className='chat-msg bot';
+                typingEl.style.opacity='0.6';
+                typingEl.innerHTML='&#128008;&#8205;&#11035; <i>Searching for articles...</i>';
+                msgs.appendChild(typingEl);
+                msgs.scrollTop=msgs.scrollHeight;
+            }
+            searchOpenAlex(searchTopic,maxR,function(articleResult){
+                chatHistory.push({role:'user',content:[{type:'tool_result',tool_use_id:toolUse.id,content:articleResult}]});
+                toolsProcessed++;
+                if(toolsProcessed>=totalTools) sendFollowUp(typingEl);
+            });
+        } else {
+            chatHistory.push({role:'user',content:[{type:'tool_result',tool_use_id:toolUse.id,content:result}]});
+            toolsProcessed++;
+            if(toolsProcessed>=totalTools) sendFollowUp(typingEl);
+        }
+    });
+}
+
+function sendFollowUp(typingEl){
+    if(!typingEl){
+        typingEl=document.createElement('div');
+        typingEl.className='chat-msg bot';
+        typingEl.style.opacity='0.6';
+        typingEl.innerHTML='&#128008;&#8205;&#11035; <i>Chico is thinking...</i>';
+        msgs.appendChild(typingEl);
+        msgs.scrollTop=msgs.scrollHeight;
+    }
+    fetch(CHICO_API,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({messages:chatHistory})
+    }).then(function(r){return r.json();}).then(function(data){
+        processAIResponse(data,typingEl);
+    }).catch(function(err){
+        if(typingEl&&typingEl.parentNode)typingEl.parentNode.removeChild(typingEl);
+        isWaitingForAI=false;
+        botSay("&#128008;&#8205;&#11035; Lost connection. Please try again.");
+    });
+}
+
 function callChicoAI(text){
     if(isWaitingForAI)return;
     isWaitingForAI=true;
@@ -1425,35 +1570,11 @@ function callChicoAI(text){
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({messages:chatHistory})
     }).then(function(r){return r.json();}).then(function(data){
-        if(typing.parentNode)typing.parentNode.removeChild(typing);
-        isWaitingForAI=false;
-        if(data.content&&data.content[0]&&data.content[0].text){
-            var reply=data.content[0].text;
-            chatHistory.push({role:'assistant',content:reply});
-            // Convert markdown bold to HTML
-            reply=reply.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
-            // Convert markdown bullet points
-            reply=reply.replace(/^- /gm,'&#8226; ');
-            // Convert newlines
-            reply=reply.replace(/\n/g,'<br>');
-            botSay(reply);
-            // Check if AI wants to open county data
-            var countyCmd=reply.match(/OPEN_COUNTY:(\w+)/);
-            if(countyCmd&&window._showModal){
-                window._showModal(countyCmd[1]);
-                reply=reply.replace(/OPEN_COUNTY:\w+/g,'');
-            }
-        } else if(data.error){
-            botSay("&#128008;&#8205;&#11035; Oops! Something went wrong. Please try again.");
-            console.log('Chico error:',data.error);
-        } else {
-            botSay("&#128008;&#8205;&#11035; Hmm, I didn't get a response. Please try again.");
-        }
+        processAIResponse(data,typing);
     }).catch(function(err){
         if(typing.parentNode)typing.parentNode.removeChild(typing);
         isWaitingForAI=false;
-        botSay("&#128008;&#8205;&#11035; I couldn't connect to my brain right now. Please try again in a moment.");
-        console.log('Chico fetch error:',err);
+        botSay("&#128008;&#8205;&#11035; I couldn't connect right now. Please try again.");
     });
 }
 
