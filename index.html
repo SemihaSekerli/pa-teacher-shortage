@@ -1398,9 +1398,8 @@ toggle.addEventListener('click',function(){
     win.classList.toggle('open');
     toggle.classList.toggle('open');
     if(win.classList.contains('open')){input.focus();if(!msgs.children.length){
-        // Get initial greeting from AI
         chatHistory=[];
-        callChicoAI("hi");
+        botSay("&#128008;&#8205;&#11035; Hi, I'm Chico, Dr. Sekerli's cat turned research assistant. How can I help?");
     }}
 });
 closeBtn.addEventListener('click',function(){win.classList.remove('open');toggle.classList.remove('open');});
