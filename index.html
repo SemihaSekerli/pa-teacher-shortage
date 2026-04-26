@@ -1297,9 +1297,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- ============================================ -->
 <style>
 #chatWidget{position:fixed;bottom:24px;right:24px;z-index:9999;font-family:'Inter',sans-serif}
-#chatToggle{width:68px;height:68px;border-radius:50%;background:#c0392b;border:3px solid #e74c3c;color:#fff;font-size:36px;cursor:pointer;box-shadow:0 4px 20px rgba(192,57,43,0.5);transition:all 0.3s;display:flex;align-items:center;justify-content:center;animation:chatBounce 2s ease-in-out infinite}
-#chatToggle:hover{transform:scale(1.15);box-shadow:0 6px 24px rgba(192,57,43,0.6)}
-#chatToggle.open{background:#922b21;animation:none}
+#chatToggle{width:130px;height:130px;background:transparent;border:none;padding:0;cursor:pointer;transition:transform 0.3s;display:flex;align-items:center;justify-content:center;animation:chatBounce 2s ease-in-out infinite;filter:drop-shadow(0 4px 14px rgba(192,57,43,0.45))}
+#chatToggle:hover{transform:scale(1.12);filter:drop-shadow(0 6px 18px rgba(192,57,43,0.65))}
+#chatToggle.open{animation:none}
+#chatToggle img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
 @keyframes chatBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @keyframes chicoKnock{0%,100%{transform:scale(1)}10%{transform:scale(1.2) rotate(-5deg)}20%{transform:scale(1) rotate(5deg)}30%{transform:scale(1.2) rotate(-5deg)}40%{transform:scale(1) rotate(0)}50%,100%{transform:scale(1)}}
 #chicoBubble{display:none;position:fixed;bottom:100px;right:24px;background:#161b22;border:2px solid #c0392b;border-radius:16px 16px 4px 16px;padding:14px 18px;max-width:280px;font-family:'Inter',sans-serif;font-size:14px;color:#e0e0e0;line-height:1.6;box-shadow:0 6px 24px rgba(0,0,0,0.4);z-index:9998;animation:chicoBubbleFade 0.4s ease}
@@ -1323,7 +1324,7 @@ document.addEventListener('DOMContentLoaded', function() {
 #chatInput:focus{border-color:#c0392b}
 #chatSend{background:#c0392b;border:none;color:#fff;border-radius:6px;padding:10px 16px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer}
 #chatSend:hover{background:#a93226}
-@media(max-width:480px){#chatWindow{width:calc(100vw - 16px);right:8px;bottom:80px;height:calc(100vh - 100px)}#chatToggle{width:50px;height:50px;font-size:24px}}
+@media(max-width:480px){#chatWindow{width:calc(100vw - 16px);right:8px;bottom:80px;height:calc(100vh - 100px)}#chatToggle{width:100px;height:100px}}
 </style>
 
 <div id="chatWidget">
@@ -1345,7 +1346,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <button class="close-bubble" onclick="document.getElementById('chicoBubble').classList.remove('show');">&times;</button>
         &#129302; <b>Knock knock!</b><br>Hey! I'm Chico — Dr. Sekerli's cat turned AI research assistant! Need help with your research? Click me!
     </div>
-    <button id="chatToggle" title="Chico">&#129302;</button>
+    <button id="chatToggle" title="Chico"><img src="assets/chico-robot.png" alt="Chico" onerror="this.outerHTML='&#129302;';this.parentNode.style.fontSize='36px';this.parentNode.style.background='#c0392b';this.parentNode.style.border='3px solid #e74c3c';this.parentNode.style.borderRadius='50%';this.parentNode.style.color='#fff';"></button>
 </div>
 
 <script>
@@ -1389,6 +1390,8 @@ var chicoTimer=setTimeout(function(){
         document.getElementById('chicoBubble').classList.add('show');
         playKnock();
         setTimeout(function(){toggle.style.animation='chatBounce 2s ease-in-out infinite';},1000);
+        // Auto-dismiss knock-knock bubble after 8s so it doesn't collide with roaming behaviors
+        setTimeout(function(){document.getElementById('chicoBubble').classList.remove('show');},8000);
     }
 },7000);
 
@@ -1588,5 +1591,210 @@ function send(){
 
 })();
 </script>
+
+<!-- ============================================ -->
+<!-- CHICO ROAMER - The robot toggle handles all 4 behaviors itself -->
+<!-- ============================================ -->
+<style>
+#chicoSpeech{position:fixed;display:none;background:#161b22;border:2px solid #c0392b;color:#e0e0e0;padding:9px 14px;border-radius:14px;font-size:13px;font-family:'Inter',sans-serif;max-width:260px;line-height:1.5;z-index:10001;box-shadow:0 4px 12px rgba(0,0,0,0.4);pointer-events:none;opacity:0;transition:opacity 0.3s}
+#chicoSpeech.show{display:block;opacity:1}
+#chicoSpeech.above{transform:translate(-50%,-100%) translateY(-12px);border-radius:14px 14px 14px 4px}
+#chicoSpeech.below{transform:translate(-50%,0) translateY(12px);border-radius:4px 14px 14px 14px}
+#chicoSpeech.right{transform:translate(12px,-50%);border-radius:4px 14px 14px 14px}
+#chicoSpeech.left{transform:translate(calc(-100% - 12px),-50%);border-radius:14px 4px 14px 14px}
+
+#chatToggle.roaming{animation:none!important;transition:transform 2.5s linear}
+#chatToggle.roaming-fast{transition:transform 0.8s ease-in-out}
+#chatToggle.napping{animation:none!important;transform:rotate(14deg) scale(0.95)!important;transition:transform 0.4s}
+#chatToggle.napping-z{position:relative}
+#chicoZzz{position:fixed;bottom:88px;right:24px;font-size:22px;z-index:10000;animation:chicoZzz 2.6s ease-in-out infinite;pointer-events:none;display:none}
+#chicoZzz.show{display:block}
+@keyframes chicoZzz{0%,100%{opacity:0;transform:translate(0,0) scale(0.7)}45%,55%{opacity:1;transform:translate(8px,-12px) scale(1)}}
+
+#chatToggle.peeking{animation:none!important;transition:transform 0.5s ease-in-out}
+#chatToggle.section-wiggle{animation:chicoKnock 0.8s ease-in-out!important}
+</style>
+
+<div id="chicoSpeech"></div>
+<div id="chicoZzz">&#128164;</div>
+
+<script>
+(function(){
+    var toggle=document.getElementById('chatToggle');
+    if(!toggle)return;
+    var speech=document.getElementById('chicoSpeech');
+    var zzz=document.getElementById('chicoZzz');
+
+    var chatWin=document.getElementById('chatWindow');
+    var busy=false;
+    var lastActivity=Date.now();
+    var pageLoadTime=Date.now();
+    var lastWander=Date.now();   // first wander only AFTER knock-knock window (60s from load)
+    var lastPeek=Date.now()-15000;
+    var lastNap=0;
+    var pathIdx=0;
+    var sectionLastShown={};
+    function chatIsOpen(){return chatWin && chatWin.classList.contains('open')}
+    function knockKnockShowing(){var k=document.getElementById('chicoBubble');return k && k.classList.contains('show')}
+    function inInitialPeriod(){return Date.now()-pageLoadTime<17000}
+    function blocked(){return chatIsOpen() || knockKnockShowing() || inInitialPeriod()}
+
+    var WANDER_MSGS=['\u{1F43E} Need a paw?','Got a question?','I\'m here if you need me!','Curious about a county?','Want to dig into the data?'];
+    var PEEK_MSGS=['\u{1F440}','Boop!','Hey','Hi there'];
+    var NAP_MSGS=['\u{1F4A4} Cat naps for research...','Zzz... wake me if you need help','Just resting one eye \u{1F638}'];
+
+    var SECTIONS=[
+        {id:'map',msg:'Click any county on the map for its district data!'},
+        {id:'yearLabels',msg:'Switching years? Ask me what changed the most.'},
+        {id:'varToggle',msg:'Wondering what a variable means? Just ask.'},
+        {id:'srcToggle',msg:'Need a citation? I can format one for you.'},
+        {id:'citeSection',msg:'Writing a paper that uses this data? I can help.'},
+        {id:'aboutResearcher',msg:'Want to reach Dr. Sekerli? I can connect you.'}
+    ];
+
+    function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
+
+    function showSpeech(x,y,text,position){
+        speech.textContent=text;
+        speech.style.left=x+'px';
+        speech.style.top=y+'px';
+        speech.classList.remove('above','below','left','right');
+        speech.classList.add(position||'above');
+        speech.classList.add('show');
+    }
+    function hideSpeech(){speech.classList.remove('show')}
+
+    function resetToggle(){
+        toggle.classList.remove('roaming','roaming-fast','napping','napping-z','peeking','section-wiggle');
+        toggle.style.transform='';
+        toggle.style.transition='';
+        zzz.classList.remove('show');
+    }
+    function endBehavior(){resetToggle();hideSpeech();busy=false}
+
+    // Stop any in-flight behavior the moment the chat opens
+    toggle.addEventListener('click',function(){if(busy)endBehavior()});
+
+    ['click','scroll','mousemove','keydown','touchstart'].forEach(function(ev){
+        window.addEventListener(ev,function(){lastActivity=Date.now()},{passive:true});
+    });
+
+    // ---- Wanderer (stationary): Chico stays in his corner. Bubble pops next to him with a small wiggle. ----
+    function wander(){
+        if(busy||blocked())return;
+        busy=true;
+        lastWander=Date.now();
+
+        var TH=130; // toggle height/width
+        // Bubble anchor: just left of the toggle's left edge, vertically centered on toggle
+        var x=window.innerWidth - 24 - TH; // toggle's left edge in viewport
+        var y=window.innerHeight - 24 - (TH/2); // toggle's vertical center
+
+        // Quick wiggle so Chico draws attention to the bubble
+        toggle.classList.add('section-wiggle');
+        setTimeout(function(){toggle.classList.remove('section-wiggle')},900);
+
+        // Bubble appears to the LEFT of Chico
+        showSpeech(x, y, pick(WANDER_MSGS), 'left');
+
+        setTimeout(function(){
+            hideSpeech();
+            endBehavior();
+        },4500);
+    }
+
+    // ---- Napper: toggle stays in corner, tilts, Z's appear, bubble shows ----
+    function nap(){
+        if(busy||chatIsOpen())return;
+        busy=true;
+        lastNap=Date.now();
+        toggle.classList.add('napping');
+        zzz.classList.add('show');
+        // Anchor bubble at toggle's LEFT edge (so it sits to the left of Chico, not over him)
+        showSpeech(window.innerWidth - 154, window.innerHeight - 89, pick(NAP_MSGS), 'left');
+
+        var started=Date.now();
+        var wakeCheck=setInterval(function(){
+            if(chatIsOpen()){clearInterval(wakeCheck);return}
+            var sinceActivity=Date.now()-lastActivity;
+            var sinceStart=Date.now()-started;
+            if((sinceActivity<1500 && sinceStart>2500) || sinceStart>20000){
+                clearInterval(wakeCheck);
+                if(!chatIsOpen())endBehavior();
+            }
+        },700);
+    }
+
+    // ---- Peeker: toggle slides slightly off the corner, shows briefly, slides back ----
+    function peek(){
+        if(busy||chatIsOpen())return;
+        busy=true;
+        lastPeek=Date.now();
+        toggle.classList.add('peeking');
+        toggle.style.transform='translateX(38px)';
+
+        // Slide back to peeking-out
+        setTimeout(function(){
+            if(!busy)return;
+            toggle.style.transform='translateX(-4px)';
+            if(Math.random()<0.55){
+                setTimeout(function(){
+                    if(busy)showSpeech(window.innerWidth - 154, window.innerHeight - 89, pick(PEEK_MSGS), 'left');
+                },200);
+            }
+        },500);
+
+        // Hide
+        setTimeout(function(){
+            if(!busy)return;
+            hideSpeech();
+            toggle.style.transform='translateX(38px)';
+        },2800);
+
+        setTimeout(function(){if(!chatIsOpen())endBehavior()},3600);
+    }
+
+    // ---- Section Guard: toggle wiggles in corner, bubble appears NEXT TO CHICO (so it's clearly from him) ----
+    function showSectionTip(el,msg){
+        if(busy||blocked())return;
+        busy=true;
+        toggle.classList.add('section-wiggle');
+        // Bubble appears at Chico's left edge — same anchor as wander/peek/nap, so all bubbles consistently come from him
+        var TH=130;
+        var x=window.innerWidth - 24 - TH;
+        var y=window.innerHeight - 24 - (TH/2);
+        showSpeech(x, y, msg, 'left');
+        setTimeout(function(){toggle.classList.remove('section-wiggle')},900);
+        setTimeout(function(){endBehavior()},5500);
+    }
+
+    if('IntersectionObserver' in window){
+        var obs=new IntersectionObserver(function(entries){
+            entries.forEach(function(en){
+                if(!en.isIntersecting||blocked()||busy)return;
+                var id=en.target.id;
+                var now=Date.now();
+                if(sectionLastShown[id] && now-sectionLastShown[id]<150000)return;
+                var sec=SECTIONS.find(function(s){return s.id===id});
+                if(!sec)return;
+                sectionLastShown[id]=now;
+                showSectionTip(en.target, sec.msg);
+            });
+        },{threshold:0.4});
+        SECTIONS.forEach(function(s){var el=document.getElementById(s.id);if(el)obs.observe(el)});
+    }
+
+    // ---- Master tick ----
+    setInterval(function(){
+        if(blocked()||busy)return;
+        var now=Date.now();
+        var idle=now-lastActivity;
+        if(idle>60000 && now-lastNap>45000)return nap();
+        if(now-lastWander>60000)return wander();
+        if(now-lastPeek>40000 && Math.random()<0.35)return peek();
+    },4000);
+})();
+</script>
+
 </body>
 </html>
