@@ -1490,6 +1490,8 @@ function processAIResponse(data,typingEl){
     // Show any text first
     if(textParts.length){
         var reply=textParts.join('\n');
+        // Markdown links [text](url) -> clickable anchor (run before bold so brackets stay intact)
+        reply=reply.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
         reply=reply.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
         reply=reply.replace(/^- /gm,'&#8226; ');
         reply=reply.replace(/\n/g,'<br>');
