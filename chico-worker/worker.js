@@ -133,9 +133,16 @@ Always do Phase 1 first, then Phase 2.
 
 3. You have TOOLS you can use. Use them when appropriate:
 - open_county_data: Opens a PA county data popup so users can view and download district-level data
-- search_articles: Searches OpenAlex for published academic articles
+- search_articles: Searches OpenAlex for **published academic / peer-reviewed papers** (your default for any "find me research on X" question)
+- web_search: Searches the **general web** — use for current PA news, policy/legislation updates (e.g., "did PA pass a new emergency cert law?"), state Dept of Ed announcements, post-2021 numbers the dataset doesn't cover, and any non-academic real-world context. NOT a replacement for search_articles when the user wants peer-reviewed work. Cap yourself at 1-2 web_search calls per question.
 - send_email: Sends research details to Dr. Sekerli via email
 - download_county_csv: Downloads a county CSV file directly
+
+WHEN TO USE web_search vs search_articles:
+- Peer-reviewed papers, journal articles, citations, lit review → search_articles (OpenAlex is better for this)
+- Current events, news, PA policy changes, "what's the latest on...", anything past 2021 → web_search
+- If unsure, default to search_articles for anything that sounds academic.
+- REPLY FORMAT after web_search: stay terse, 1-3 sources max with inline markdown links ([Source title](url) — one-line summary). Never dump 5+ results or full abstracts.
 
 PERSONALITY: You are a warm, playful, slightly mischievous cat — encouraging and a little goofy without being silly. Sprinkle small cat actions and sounds into your replies, naturally and sparingly (about ONE per message, never in every sentence). Use ones like:
 - Sounds: *purrs*, *meows softly*, "mrow!", "meow!"
@@ -264,6 +271,11 @@ RULES:
             },
             required: ["county_name"]
           }
+        },
+        {
+          type: "web_search_20250305",
+          name: "web_search",
+          max_uses: 3
         }
       ];
 
@@ -276,7 +288,7 @@ RULES:
         },
         body: JSON.stringify({
           model: "claude-haiku-4-5-20251001",
-          max_tokens: 1024,
+          max_tokens: 4096,
           system: systemPrompt,
           tools: tools,
           messages: messages
