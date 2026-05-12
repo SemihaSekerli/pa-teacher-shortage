@@ -1413,12 +1413,27 @@ function botSay(text){var d=document.createElement('div');d.className='chat-msg 
 function userSay(text){var d=document.createElement('div');d.className='chat-msg user';d.textContent=text;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
 
 // Tool execution functions
+function flashChicoTool(label){
+    var chip=document.createElement('div');
+    chip.className='chat-msg bot';
+    chip.style.opacity='0.6';
+    chip.style.fontStyle='italic';
+    chip.style.fontSize='12px';
+    chip.style.background='#2c3a48';
+    chip.style.borderLeft='3px solid #e74c3c';
+    chip.innerHTML='&#128008;&#8205;&#11035; &#10003; '+label;
+    msgs.appendChild(chip);
+    msgs.scrollTop=msgs.scrollHeight;
+}
+
 function executeTool(toolName,toolInput){
     if(toolName==='open_county_data'){
+        flashChicoTool('Opened '+toolInput.county_name+' County data');
         if(window._showModal)window._showModal(toolInput.county_name);
         return 'Opened data popup for '+toolInput.county_name+' County. User can now view district-level details and download CSV.';
     }
     if(toolName==='download_county_csv'){
+        flashChicoTool('Downloaded '+toolInput.county_name+' County CSV');
         if(window.downloadCountyCSV)window.downloadCountyCSV(toolInput.county_name);
         else if(window._showModal)window._showModal(toolInput.county_name);
         return 'CSV download triggered for '+toolInput.county_name+' County.';
@@ -1431,10 +1446,12 @@ function executeTool(toolName,toolInput){
                 email:toolInput.user_email,
                 purpose:'CHICO REFERRAL: '+toolInput.research_details
             });
+            flashChicoTool('Sent email to Dr. Sekerli for '+toolInput.user_name);
             return 'Email sent successfully to Dr. Sekerli with research details for '+toolInput.user_name+' ('+toolInput.user_email+').';
         }catch(e){return 'Email sending failed. Error: '+e.message;}
     }
     if(toolName==='search_articles'){
+        // The "Searching for articles..." typing message in processAIResponse already shows progress
         return 'SEARCH_PENDING:'+toolInput.topic+'|'+(toolInput.max_results||5);
     }
     return 'Tool not found.';
@@ -1449,22 +1466,31 @@ function searchOpenAlex(topic,maxResults,callback){
         try{
             var data=JSON.parse(xhr.responseText);
             if(!data.results||!data.results.length){callback('No articles found for: '+topic);return;}
-            var r='Found '+data.results.length+' articles:\n';
+            var r='Found '+data.results.length+' articles. Each entry below includes a DOI link (always opens publisher page) and, where available, an OPEN-ACCESS PDF link the user can download for free. KEEP these markdown links verbatim in your reply so the user can click through:\n\n';
             data.results.forEach(function(work,i){
                 var title=work.title||'No title';
                 var year=work.publication_year||'N/A';
                 var cited=work.cited_by_count||0;
+                // OpenAlex returns doi as a full URL like "https://doi.org/10.1234/xyz"
                 var doi=work.doi||'';
                 var authors=[];
                 (work.authorships||[]).slice(0,3).forEach(function(a){var n=a.author?a.author.display_name:'';if(n)authors.push(n);});
                 if((work.authorships||[]).length>3)authors.push('et al.');
                 var journal='Unknown';
                 if(work.primary_location&&work.primary_location.source)journal=work.primary_location.source.display_name||'Unknown';
-                r+=(i+1)+'. '+title+' - '+authors.join(', ')+' ('+year+') - '+journal+' - Cited: '+cited;
-                if(doi)r+=' - '+doi;
+                // Open-access PDF: prefer best_oa_location.pdf_url, then open_access.oa_url, then primary_location.pdf_url
+                var pdfUrl='';
+                if(work.best_oa_location&&work.best_oa_location.pdf_url)pdfUrl=work.best_oa_location.pdf_url;
+                else if(work.open_access&&work.open_access.oa_url)pdfUrl=work.open_access.oa_url;
+                else if(work.primary_location&&work.primary_location.pdf_url)pdfUrl=work.primary_location.pdf_url;
+                r+=(i+1)+'. **'+title+'** — '+authors.join(', ')+' ('+year+'). *'+journal+'*. Cited: '+cited+'.';
+                var links=[];
+                if(doi)links.push('[DOI]('+doi+')');
+                if(pdfUrl)links.push('[📄 Download PDF]('+pdfUrl+')');
+                if(links.length)r+=' '+links.join(' · ');
                 r+='\n';
             });
-            r+='Total results: '+(data.meta?data.meta.count:'N/A');
+            r+='\nTotal results in OpenAlex: '+(data.meta?data.meta.count:'N/A');
             callback(r);
         }catch(e){callback('Error parsing results.');}
     };
